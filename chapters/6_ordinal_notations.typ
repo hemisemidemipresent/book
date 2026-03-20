@@ -140,7 +140,7 @@ Ordinal notations themselves are *not transfinite sets* (unlike actual ordinals)
 
 We now have two order-isomorphic well-ordered sets of order type $e0$:
 + the ordinals $<e0$ ordered by $<$, or equivalently $in$
-+ ordinal notations $<e0$ ordered by $prec$
++ ordinal notations $<e0$ ordered by $prec$ (This Ordinal notation is known as Iterated Cantor Normal Form)
 
 Another example of a well-ordered set of order type $e0$ is the set of all finite, finitely branching trees.
 
@@ -369,10 +369,10 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
     ],
     align(horizon)[#sym.arrow.r],
     text-tree-graph[
-    - $wpow(wpow(zero)3 plus wpow(zero)2) plus wpow(zero)2$ #node-attr(rotate: -180deg)
+    - $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$ #node-attr(rotate: -180deg)
       - #zero
       - #zero
-      - #box[$wpow(zero)3 plus wpow(zero)2$]
+      - #box[$wpow(wpow(zero)3) plus wpow(zero)2$]
         - #zero
         - $wpow(zero)3$
           - #zero
@@ -425,14 +425,92 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
 ]
 
 === Goodstein sequences
+In base 10, we represent a number using powers of 10:
+$
+    25739 = 2 dot 10^4 + 5 dot 10^3 + 7 dot 10^2 + 3 dot 10^1 + 9
+$
 
-Base 10:
-$25739 = 2 dot 10^4 + 5 dot 10^3 + 7 dot 10^2 + 3 dot 10^1 + 9$
+In other bases, e.g. base 3, we can do the same:
+$
+    25739 = 3^9 + 2 dot 3^7 + 2 dot 3^4 + 2 dot 3^3 + 2 dot 3 + 2
+$
+We can take a page out of our Iterated Cantor Normal Form and demand that the exponents of 3 must also be in terms of power of 3:
+#let t = redf($3$)
+$
+    25739 = #t^#t^2 + 2 dot #t^(2 dot #t + 1) + 2 dot #t^(#t+1) + 2 dot #t^#t + 2 dot #t + 2
+$
+We call this "hereditary" base-3 representation.
 
-Base 3:
+Now the next term in the *Goodstein sequence* for this number would be equivalent to taking every "3^" and replacing it with a "4^", then subtracting 1 from it.
+#let t = redf($4$)
+$
+    4297067018 = #t^#t^2 + 2 dot #t^(2 dot #t + 1) + 2 dot #t^(#t+1) + 2 dot #t^#t + 2 dot #t + 2 greenf(-1)
+$
+#definition[
+    The *Goodstein sequence* for some number $n$ is the sequence $(n_2, n_3, n_4, ...)$ where
+    the number $n_(i+1)$ is obtained by writing $n_i$ in hereditary base-$i$ notation, changing
+    the $i$s into $(i + 1)$s and subtracting 1.
+]
+#example[
+    Let's start with $n_2 = 10$. We first write $10$ in hereditary base-$2$ notation:
+    #let t = redf($2$)
+    $
+        n_2 = #t^(#t+1) + #t
+    $
+    #let t = redf($3$)
+    Then $n_3$ is:
+    $
+        n_3 = #t^(#t+1) + #t greenf(-1) = #t^(#t+1) + 2 = 83
+    $
+    We can repeat this for $n_4, n_5, ...$:
+    $
+        #let t = redf($4$)
+        n_4 &= #t^(#t+1) + 2 greenf(-1) = #t^(#t+1) + 1 = 1025 \
+        #let t = redf($5$)
+        n_5 &= #t^(#t+1) + 1 greenf(-1) = #t^(#t+1) = 15625 \
+        #let t = redf($6$)
+        n_6 &= #t^(#t+1) greenf(-1) = 279935 \
+        &= 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 5\
+        #let t = redf($7$)
+        n_7 &= 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 5 greenf(-1)\
+        &= 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 4\
+        &= 4215754
+    $
+]
 
+The goodstein sequence seems to grow forever, but this sequence eventually terminates at 0!
 
-[WIP]
+#theorem[
+    The Goodstein sequence for $n$ eventually reaches $0$, for all $n$
+]
+
+#proof[
+    let $alpha(n, b)$ be the ordinal notation resulting from it by replacing every $b$ by $wpow("")$.
+
+    With this, for each $n_i$ in the Goodstein sequence, we can assign an ordinal notation $alpha(n_i, i)$ to it.
+    We now show that $alpha(n_(i+1),i+1) prec alpha(n_i,i)$.
+
+    #let i = redf($i$)
+    Suppose $n_i = a_k #i^k + ... + a_j #i^j + a_0$. Then $alpha(n_i,i)= wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0$.
+
+    If $a_0 > 0$, then
+    #let i = redf($(i+1)$)
+    $
+        n_(i+1) &= a_k #i^k + ... + a_j #i^j + a_0 greenf(-1)\
+        alpha(n_(i+1),i+1) &= wpow(k) dot a_i plus ... plus wpow(j) dot a_j + (a_0 - 1)\
+        &prec wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0 = alpha(n_i, i)
+    $
+    If $a_0 = 0$, then:
+    $
+        n_(i+1) &= a_k #i^k + ... + a_j #i^j greenf(-1)\
+        &= a_k #i^k + ... + (a_j-1) #i^j + #i^j greenf(-1)\
+        &= a_k #i^k + ... + (a_j-1) #i^j + sum_(s=0)^(j-1) i#i^s\
+        alpha(n_(i+1),i+1) &= wpow(k) dot a_k plus ... plus wpow(j) dot (a_j - 1) + sum_(s=0)^(j-1) wpow(s) dot i\
+        &prec wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0 = alpha(n_i, i)
+    $
+    In the last line, we compare the factor on $wpow(j)$ (the largest power of $wpow("")$ in which they differed),
+    and find that $alpha(n_i, i) succ alpha(n_(i+1),i+1)$ no matter the value of $a_0$, and therefore the sequence reaches 0.
+]
 
 == The Primitive Sequence System
 
@@ -534,4 +612,68 @@ Since the lexicographic ordering of _sequences of sequences_ is also lexicograph
 the first sequence in both, then move onto the second if they are equal), for any two _sequences of sequences_ $S_1$ and $S_2$, $S_1 lex S_2$ if and only if
 $f(S_1) lex f(S_2)$.
 
-[WIP formal induction]
+Here are some examples of the PrSS correspondence with ordinals.
+I added a third column for the PrSS "hydra" to show how elements in the sequence relate to nodes of the ordinal notation tree.
+
+#set align(center)
+#table(
+    columns: (auto, auto, auto, auto),
+    align: left + horizon,
+    inset: 0.75em,
+    table.header([*Ordinal*],[*Ordinal Notation*],[*PrSS tree*],[*PrSS*]),
+    $0$, $zero$, [```•```], $()$,
+    $1$, $wpow(zero)$, [```
+          0
+        •─┘```], $(0)$,
+    $2$, $wpow(zero) plus wpow(zero)$, [```
+          0 0
+        •─┴─┘```], $(0,0)$,
+    $3$, $wpow(zero) plus wpow(zero) plus wpow(zero)$, [```
+          0 0 0
+        •─┴─┴─┘```], $(0,0,0)$,
+    $omega$, $wpow(wpow(zero))$, [```
+        1
+      0─┘
+    •─┘```], $(0,1)$,
+    $omega+1$, $wpow(wpow(zero)) plus wpow(zero)$, [```
+        1
+      0─┘ 0
+    •─┴───┘```], $(0,1,0)$,
+    $omega+2$, $wpow(wpow(zero)) plus wpow(zero) plus wpow(zero)$, [```
+        1
+      0─┘ 0 0
+    •─┴───┴─┘```], $(0,1,0,0)$,
+    $omega dot 2$, $wpow(wpow(zero)) plus wpow(wpow(zero))$,[```
+        1   1
+      0─┘ 0─┘
+    •─┴───┘```], $(0,1,0,1)$,
+    $omega dot 2 + 1$, $wpow(wpow(zero)) plus wpow(wpow(zero)) plus wpow(zero)$, [```
+        1   1
+      0─┘ 0─┘ 0
+    •─┴───┴───┘```], $(0,1,0,1,0)$,
+    $omega^2$, $wpow(wpow(zero) plus wpow(zero))$, [```
+        1 1
+      0─┴─┘
+    •─┘```], $(0,1,1)$,
+    $omega^3$, $wpow(wpow(zero) plus wpow(zero) plus wpow(zero))$, [```
+        1 1 1
+      0─┴─┴─┘
+    •─┘```], $(0,1,1,1)$,
+    $omega^omega$, $wpow(wpow(wpow(zero)))$, [```
+        2
+      1─┘
+    0─┘
+  •─┘```], $(0,1,2)$,
+    $omega^(omega^3 + 2) + 2$, $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$, [```
+        2 2 2
+      1─┴─┴─┘ 1 1
+    0─┴───────┴─┘ 0 0
+  •─┴─────────────┴─┘```], $(0,1,2,2,2,1,1,0,0)$,
+    $omega^omega^omega$, $wpow(wpow(wpow(wpow(zero))))$, [```
+        3
+      2─┘
+    1─┘
+  0─┘
+•─┘```], $(0,1,2,3)$,
+)
+#set align(left)

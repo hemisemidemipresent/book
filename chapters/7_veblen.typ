@@ -70,7 +70,7 @@ But does a fixed point exist for every function? The answer is yes, if the funct
 
 #theorem(name: [*_Veblen’s Fixed Point Theorem_*])[
     #definition[
-        A *normal function* is a function $f: "Ord" arrow.r.bar "Ord"$ such that:
+        A *normal function* is a function $f: Ord arrow.r.bar Ord$ such that:
         + $f$ is *strictly increasing*: $f(alpha) < f(beta)$ whenever $alpha <beta$
         + $f$ is *continuous*: if $beta$ is a limit ordinal, then $f(beta) = sup{f(alpha) | alpha < beta}$
     ]
@@ -80,10 +80,11 @@ But does a fixed point exist for every function? The answer is yes, if the funct
 ]
 
 #proof[
-    Let $alpha$ be an arbitrary ordinal, and let $f$ be a normal function. Now let's define $beta$ as:
+    Let $alpha$ be an arbitrary ordinal, and left $f$ be a normal function. Now let's define $beta$ as:
 
     $
-        beta = sup{f^n (alpha) | n in NN}
+        beta &= sup{f^n (alpha) | n in NN}\
+        &= sup{f^0(alpha) = alpha, f(alpha), f(f(alpha)), f^3 (alpha), ...}
     $
     Where $f^n (alpha)$ denotes function iteration. We can now show that $beta$ is a fixed point:
     $
@@ -116,8 +117,11 @@ But does a fixed point exist for every function? The answer is yes, if the funct
 We can define a function to find these fixed points:
 #definition[
     The *derivative* of normal functions $f$, denoted $f'(alpha)$, is a function that enumerates over the fixed points of $f$.
+    $
+       f'(alpha) = sup{f^n (alpha) | n in NN} &<= gamma
+    $
+    I.e., $f'(alpha)$ represents the $(1 + alpha)^"th"$ fixed point of $f$
 
-    I.e., $f'(alpha)$ represents the $1 + alpha^"th"$ fixed point of $f$
 ]
 
 #example[
@@ -126,40 +130,89 @@ We can define a function to find these fixed points:
 
 We can generalize this to define a fixed point of multiple functions:
 
-[WIP]
+#definition[
+    For a family of the function $f_1, f_2, ..., f_k$, the _joint fixed point_ of _all_ $f_1, f_2, ..., f_k$ is defined as the fixed point of
+    $
+        f(alpha) := f_1(f_2(...f_k (alpha)))
+    $
+    So the $(1+alpha)^"th"$ fixed point of $f_1, f_2, ..., f_k$ is:
+    $
+        f'(alpha) &= sup{f^n (alpha) | n in NN}
+    $
+]
 
 == 2-argument Veblen function
+#let o = $circle.filled$
 
 #definition[
   The 2-argument/binary Veblen function *$phi(alpha, beta)$* is defined as such:
-  - $phi(0, beta) := omega^beta$
-  - $phi(alpha, beta)$ for $alpha !=0$ is the $(1+beta)^"th"$ fixed point of the functions $phi(gamma, delta) = delta$ for $gamma<alpha$
+  - $phi(0, gamma) := omega^gamma$
+  - $phi(beta, gamma)$ for $alpha !=0$ is the $(1+gamma)^"th"$ fixed point of the functions $phi(alpha, #o) = #o$ for $alpha<beta$
 ]
+
+
+Since we will be dealing with functions with multiple arguments, it's hard to tell which argument is the one being fixed,
+so I denote the "dummy variable" of the fixed point to be #o.
+// so instead of writing "the fixed point
+// of the function $f(a,b)=b$, I will use a circle and say "the fixed point of the function $f(a,#o)$"
 
 #example[
   Show that  $e0 = phi(1,0)$, and $zeta_2 = phi(2,2)$
 
-  $phi(1,0)$ is the $(1+0)^"th"$ fixed point of the function $phi(gamma, delta )= delta$ for $gamma < 1$ (i.e. $gamma = 0$)
+  $phi(1,0)$ is the $(1+0)^"th"$ fixed point of the function $phi(gamma, #o )= #o$ for $gamma < 1$ (i.e. $gamma = 0$)
 
-  $phi(1,0)$ is the $1^"st"$ fixed point of the function $phi(0, delta) = omega^delta = delta$, and the first fixed point of $omega^delta = delta$ is $e0$.
+  $phi(1,0)$ is the $1^"st"$ fixed point of the function $phi(0, #o) = omega^#o = #o$, and the first fixed point of $omega^#o = #o$ is $e0$.
 
-  $phi(2,2)$ is the $(1+2)^"th"$ fixed point of the function $phi(gamma, delta) = delta$ for $gamma < 2$
+  $phi(2,2)$ is the $(1+2)^"th"$ fixed point of the function $phi(gamma, #o) = #o$ for $gamma < 2$
 
-  $phi(2,2)$ is the $3^"rd"$ fixed point of the functions $phi(0, delta) = omega^delta = delta$ and $phi(1, delta) = epsilon_delta = delta$, and $zeta_2$ is the third ordinal that is a fixed point for _both_ functions. ($z0, zeta_1$ are the first and second).
+  $phi(2,2)$ is the $3^"rd"$ fixed point of the functions $phi(0, #o) = omega^#o = #o$ and $phi(1, #o) = epsilon_#o = #o$, and $zeta_2$ is the third ordinal that is a fixed point for _both_ functions. ($z0, zeta_1$ are the first and second).
 ]
 
 Now that we have defined the 2-argument Veblen function, what is the largest ordinal we can make? After $eta_0$ we have $phi(4,0), phi(10,0), phi(10000, 0)$.
-What about $phi(omega,0)$? This is where using the *joint derivative*
+What about $phi(omega,0)$? We can think of it as the first fixed point for _all_ $phi(n,#o) = #o$ for every $n in NN$. And we can continue on and on for larger ordinals.
 
+But before we get into even larger ordinals, let's go through some basic properties of the Veblen function:
+#proposition[
+    #let alpha = redf($alpha$)
+    #let beta = bluef($beta$)
+    + If $alpha < beta$, then $phi(alpha, phi(beta, gamma)) = phi(beta, gamma)$
+    + If $alpha < beta$, then $phi(gamma, alpha) < phi(gamma, beta)$
+]
+Both properties are just consequences of the definition provided, so convince yourself that they are true.
 
-then $phi(omega, 0) = phi(phi(1,0),0)$, and we can keep nesting $phi(phi(phi(1,0),0),0), phi(phi(phi(phi(1,0),0),0),0)$, until we reach the (first) fixed point of the Veblen function: $G0 = phi(G0, 0)$. $G0$ is known as the *Feferman–Schütte ordinal*, which can also be expressed in $phi(phi(...phi(1,0)...,0),0)$.
+#example[
+    Which is bigger? $phi(2, phi(1,0))$ or $phi(3,0)$?
+
+    Of course we can convert them into ordinals that we know ($zeta_omega$ and $eta_0$) but we don't have notation that keeps up.
+
+    $phi(3,0)$ can be written as $phi(1,phi(3,0))$, which can then be written as $phi(2,phi(1,phi(3,0)))$ (Property 1)
+
+    Then we have:
+    $
+        0 &< phi(3,0)\
+        phi(1,0) &< phi(1,phi(3,0))\
+        phi(2,phi(1,0)) &< phi(2,phi(1,phi(3,0))) = phi(3,0)\
+    $
+    Therefore $phi(3,0)$ is bigger.
+]
+
+Continuing where we left off, we have $phi(omega, 0) = phi(phi(1,0),0)$, and we can keep nesting $phi(phi(phi(1,0),0),0)$, $phi(phi(phi(phi(1,0),0),0),0)$, until we reach the (first) fixed point of the Veblen function: $G0 = phi(G0, 0)$.
+$G0$ is known as the *Feferman–Schütte ordinal*, which can also be expressed as:
+
+$
+    G0 = sup{phi(1,0), phi(phi(1,0),0), phi(phi(phi(1,0),0),0), ...}
+$
+
+== Veblen Normal Form
+
+Much like how all ordinals $<e0$ can be expressed in Cantor Normal Form, all ordinals $<G0$ can be expressed in:
 
 #theorem(name: [*_Veblen Normal Form_*])[
   Every ordinal $alpha < G0$, can be uniquely written in the following form:
   $
   phi(beta_1, gamma_1) + phi(beta_2, gamma_2) + ... + phi(beta_k, gamma_k)
   $
-  where $phi(beta_1, gamma_1) >= phi(beta_2, gamma_2) >= ... +. phi(beta_k, gamma_k)$ and $gamma_i < phi(beta_i, gamma_i)$ for $i in {1,...,n}$
+  where $phi(beta_1, gamma_1) >= phi(beta_2, gamma_2) >= ... >= phi(beta_k, gamma_k)$ and $gamma_i < phi(beta_i, gamma_i)$ for $i in {1,...,k}$
 ]
 
 #definition[
@@ -178,4 +231,239 @@ then $phi(omega, 0) = phi(phi(1,0),0)$, and we can keep nesting $phi(phi(phi(1,0
   In rule 3 and 4, $phi^n ()$ refers to function iteration, so $phi^n (beta, gamma) = phi(beta, phi^(n-1) (beta, gamma))$
 ]
 
-=== Veblen Normal Form
+== Multivariate Veblen function
+
+=== 3-argument veblen function
+
+So how do we go beyond $G0$? $G0$ is the $1^"st"$ fixed point of $phi(#o,0) = #o$. $Gamma_1$ is therefore the $2^"nd"$ fixed point, and $Gamma_2$ is the $3^"rd"$, and so on.
+This "Gamma function" can be thought of as $Gamma_beta = (1+beta)^"th"$ fixed point of $phi(#o, 0) = #o$. So we can make $Gamma_omega$, $Gamma_e0$, or even $Gamma_G0$.
+We have seen this pattern before -- eventually we reach the _Gamma fixed point_ of $Gamma_#o = #o$, which can be though of as an infinite nesting of Gammas: $Gamma_Gamma_Gamma_dots.down$.
+
+We can then iterate over the fixed points of $Gamma_#o = #o$, but we can systematize this with the _3-argument veblen function_. We let $G0 = phi(1,0,0)$,
+and then $Gamma_1 = phi(1,0,1)$. In general $Gamma_beta = phi(1,0,beta)$, and first Gamma fixed point $Gamma_Gamma_Gamma_dots.down = phi(1,1,0)$, or the first fixed point of $phi(1,0,#o) = #o$.
+
+We can create a definition of the 3-argument veblen function as such:
+
+#definition[
+    - $phi(0,beta,gamma) = phi(beta,gamma)$, converting from the 3-argument veblen to the 2-argument veblen
+    - $phi(alpha,0,gamma)$ is the $(1+gamma)^"th"$ fixed point of $phi(bluef(alpha'),#o,0)=#o$ for all $bluef(alpha') < alpha$
+    - $phi(alpha,beta,gamma), beta!=0$ is the $(1+gamma)^"th"$ fixed point of $phi(alpha, bluef(beta'), #o)$ for all $bluef(beta') < beta$
+]
+
+#example[
+    $phi(2,0,0)$ is the $1^"st"$ fixed point of $phi(bluef(alpha'),#o,0)=#o$ for all $bluef(alpha') < alpha$ = 2, so $bluef(alpha') = {0,1}$
+    - $phi(0,#o,0)=#o$
+    - $phi(1,#o,0)=#o$
+]
+
+=== Extension to finitely many argument
+
+Now what about a 4-argument veblen function? or an $n$-argument veblen function? We can extend it to any number of arguments as such:
+
+#definition[
+    Let $S$ be an arbitrary string of ordinals, and $O$ be a string of $0$s.
+    - $phi(gamma) = gamma$
+    - $phi(O,S)=phi(S)$, i.e., you can remove zeroes from the left
+    - $phi(S,beta,O,gamma)$ is the $(1+gamma)^"th"$ fixed point of $phi(S,beta,#o,O)=#o$ for all $alpha<beta$
+]
+
+Wit this, we can define ordinals like $phi(1,0,0,0)$, $phi(1,0,0,0,0)$, and so on. Taking this to its limit yields the *Small Veblen Ordinal*:
+
+$
+    SVO = sup{phi(1), phi(1,0), phi(1,0,0), phi(1,0,0,0), phi(1,0,0,0,0), ...}
+$
+
+We also have an "Extended Veblen Normal Form":
+
+#theorem[
+    Every ordinal $alpha < SVO$, can be uniquely written in the following form:
+    $
+        phi(s_1) + phi(s_2) + ... + phi(s_k)
+    $
+    where:
+    - $phi(s_1) >= phi(s_2) >= ... >= phi(s_k)$
+    - $s_i$ is an arbitrary string of ordinals $alpha_(i,1), alpha_(i,2), ..., alpha_(i,k_i)$ where $i in {1,...,k}$
+    - $alpha_(i,1) > 0$ and $alpha_(i,j) < phi(s_i)$ for all $i in {1,...,k}$ and $j in {1, ..., k_i}$
+]
+
+However, I'm going to take a page out of the "Veblen's multivariate function" thread from the Googology discord's education forum, and skip straight to
+the veblen function with _transfinitely_ many arguments, as that generalizes to finitely many arguments too.
+
+== Transfinitary Veblen function
+
+=== Finitely Supported functions
+#let fsarrow = $scripts(arrow.bar.r)_0$ // arrow for finitely supported functions
+#definition[
+    A function $f:X arrow.bar.r Y$ if a *finitely supported* if there are only _finitely many_ values of $x in X$ such that $f(x) != 0$ (assuming $0 in Y$).
+
+    We call the set of values $x in X$ such that $f(x)!=0$ the _support_ of the function.\
+    ${x|x in X "and" f(x)!=0}$)
+
+    If  $f:X arrow.bar.r Y$ is finitely supported, we write it as $f:X fsarrow Y$.
+]
+
+#example[
+    $
+        f(beta) = cases(
+            2 "if" beta = 0,
+            3 "if" beta = 1,
+            0 "else"
+        )
+    $
+    is an example of a finitely supported function from $Ord fsarrow Ord$
+]
+
+We use finitely supported functions for this as our veblen function will now _take in_ a finitely supported function $f: Ord fsarrow Ord$,
+so our veblen function can be thought of as $phi: (Ord fsarrow Ord) arrow.r.bar Ord$.
+
+#example[
+    In our previous example, we defined an $f$ where $f(0)=2, f(1)=3, f("anything else") = 0$. Then
+    $
+        phi(f) = phi(f(1),f(0)) = phi(3,2)
+    $and in general, the arguments are arranged "right to left":
+    $
+        phi(f) = phi(...,f(2),f(1), f(0))
+    $
+]
+
+The easiest way to create a new finitely supported function from another is to "update" one of their values:
+
+#definition[
+    For a finitely supported function $f$, $f[alpha@beta]$ is defined as such:
+    $
+        f[alpha@beta](xi) := cases(
+            f(xi) &"if" xi!=beta,
+            alpha &"if" xi=beta
+        )
+    $
+
+    You can think of $f[alpha@beta]$ as "$f$ with $alpha$ at $beta$".
+
+    As shorthands:
+    + If $f(xi) = 0$ for all $xi$, i.e., $f$ is the "zero function", then $f[alpha@beta]$ can be written as just $[alpha@beta]$
+    + $f[alpha_1@beta_1][alpha_2@beta_2]...[alpha_n@beta_n]$ can be written as $f[alpha_1@beta_1,alpha_2@beta_2,...,alpha_n@beta_n]$
+]
+
+#proposition[
+    The set of all finitely supported functions $Ord fsarrow Ord$ is well-ordered as such:
+
+    For two finitely supported functions $f,g : Ord fsarrow Ord$, $f < g$ if for some ordinal $alpha$:
+    + $f(beta) = g(beta)$ for all $beta < alpha$, and
+    + $f(alpha) < g(alpha)$
+]
+This should be fairly easy to show, it is quite similar to how $NN^2$ is well-ordered.
+
+#definition[
+    The *degree* $deg(f)$ of a finitely supported function $f: X fsarrow Y$ is the smallest $d in X$ such that $f(d) != 0 $
+    (i.e. the smallest element of $X$ that is in the support of $f$)
+]
+// prove that all these (veblen) functions are normal
+
+=== Definition
+#definition[
+    The multivariate Veblen function is the function $phi: (Ord fsarrow Ord) arrow.r.bar Ord$ defined as follows:
+
+    Let $f:Ord fsarrow Ord$, and let $g = f[0@0]$. If $g$ is the zero function, we set $phi(f) = omega^f(0)$.
+
+    Otherwise, let $d = deg(g)$. We define $phi(f)$ as the $(1+f(0))^"th"$ common fixed point of the functions
+    $phi(g[alpha@d, #o@d']) = #o$ for all $alpha < f(d)$ and $d' < d$.
+]
+
+#example[
+    $phi(1,1,0) = phi(f)$ where $f$ is:
+    $
+        f(xi) = cases(
+            0 "if" xi = 0,
+            1 "if" xi = 1,
+            1 "if" xi = 2,
+            0 "else",
+        )
+    $
+    $g = f[0@0]$ basically sets $g(0) = 0$, which doesnt change anything since $f(0)$ is already $0$. So $g$ is not the zero function.
+
+    $d = deg(f) = 1$. So $phi(f)$ is the $(1+f(0))^"th" = 1^"st"$ common fixed point of: $phi(g[alpha@d, #o@d']) = #o$ for all $alpha < f(d) = 1$ and $d' < d = 1$.
+    So we are basically stuck with $alpha = 0$ and $d' = 0$, so $phi(1,1,0)$ is the first fixed point of $phi(f[0@1, #o@0])=phi(1,0,#o)=#o$
+]
+
+#example[
+    $phi([1@omega]) = phi(f)$ where $f$ is:
+    $
+        f(xi) = cases(
+            1 "if" xi = omega,
+            0 "else"
+        )
+    $
+    $g = f[0@0] = f$ which doesn't change anything since $f(0) = 0$. $deg(f) = omega$, so from the definition, $phi(f)$ is the $1^"st"$ common fixed point of all functions
+    $phi(g[alpha@d, #o@d']) = #o$ for all $alpha < f(d) = 1$ and $d'<d=omega$. Plugging this in yields $phi(g[0@omega,#o@d']) = #o$ for all $d' < omega$, or put another way
+    it is the common fixed points of all $phi(1@n)$ for $n in NN$.
+
+    This is equivalent to the _Small Veblen Ordinal_.
+]
+
+But how do we even know that these fixed points exist? We need to first show that the multivariate veblen are all normal functions.
+#proposition[
+    If $f : Ord fsarrow Ord$, and $deg(f) >= d$, then $g(alpha) = phi(f[alpha@d])$ is a non-negative normal function.
+
+]
+
+#proof[
+    [WIP]
+]
+
+#definition[
+    The fundamental sequences for the multivariate veblen function is:
+    [WIP]
+]
+
+=== The Large Veblen Ordinal
+
+Now that we have extended the veblen function yet again, what is the new limit? We can construct $SVO = phi([1@omega])$, but why stop at $omega$?
+We can have $phi([1@G0])$, $phi([1@SVO]) = phi([1@phi([1@omega])])$, or even $phi([1@phi([1@phi([1@omega])])])$.
+I think we have seen this pattern enough times by now -- we can make a fixed point $phi([1@#o])=#o$,
+and the (first) ordinal that satisfies is known as  the *Large Veblen Ordinal* $LVO$. If we let $f(alpha) = phi([1@alpha])$, it can also be written as:
+$
+    LVO &= sup{f^n (0) | n in NN}\
+    &= sup{f(0), f(f(0)), f(f(f(0))), ...}\
+    &= sup{phi([1@0]) = omega, phi([1@phi[1@0]])=SVO,phi([1@phi[1@phi([1@0])]]),...}
+$
+
+We do have to first show that $phi([1@alpha])$ is normal before we know that such a fixed point exists:
+#proposition[
+    The function $f(alpha) = phi([1@alpha])$ is normal.
+]
+#proof[
+    We need to show that it is:
+    1. strictly increasing
+
+        $phi([1@y]) = phi([phi([1@y])@x]) > phi([1@x])$ (why? [WIP])
+    2. continuous
+        [WIP]
+]
+=== Schütte's Klammersymbolen
+
+This is another way to write the veblen function with transfinitely many arguments. If we have a finitely covered function $f$ like so:
+
+$
+    f(xi) = cases(
+    alpha_0 &"if" xi=0,
+    alpha_1 &"if" xi=1,
+    &dots.v,
+    alpha_beta &"if" xi=beta,
+    0 &"else"
+)
+$
+We can "decompose" it to $[alpha_0@0, alpha_1@1, ..., alpha_beta@beta]$. In Schütte's Klammersymbolen, we write this as:
+$
+    mat(
+        alpha_beta, ..., alpha_1, alpha_0;
+        beta, ..., 1, 0;
+    )
+$
+So for example, the Small Veblen Ordinal would be $phi mat(1;omega)$, and the Large Veblen Ordinal would be represented as the following fixed point:
+$
+    LVO = phi mat(1;LVO)
+$
+
+== Dimensional Veblen
+
+Some fellas made another extension to the Veblen function. I won't cover it here but you can check it out here: https://arxiv.org/pdf/2310.12832

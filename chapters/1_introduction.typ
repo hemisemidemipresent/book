@@ -7,6 +7,7 @@ If you wish to contribute new sections, edit, or have suggestions please let me 
 
 References:
 - Googology wiki(s)
+- The googology discord
 - An Introduction to Proof Theory: Normalization, Cut-elimination, and Consistency Proofs by Paolo Mancosu, Richard Zach, and Sergio Galvan
 - Zhongshu Wu PrSS doc on gdrive
 

@@ -80,7 +80,7 @@
 // fill shorthands
 #let redf(content) = text(content, fill: red)
 #let greenf(content) = text(content, fill: green)
-#let blue(content) = text(content, fill: blue)
+#let bluef(content) = text(content, fill: blue)
 #let blackf(content) = text(content, fill: black)
 
 // predefined "macros"
@@ -93,15 +93,20 @@
 #let lex = $prec_"lex"$ // lexicographic ordering
 #let lexgt = $succ_"lex"$ // gt version of lex
 #let lexgteq = $succ.eq_"lex"$ // gt version of lex
-#let slex = $prec_"slex"$
+// #let slex = $prec_"slex"$
 
 #let sup = $limits(sup)^+$ // override supremum with strict supremum to avoid ambiguity
-
 
 // Ordinals
 #let e0 = $epsilon_0$
 #let z0 = $zeta_0$
 #let G0 = $Gamma_0$
+#let SVO = $"SVO"$
+#let LVO = $"LVO"$
+#let BHO = $psi(epsilon_(Omega+1))$
+#let BO = $psi(Omega_omega)$
+#let Ord = $"Ord"$ // proper class of all ordinals
+#let Lim = $"Lim"$ // proper class of all limit ordinals
 // Ordinal Notation
 #let zero = redf($bold(0)$)
 #let plus = redf($+$)

@@ -70,7 +70,7 @@
 #include "chapters/5_formal_ordinals.typ"
 #include "chapters/6_ordinal_notations.typ"
 #include "chapters/7_veblen.typ"
-// #include "chapters/8_buchholz_ocf.typ"
+#include "chapters/8_buchholz_ocf.typ"
 // other BO-notations? (e.g. PSS, HPrSS, NAN/Patcail's Hydra)
 
 // not sure what order:
