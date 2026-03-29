@@ -120,12 +120,34 @@ Now that we have a standardized way to uniquely write each ordinal, we can final
 ]
 
 #example[
-  Evaluate $(omega^omega^2 + omega^omega)[3]$
+  If we want to find out what $f_(omega^omega^2 + omega^omega)(3)$ is, we first evaluate $(omega^omega^2 + omega^omega)[3]$
   $
   (omega^omega^2 + omega^omega)[3] &= omega^omega^2 + omega^omega [3]\
   &= omega^omega^2 + omega^omega[3]\
   &= omega^omega^2 + omega^3
   $
+
+  So $f_(omega^omega^2 + omega^omega)(3) = f_(omega^omega^2 + omega^3)(3)$, so we still need to evaluate $(omega^omega^2 + omega^3)[3]$:
+
+  $
+      (omega^omega^2 + omega^3)[3] &= omega^omega^2 + omega^2 dot omega[3]\
+      &= omega^omega^2 + omega^2 dot 3\
+      omega^omega^2 + (omega^2 dot 3) [3] &= omega^omega^2 + omega^2 dot 2 + omega^2 [3]\
+      &= omega^omega^2 + omega^2 dot 2 + omega dot omega [3]\
+      &= omega^omega^2 + omega^2 dot 2 + omega dot 3\
+      omega^omega^2 + omega^2 dot 2 + (omega dot 3)[3] &= omega^omega^2 + omega^2 dot 2 + omega dot 2 + omega[3]\
+      &= omega^omega^2 + omega^2 dot 2 + omega dot 2 + 3
+  $
+
+  So $f_(omega^omega^2 + omega^omega)(3) = f_(omega^omega^2 + omega^2 dot 2 + omega dot 2 + 3)(3)$. Then
+  #let ordinal = $omega^omega^2 + omega^2 dot 2 + omega dot 2$
+  $
+      &f_(ordinal + 3)(3) = f_(ordinal redf(+ 2))^redf(3)(3)\
+      =& f_(ordinal + 2)(f_(ordinal + 2)(f_(ordinal + 2)(3)))\
+      =& f_(ordinal + 2)(f_(ordinal + 2)(f_(ordinal redf(+ 1))^redf(3)(3)))\
+      =& f_(ordinal + 2)(f_(ordinal redf(+1))^( bluef(f_(ordinal + 1)^3(3)) )( bluef(f_(ordinal + 1)^3(3)) ))\
+  $
+  And we will stop there. It's quite clear that this grows wayyy out of control that even expressing it in terms of $f_ordinal$ is basically impossible
 ]
 
 == Other growing hierarchies
@@ -148,7 +170,7 @@ Aside from the fast-growing hierarchy, we have other slower hierarchies, though 
 
 #definition[
   *Hardy hierarchy* (HH):
-  + $H_0(n):=0$
+  + $H_0(n):=n$
   + $H_(alpha+1)(n):= H_alpha (n+1)$
   + $H_alpha (n) := H_alpha[n]$ when $alpha$ is a limit ordinal
 ]

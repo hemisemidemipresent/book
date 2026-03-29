@@ -139,8 +139,8 @@ Ordinal notations themselves are *not transfinite sets* (unlike actual ordinals)
 == Ordering of Trees and Goodstein sequences
 
 We now have two order-isomorphic well-ordered sets of order type $e0$:
-+ the ordinals $<e0$ ordered by $<$, or equivalently $in$
-+ ordinal notations $<e0$ ordered by $prec$ (This Ordinal notation is known as Iterated Cantor Normal Form)
++ The ordinals $<e0$ ordered by $<$, or equivalently $in$
++ Ordinal notations $<e0$ ordered by $prec$ (This ordinal notation is known as Iterated Cantor Normal Form)
 
 Another example of a well-ordered set of order type $e0$ is the set of all finite, finitely branching trees.
 
@@ -512,15 +512,15 @@ The goodstein sequence seems to grow forever, but this sequence eventually termi
     and find that $alpha(n_i, i) succ alpha(n_(i+1),i+1)$ no matter the value of $a_0$, and therefore the sequence reaches 0.
 ]
 
-== The Primitive Sequence System
+== The Primitive Sequence System (PrSS)
 
 #definition(name: [*_Primitive Sequence System (PrSS)_*])[
     Let the set $T$ be the set of sequences $s = (a_1, a_2, ..., a_l)$ such that:
 
     + $s$ is either empty $()$ or starts with $0$: $(0,...)$.
-    + For any $a_i$ in $s$, let $a_j$ be the _latest element_ before $a_i$ such that $a_j<a_i$. $a_j$ must be equal to $a_i - 1$.
+    + For any $a_i$ in $s$, let it's *parent* $a_j$ be the _latest element_ before $a_i$ such that $a_j<a_i$. $a_j$ must be equal to $a_i - 1$.
 
-        Put another way, let $p(i)$ be the largest possible $p(i)<i$ such that $a_p(i)<a_i$. For all $a_i$, $a_p(i) = a_i - 1$.
+        Put another way, let the _parent index_ $p(i) in NN$ be the largest possible $p(i)<i$ such that $a_p(i)<a_i$. For all $a_i$ in the sequence, $a_p(i) = a_i - 1$.
 
         #example[
             $(0,1,3)$ is not a valid sequence as the latest element before $3$ that is less than $3$ is $1$, which is not $3-1 = 2$.
@@ -535,41 +535,58 @@ The goodstein sequence seems to grow forever, but this sequence eventually termi
 
     + The ordering $<$ is simply the lexicographic ordering of these sequences.
 ]
-We can use this notation to define a fast-growing function:
+We can use this notation to define either _a fast-growing function_, or a _system of fundamental sequences_:
 
 #definition[
-    For a sequence $s = (a_1, a_2, ..., a_l) in T$, we define $s[n]$ as a function $NN arrow.r.bar NN$.
+    For a sequence $s = (a_1, a_2, ..., a_l) in T$, we define $s[n]$ as the $n^"th"$  member in its _fundamental sequence_.
     - $()[n] = n$. Otherwise, for nonempty $s$:
     - The *good root* $g$ and the *bad root* $b$ are defined as such:
         - $g = (a_1, ..., a_(p(l)-1))$
         - $b = (a_p(l), ..., a_(l-1))$
         - if $p(l)$ does not exist (i.e. there is no a_i < a_l), then: $g=(a_1, ..., a_(l-1))$ and $b$ is empty
-    - $s[n] = (g, b, b, ..., b)[f(n)]$ with $f(n)$ copies of $b$. $f(n)$ here represents any increasing function.
-    $f(n) = n^2$ when this notation was first created, but $f(n) = n+1$ can also be used.
+    - $s[n] = (g, b, b, ..., b)$ with $n$ copies of $b$, though this can be replaced with any increasing function $f(n)$. The original definition used $f(n) = n^2$.
+
+    As for the _fast-growing function_ also confusingly labelled $s[n]$:
+    - We split the sequence into good root $g$ and bad root $b$ again.
+    - $s[n] = (g, b, b, ..., b)[f(n)]$ with $f(n)$ copies of $b$. The original definition used $f(n) = n^2$, but $f(n) = n+1$ can also be used.
+    The final result is the value in the $[]$ when the sequence is eventually empty.
 ]
 
 #example[
-    Evaluate $(0,1,1)[1]$ with $f(n) = n+1$
+    Expand the following:
+    + $(0,0)[3]$
+    + $(0,1)[3]$
+    + $(0,1,2,3,2)[3]$
+    + $(0,1,2,3,4,3,4,2,3)[3]$
+    Seriously, try it yourself. I'll provide the answers in case you get stuck:
 
+    + $0$ has no parent, so good root is $greenf(0)$ and bad root is empty. We get $(greenf(0))$. Note that $n$ doesn't matter when the last element is $0$.
+    + The parent of $1$ is $0$, so we have an empty good root and a bad root of $redf(0)$. We replicate the bad root $n=3$ times, so we get $(redf(0),redf(0),redf(0))$
+    + The parent of $2$ is $1$, so we have a good root of $greenf(0)$ and a bad root of $redf(1\,2\,3)$, so we get $(greenf(0),redf(1\,2\,3),redf(1\,2\,3),redf(1\,2\,3))$
+    + $(0,1,2,3,4,2,3,2,2,2)$
+]
+
+#example[
+    Evaluate $(0,1,1)[1]$ as a fast-growing function with $f(n) = n+1$
 
     $
         &(0,1,1)[1]\
-        &#h(1em) g="empty", b=(0,1), f(n) = 2\
+        // &#h(1em) g="empty", b=(0,1), f(n) = 2\
         &=(0,1,0,1)[2]\
-        &#h(1em) g=(0,1), b=(0), f(n) = 3\
+        // &#h(1em) g=(0,1), b=(0), f(n) = 3\
         &=(0,1,0,0,0)[3]\
-        &#h(1em) g=(0,1,0,0), b=(), f(n)=4\
-        &#h(1em) "(there's no index" i "where" a_i < 0" so" p(l) "doesn't exist)"\
+        // &#h(1em) g=(0,1,0,0), b=(), f(n)=4\
+        // &#h(1em) "(there's no index" i "where" a_i < 0" so" p(l) "doesn't exist)"\
         &= (0,1,0,0)[4]\
-        &#h(1em) g=(0,1,0), b=(), f(n)=5 "(same logic)"\
+        // &#h(1em) g=(0,1,0), b=(), f(n)=5 "(same logic)"\
         &= (0,1,0)[5]\
-        &#h(1em) g=(0,1), b=(), f(n)=6 "(same logic)"\
+        // &#h(1em) g=(0,1), b=(), f(n)=6 "(same logic)"\
         &= (0,1)[6]\
     $
-    At this point we see a new pattern: $(a_1, ..., a_(l-1), 0)[n] = (a_1, ..., a_(l-1))[f(n)]$, since there's no $a_i < 0$.
+    At this point we see a new pattern: $(a_1, ..., a_(l-1), 0)[n] = (a_1, ..., a_(l-1))[f(n)]$, since there's no parent for $0$ as there are no $a_i < 0$.
     $
         &(0,1)[6]\
-        &#h(1em) g="empty", b=(0), f(n)=7\
+        // &#h(1em) g="empty", b=(0), f(n)=7\
         &= (0,0,0,0,0,0,0)[7]\
         &= (0,0,0,0,0,0)[8]\
         &= (0,0,0,0,0)[9]\
@@ -581,8 +598,10 @@ We can use this notation to define a fast-growing function:
         &= 14\
     $
     Now imagine if we used a bigger value of $n$, making many more copies of the bad root. Or image if we used $f(n) = n^2$ instead of $n+1$.
-    $s[n]$ is a very powerful function. But we know it's maximum possible growth rate: $f_e0 (n)$.
+    $s[n]$ is a very powerful function. But we can constrain it's growth rate in the Hardy hierarchy as we'll show later.
 ]
+
+=== Order isomorphism to $e0$
 
 We now show that PrSS is order isomorphic to #e0.
 
@@ -599,17 +618,20 @@ $
 
 In PrSS we can make a new notation of new height $k+1$ from sequences of height $<=k$ as such:
 
-Given a non-increasing _sequence of sequences_ of height $<=k$, e.g. $(0,1) lexgteq (0,0,0) lexgteq (0,0) lexgteq (0,0)$, we add 1 to each term in the sequence and join them up with $0$s:
+Given a non-increasing _sequence of PrSS sequences_ of height $<=k$, e.g.
+$
+    (0,1) lexgteq (0,0,0) lexgteq (0,0) lexgteq (0,0)
+$, we add 1 to each term in the sequence and join them up with $0$s:
 
 $
     (0,1) lexgteq (0,0,0) lexgteq (0,0) lexgteq (0,0) -> (1,2) lexgteq (1,1,1) lexgteq (1,1) lexgteq (1,1)\
     redf((0, greenf((1,2)), 0, greenf((1,1,1)), 0, greenf((1,1)), 0, greenf((1,1)) ))\
     redf((0, #greenf[$1,2$], 0, #greenf[$1,1,1$], 0, #greenf[$1,1$], 0, #greenf[$1,1$] ))
 $
-Let's call this function $f$, which acts on _sequences of sequences_ and returns the concatenated sequence.
+Let's call this function $f$, which acts on _sequences of PrSS_ and returns the concatenated sequence.
 
-Since the lexicographic ordering of _sequences of sequences_ is also lexicographic (i.e. to compare 2 _sequences of sequences_, we first compare
-the first sequence in both, then move onto the second if they are equal), for any two _sequences of sequences_ $S_1$ and $S_2$, $S_1 lex S_2$ if and only if
+Since the lexicographic ordering of _sequences of PrSS_ is also lexicographic (i.e. to compare 2 _sequences of PrSS_, we first compare
+the first sequence in both, then move onto the second if they are equal), for any two _sequences of PrSS_ $S_1$ and $S_2$, $S_1 lex S_2$ if and only if
 $f(S_1) lex f(S_2)$.
 
 Here are some examples of the PrSS correspondence with ordinals.
@@ -625,51 +647,51 @@ I added a third column for the PrSS "hydra" to show how elements in the sequence
     $1$, $wpow(zero)$, [```
           0
         •─┘```], $(0)$,
-    $2$, $wpow(zero) plus wpow(zero)$, [```
+    $2$, $wpow(zero) plus wpow(zero)$, box[```
           0 0
         •─┴─┘```], $(0,0)$,
-    $3$, $wpow(zero) plus wpow(zero) plus wpow(zero)$, [```
+    $3$, $wpow(zero) plus wpow(zero) plus wpow(zero)$, box[```
           0 0 0
         •─┴─┴─┘```], $(0,0,0)$,
-    $omega$, $wpow(wpow(zero))$, [```
+    $omega$, $wpow(wpow(zero))$, box[```
         1
       0─┘
     •─┘```], $(0,1)$,
-    $omega+1$, $wpow(wpow(zero)) plus wpow(zero)$, [```
+    $omega+1$, $wpow(wpow(zero)) plus wpow(zero)$, box[```
         1
       0─┘ 0
     •─┴───┘```], $(0,1,0)$,
-    $omega+2$, $wpow(wpow(zero)) plus wpow(zero) plus wpow(zero)$, [```
+    $omega+2$, $wpow(wpow(zero)) plus wpow(zero) plus wpow(zero)$, box[```
         1
       0─┘ 0 0
     •─┴───┴─┘```], $(0,1,0,0)$,
-    $omega dot 2$, $wpow(wpow(zero)) plus wpow(wpow(zero))$,[```
+    $omega dot 2$, $wpow(wpow(zero)) plus wpow(wpow(zero))$, box[```
         1   1
       0─┘ 0─┘
     •─┴───┘```], $(0,1,0,1)$,
-    $omega dot 2 + 1$, $wpow(wpow(zero)) plus wpow(wpow(zero)) plus wpow(zero)$, [```
+    $omega dot 2 + 1$, $wpow(wpow(zero)) plus wpow(wpow(zero)) plus wpow(zero)$, box[```
         1   1
       0─┘ 0─┘ 0
     •─┴───┴───┘```], $(0,1,0,1,0)$,
-    $omega^2$, $wpow(wpow(zero) plus wpow(zero))$, [```
+    $omega^2$, $wpow(wpow(zero) plus wpow(zero))$, box[```
         1 1
       0─┴─┘
     •─┘```], $(0,1,1)$,
-    $omega^3$, $wpow(wpow(zero) plus wpow(zero) plus wpow(zero))$, [```
+    $omega^3$, $wpow(wpow(zero) plus wpow(zero) plus wpow(zero))$, box[```
         1 1 1
       0─┴─┴─┘
     •─┘```], $(0,1,1,1)$,
-    $omega^omega$, $wpow(wpow(wpow(zero)))$, [```
+    $omega^omega$, $wpow(wpow(wpow(zero)))$, box[```
         2
       1─┘
     0─┘
   •─┘```], $(0,1,2)$,
-    $omega^(omega^3 + 2) + 2$, $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$, [```
+    $omega^(omega^3 + 2) + 2$, $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$, box[```
         2 2 2
       1─┴─┴─┘ 1 1
     0─┴───────┴─┘ 0 0
   •─┴─────────────┴─┘```], $(0,1,2,2,2,1,1,0,0)$,
-    $omega^omega^omega$, $wpow(wpow(wpow(wpow(zero))))$, [```
+    $omega^omega^omega$, $wpow(wpow(wpow(wpow(zero))))$, box[```
         3
       2─┘
     1─┘
@@ -677,3 +699,59 @@ I added a third column for the PrSS "hydra" to show how elements in the sequence
 •─┘```], $(0,1,2,3)$,
 )
 #set align(left)
+
+We can see how this "hydra" behaves quite similarly to the Kirby-Paris Hydra we saw earlier:
+
+$(greenf(0\,1),redf(2\,3\,3),bluef(3))[3] = (greenf(0\,1),redf(2\,3\,3),redf(2\,3\,3),redf(2\,3\,3))$
+
+#align(center)[
+    #set text(font: "Dejavu Sans Mono")
+    #stack(
+        dir: ltr,
+        spacing: 3em,
+        box[
+            #set align(left)
+            ~~~~~~~~#redf("3 3") #bluef("3")\
+            ~~~~~~#redf("2─┴─┴")#bluef("─┘")\
+            ~~~~#greenf("1─┘")\
+            ~~#greenf("0─┘")\
+            #greenf("•─┘")\
+        ],
+        box[
+            #set align(left)
+            ~~~~~~~~#redf("3 3   3 3   3 3")\
+            ~~~~~~#redf("2─┴─┘ 2─┴─┘ 2─┴─┘")\
+            ~~~~#greenf("1─┴─────┴─────┘")\
+            ~~#greenf("0─┘")\
+            #greenf("•─┘")\
+        ]
+    )
+]
+
+=== Growth rate of $s[n]$
+
+Since we have assigned a mapping from each PrSS sequence to an ordinal, let's compare PrSS expansion rules with the Hardy Hierarchy,
+using the Wainer Hierarchy for fundamental sequences.
+We make just one modification to $H$, that for a limit ordinal $alpha$, $H_alpha (n) = H_alpha[n] (n+1)$ instead of the usual $H_alpha[n](n)$.
+We can rewrite this as $H_alpha (n) = H_(alpha[n]+1)(n)$ since $H_(alpha+1)(n)= H_alpha (n+1)$.
+
+#set align(center)
+#table(
+    align: left + horizon,
+    inset: 0.75em,
+    columns: (auto, auto),
+    table.header([*PrSS*], [*HH*]),
+    $()[n] = n$, $H_0(n) = n$,
+    $(0)[n] = ()[n+1]$, $H_1(n) = H_0(n+1)$,
+    $(0,0)[n] = (0)[n+1]$, $H_2(n) = H_1(n+1)$,
+    $(0,1)[n] = underbrace((0\,0\,0\,...\,0), n "copies of" 0)[n+1]$, $H_omega (n) = H_n (n+1)$,
+    $(0,1,0)[n] = (0,1)[n+1]$, $H_(omega+1) = H_omega (n+1)$,
+    $(0,1,0,1)[n] = (0\,1\,underbrace(0\,0\,0\,...\,0, n "copies of" 0))[n+1]$, $H_(omega dot 2) (n) = H_(omega + n) (n+1)$,
+    $(0,1,1)[n] = underbrace((0\,1\,...\,0\,1), n "copies of" (0,1))[n+1]$, $H_(omega^2) (n) = H_(omega n) (n+1)$,
+    $(0,1,2)[n] = (0\,1\,underbrace(1\,1\,1\,...\,1, n "copies of" 1))[n+1]$, $H_(omega^omega) (n) = H_(omega^n) (n+1)$,
+)
+#set align(left)
+
+We see the correspondence between each PrSS sequence and its associated ordinal in our modified Hardy Hierarchy.
+Therefore the maximum growth rate of PrSS is $(0,1,2,3,...)[n]$ which corresponds to $H_e0 (n)$.
+

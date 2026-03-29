@@ -63,20 +63,13 @@
 #show link: set text(fill: blue)
 #show link: underline
 
-#include "chapters/1_introduction.typ"
-#include "chapters/2_hyperoperators.typ"
-#include "chapters/3_intro_to_ordinals.typ"
-#include "chapters/4_fgh.typ"
-#include "chapters/5_formal_ordinals.typ"
-#include "chapters/6_ordinal_notations.typ"
-#include "chapters/7_veblen.typ"
-#include "chapters/8_buchholz_ocf.typ"
-// other BO-notations? (e.g. PSS, HPrSS, NAN/Patcail's Hydra)
-
-// not sure what order:
-// BMS
-// Inaccessible cardinals, Mahlo Cardinals, and small rajthen OCF
-// y sequence
-// Laver table
-// PTOs
-
+#include "chapters/01_introduction.typ"
+#include "chapters/02_hyperoperators.typ"
+#include "chapters/03_intro_to_ordinals.typ"
+#include "chapters/04_fgh.typ"
+#include "chapters/05_formal_ordinals.typ"
+#include "chapters/06_ordinal_notations.typ"
+#include "chapters/07_veblen.typ"
+#include "chapters/08_buchholz_ocf.typ"
+#include "chapters/09_buchholz_on.typ"
+#include "chapters/10_bms.typ"

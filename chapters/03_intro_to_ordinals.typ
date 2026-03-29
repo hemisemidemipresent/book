@@ -139,6 +139,41 @@ Multiplication can also be denoted with the $times$ symbol (e.g. $omega times 2$
   + $alpha^beta = limits(union.big)_(gamma < beta) (alpha^gamma)$ when $beta$ is a limit ordinal
 ]
 
+The usual exponential rules apply, e.g. $alpha^(beta+gamma) = alpha^beta dot alpha^gamma$, and $alpha^(beta dot gamma) = (alpha^beta)^gamma$.
+
+Distributivity holds on the left, but not on the right:
+$
+    alpha dot (beta + gamma) &= alpha dot beta + alpha dot gamma\
+    (alpha + beta) dot gamma &!= alpha dot gamma + beta dot gamma
+$
+As such we can also "cancel" terms on the left, but no on the right:
+$
+    alpha dot beta = alpha dot gamma &=> beta = gamma\
+    beta dot alpha = gamma dot alpha &arrow.r.double.not beta = gamma
+$
+
+If you recall, $1+omega = omega$. We can show a more general version of this:
+#proposition[
+    #let alpha = redf($alpha$)
+    #let beta = bluef($beta$)
+    If $alpha < beta$, $omega^alpha + omega^beta = omega^beta$
+]
+#proof[
+    #let alpha = redf($alpha$)
+    #let beta = bluef($beta$)
+    #let gamma = greenf($gamma$)
+    Let $beta = alpha + gamma$ for some ordinal $gamma$. Then:
+
+    $
+        omega^alpha + omega^beta &= omega^alpha + omega^(alpha+gamma)\
+        &= omega^alpha + omega^alpha dot omega^gamma\
+        &= omega^alpha(1+omega^gamma)\
+        &= omega^alpha dot omega^gamma\
+        &= omega^(alpha+gamma)\
+        &= omega^beta
+    $
+]
+
 Higher hyperoperators are tricky to define for transfinite ordinals, so we will only allow addition, multiplication and exponentiation on transfinite ordinals.
 
 == Ordinals versus Cardinals
@@ -174,7 +209,9 @@ Note that since we have defined ordinals as sets, we can measured the cardinalit
 Every natural number is a cardinal. For infinite cardinals, they are labelled as $aleph_0, aleph_1, aleph_2, ...$.
 We set $aleph_0$ to be the cardinality of $omega$ (and from the above example, this is the cardinality of $omega 2$ too).
 
-But how do we know that there are cardinalities above $aleph_0$? We know there are cardinalities larger than $aleph_0$, as the cardinality of the set of all real numbers $RR$ is greater than $aleph_0$. But we do not know what the cardinality of the real numbers is, because the Continuum Hypothesis cannot be proven nor disproven in ZFC itself.
+But how do we know that there are cardinalities above $aleph_0$? We know there are cardinalities larger than $aleph_0$, as the cardinality of the set of all real numbers $RR$ is $2^(aleph_0)$, which is greater than $aleph_0$.
+But what is $2^(aleph_0)$ in terms of $aleph_n$? Is $2^(aleph_0) = aleph_1$ (This is known as the Continuum Hypothesis)?
+It turns out that we can set $2^(aleph_0) = aleph_n$ for _any_ finite $n$, and it will be consistent with ZFC.
 
 In ZFC, we assign each cardinal to an ordinal via *von Neumann cardinal assignment*:
 

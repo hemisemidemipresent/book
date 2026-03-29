@@ -5,17 +5,18 @@
 == What lies beyond $e0$?
 
 We previously spent a lot of time on ordinals $<e0$. We finally see what lies beyond $e0$. We first start with $e0 + 1$, then $e0 + 2, e0 + omega, e0 + omega^2, e0+omega^omega,$ until we get $e0 + e0 = e0 dot 2$.
-We then have the following ordinals, and their expression in Cantor Normal Form (CNF).
+We then have the following ordinals, and their expression in Cantor Normal Form (CNF):
 
 (Note that CNF applies to *all* ordinals, not just ordinals $<e0$. It is the _Ordinal Notations_ discussed last chapter that have this restriction.)
 $
-e0 dot 3 = omega^e0 + omega^e0 + omega^e0\
-e0 dot omega = omega^(e0+1)\
-e0^omega = omega^omega^(e0+1)\
-e0^e0 = omega^omega^(e0 dot 2)\
-e0^e0^omega = omega^omega^omega^(e0+1)\
-e0^e0^e0 = omega^omega^omega^(e0 dot 2)\
-e0^e0^e0^omega = omega^omega^omega^omega^(e0+1)
+e0 dot 3 &= omega^e0 + omega^e0 + omega^e0\
+e0 dot omega &= omega^(e0+1)\
+e0^2 &= omega^(e0 dot 2)\
+e0^omega &= omega^omega^(e0+1)\
+e0^e0 &= omega^omega^(e0 dot 2)\
+e0^e0^omega &= omega^omega^omega^(e0+1)\
+e0^e0^e0 &= omega^omega^omega^(e0 dot 2)\
+e0^e0^e0^omega &= omega^omega^omega^omega^(e0+1)
 $
 
 Note that while $omega^e0 = e0, e0^omega != e0$.
@@ -25,17 +26,49 @@ $
     e0^omega &= union.big_(gamma < omega)(e0^gamma) > e0
 $
 
-The limit of this process is $epsilon_1$, or more formally:
+The limit of stacking $omega^dots.up^omega^(e0+1)$ is $epsilon_1$, or more formally:
 $
-    epsilon_1 = sup{e0+1,omega^(e0+1), omega^omega^(e0+1),...}
-$, which can also be defined as
+    epsilon_1 := sup{e0+1,omega^(e0+1), omega^omega^(e0+1),...}
+$
+$epsilon_1$ can also be defined as:
 $
     epsilon_1 = sup {e0, e0^e0, e0^e0^e0, ...}
-$ if you prefer.
+$
+However, you may be noticing that these are not the same sequence: $e0^e0 = omega^omega^(e0 dot 2)$, which is not of the form $omega^dots.up^omega^(e0+1)$.
+However, we can show that these two definitions lead to the same supremum of $epsilon_1$.
+
+#proof[
+    Let's fix $epsilon_1=sup{e0+1,omega^(e0+1), omega^omega^(e0+1),...}$.
+    Suppose for contradiction that
+    $
+        sup {e0, e0^e0, e0^e0^e0, ...} > sup{e0+1,omega^(e0+1), omega^omega^(e0+1),...} = epsilon_1
+    $
+    That means there must exist a term $e0^dots.up^e0$ greater than all $omega^dots.up^omega^(e0+1)$.
+    As seen earlier, we can express $e0^dots.up^e0$ as some $omega^dots.up^omega^(e0 dot 2)$.
+    However, since $e0 + 1 <= e0 dot 2 <= omega^(e0+1)$,
+    $
+        omega^dots.up^omega^(e0+1) <= omega^dots.up^omega^(e0 dot 2) <= omega^dots.up^omega^omega^(e0+1)
+    $
+    So there cannot exist a term $e0^dots.up^e0$ greater than all $omega^dots.up^omega^(e0+1)$, and as such:
+    $
+        sup {e0, e0^e0, e0^e0^e0, ...} = sup{e0+1,omega^(e0+1), omega^omega^(e0+1),...} = epsilon_1
+    $
+    In fact, we can see that for any ordinal $epsilon_0 < alpha < epsilon_1$:
+    $
+        epsilon_1 = sup{omega^alpha, omega^omega^alpha, omega^omega^omega^alpha, ...}
+    $
+]
+
 
 $epsilon_1$ is the second fixed point of $omega^alpha = alpha$. Note that it is also a fixed point of $e0^alpha = alpha$.
 
-We can repeat this process to get $epsilon_2 = sup {epsilon_1 + 1, omega^(epsilon+1), omega^omega^(epsilon_1 + 1), ...}$ and so on. $epsilon_n$ is the $(1+n)$th fixed point of $omega^alpha = alpha$.
+We can repeat this process to get $epsilon_2 = sup {epsilon_1 + 1, omega^(epsilon+1), omega^omega^(epsilon_1 + 1), ...}$ and so on.
+$epsilon_n$ is the $(1+n)$th fixed point of $omega^alpha = alpha$, and $epsilon_omega$ is the $omega^"th"$ fixed point of $omega^alpha = alpha$.
+Formally:
+$
+    epsilon_omega = sup {e0, epsilon_1, epsilon_2, ...} = sup {epsilon_n | n in NN}
+$
+and in general for a limit ordinal $lambda$, $epsilon_lambda = sup{epsilon_alpha | alpha < lambda}$
 
 We can keep repeating until we get something like $epsilon_e0$ and $epsilon_epsilon_e0$. Eventually we reach:
 $
@@ -120,8 +153,6 @@ We can define a function to find these fixed points:
     $
        f'(alpha) = sup{f^n (alpha) | n in NN} &<= gamma
     $
-    I.e., $f'(alpha)$ represents the $(1 + alpha)^"th"$ fixed point of $f$
-
 ]
 
 #example[
@@ -142,7 +173,6 @@ We can generalize this to define a fixed point of multiple functions:
 ]
 
 == 2-argument Veblen function
-#let o = $circle.filled$
 
 #definition[
   The 2-argument/binary Veblen function *$phi(alpha, beta)$* is defined as such:
@@ -157,21 +187,25 @@ so I denote the "dummy variable" of the fixed point to be #o.
 // of the function $f(a,b)=b$, I will use a circle and say "the fixed point of the function $f(a,#o)$"
 
 #example[
+  For an ordinal $alpha$:
+  $
+      omega^alpha &= phi(0,alpha)\
+      epsilon_alpha &= phi(1,alpha)\
+      zeta_alpha &= phi(2,alpha)\
+      eta_alpha &= phi(3,alpha)
+  $
   Show that  $e0 = phi(1,0)$, and $zeta_2 = phi(2,2)$
 
-  $phi(1,0)$ is the $(1+0)^"th"$ fixed point of the function $phi(gamma, #o )= #o$ for $gamma < 1$ (i.e. $gamma = 0$)
+  + $phi(1,0)$ is the $(1+0)^"th"$ fixed point of the function $phi(gamma, #o )= #o$ for $gamma < 1$ (i.e. $gamma = 0$)
 
-  $phi(1,0)$ is the $1^"st"$ fixed point of the function $phi(0, #o) = omega^#o = #o$, and the first fixed point of $omega^#o = #o$ is $e0$.
+    $phi(1,0)$ is the $1^"st"$ fixed point of the function $phi(0, #o) = omega^#o = #o$, and the first fixed point of $omega^#o = #o$ is $e0$.
 
-  $phi(2,2)$ is the $(1+2)^"th"$ fixed point of the function $phi(gamma, #o) = #o$ for $gamma < 2$
+  + $phi(2,2)$ is the $(1+2)^"th"$ fixed point of the function $phi(gamma, #o) = #o$ for $gamma < 2$
 
-  $phi(2,2)$ is the $3^"rd"$ fixed point of the functions $phi(0, #o) = omega^#o = #o$ and $phi(1, #o) = epsilon_#o = #o$, and $zeta_2$ is the third ordinal that is a fixed point for _both_ functions. ($z0, zeta_1$ are the first and second).
+    $phi(2,2)$ is the $3^"rd"$ fixed point of the functions $phi(0, #o) = omega^#o = #o$ and $phi(1, #o) = epsilon_#o = #o$, and $zeta_2$ is the third ordinal that is a fixed point for _both_ functions. ($z0, zeta_1$ are the first and second).
 ]
 
-Now that we have defined the 2-argument Veblen function, what is the largest ordinal we can make? After $eta_0$ we have $phi(4,0), phi(10,0), phi(10000, 0)$.
-What about $phi(omega,0)$? We can think of it as the first fixed point for _all_ $phi(n,#o) = #o$ for every $n in NN$. And we can continue on and on for larger ordinals.
-
-But before we get into even larger ordinals, let's go through some basic properties of the Veblen function:
+Let's go through some basic properties of the Veblen function:
 #proposition[
     #let alpha = redf($alpha$)
     #let beta = bluef($beta$)
@@ -179,7 +213,6 @@ But before we get into even larger ordinals, let's go through some basic propert
     + If $alpha < beta$, then $phi(gamma, alpha) < phi(gamma, beta)$
 ]
 Both properties are just consequences of the definition provided, so convince yourself that they are true.
-
 #example[
     Which is bigger? $phi(2, phi(1,0))$ or $phi(3,0)$?
 
@@ -196,6 +229,76 @@ Both properties are just consequences of the definition provided, so convince yo
     Therefore $phi(3,0)$ is bigger.
 ]
 
+In the previous section, we defined $epsilon_1$ as:
+$
+    epsilon_1 &= sup{e0+1,omega^(e0+1), omega^omega^(e0+1), ...}\
+    &= sup{phi(1,0)+1,phi(0,phi(1,0)+1), phi(0,phi(0,phi(1,0)+1)),...}\
+    &= sup{phi^n (0,phi(1,0)+1)|n in NN}\
+    &= phi(1,1)
+$
+
+We also mentioned that instead of $phi(1,0)+1$ (i.e. $e0 + 1$), we can replace that with any ordinal $alpha$ such that $phi(1,0) < alpha < phi(1,1)$ (i.e. $e0<alpha<epsilon_1$).
+However, it is a bit self-referential to use $phi(1,1)$ in a condition that defines $phi(1,1)$.
+We can instead prove a similar statement for all $phi(alpha+1,beta+1)$:
+#proposition[
+    $phi(alpha+1,beta+1)$ is the first fixed point of the function $f(#o) = phi(alpha, phi(alpha+1,beta)+#o) = #o$
+]
+#proof[
+    Let $xi$ be the first (i.e. _least_) fixed point of $f$, i.e., $f(xi) = phi(alpha, phi(alpha+1,beta)+xi)=xi$. We now show that $xi = phi(alpha+1, beta+1)$
+
+    Since $phi(alpha,greenf(gamma))>=greenf(gamma)$ for all $greenf(gamma)$, we can express $xi$ as:
+    $
+        xi = phi(alpha, greenf(phi(alpha+1,beta)+xi)) >= greenf(phi(alpha+1,beta)+xi)
+    $
+    This gives us $xi >= phi(alpha+1,beta) + xi$. Since obviously $xi gt.not phi(alpha+1,beta) + xi$, we have:
+    $
+        xi = phi(alpha+1,beta)+ xi
+    $, and for that to be true, $xi>phi(alpha+1,beta)$.
+    Applying $phi(alpha,#o)$ on both sides we get
+    $
+        phi(alpha,xi) &= phi(alpha,phi(alpha+1,beta)+ xi)\
+        &= xi
+    $
+    Therefore $xi$ is a fixed point of $phi(alpha,#o)$, i.e., $xi=phi(alpha+1,gamma)$ for some ordinal $gamma$.
+    And since $xi>phi(alpha+1,beta)$, minimally $xi>=phi(alpha+1, beta+1)$.
+
+    We also notice that $phi(alpha+1,beta+1)$ is a fixed point of $f$:
+    #let fp = $redf(phi(alpha+1,beta+1))$
+    $
+        f(fp) &= phi(alpha, phi(alpha+1,beta)+fp)\
+        &= phi(alpha, fp)\
+        &= fp
+    $
+
+    Since $xi$ is the _least_ fixed point of $f$, $xi<=phi(alpha+1,beta)$. Since we have just shown earlier that $xi>=phi(alpha+1,beta+1)$, we get:
+    $
+        xi = phi(alpha+1,beta+1)
+    $
+
+]
+Note that with this definition our $epsilon_1$ sequence would be translated as:
+$
+    phi(1,1) &= sup{f^n(1)|n in NN}\
+    &= sup { phi(0,phi(1,0)+1), phi(0,phi(1,0)+phi(0,phi(1,0)+1)),...}\
+    &= sup {omega^(e0+1), omega^(e0+omega^(e0+1)), omega^(e0+omega^(e0+omega^(e0+1))), ...}\
+    &= sup {omega^(e0+1), omega^omega^(e0+1), omega^(omega^omega^(e0+1)),...}
+$
+
+Now that we have defined the 2-argument Veblen function, what is the largest ordinal we can make? After $eta_0$ we have $phi(4,0), phi(10,0),$ or even $phi(10000, 0)$.
+What about $phi(omega,0)$? We can think of it as the first fixed point for _all_ $phi(n,#o) = #o$ for every $n in NN$, or as the supremum of all $phi(n,0)$:
+
+$
+    phi(omega,0) = sup {phi(n,0) | n in NN}
+$
+It should be obvious to deduce that it is also the supremum of all $phi(n,1)$ too, i.e., the value of the second argument does not matter.
+In general, for a limit ordinal $lambda$,
+$
+    phi(lambda, 0) = sup{phi(alpha,0)|alpha<lambda}
+$
+
+
+
+
 Continuing where we left off, we have $phi(omega, 0) = phi(phi(1,0),0)$, and we can keep nesting $phi(phi(phi(1,0),0),0)$, $phi(phi(phi(phi(1,0),0),0),0)$, until we reach the (first) fixed point of the Veblen function: $G0 = phi(G0, 0)$.
 $G0$ is known as the *Feferman–Schütte ordinal*, which can also be expressed as:
 
@@ -203,7 +306,11 @@ $
     G0 = sup{phi(1,0), phi(phi(1,0),0), phi(phi(phi(1,0),0),0), ...}
 $
 
-== Veblen Normal Form
+This is the largest ordinal we can reach with the two-argument veblen function.
+
+
+
+== Veblen Normal Form and Fundamental Sequences
 
 Much like how all ordinals $<e0$ can be expressed in Cantor Normal Form, all ordinals $<G0$ can be expressed in:
 
@@ -218,8 +325,6 @@ Much like how all ordinals $<e0$ can be expressed in Cantor Normal Form, all ord
 #definition[
   The *Veblen Hierarchy* is a system of fundamental sequences for *limit* ordinals $alpha < G0$ when expressed in Veblen Normal Form:
 
-  WIP: inaccuracies
-
   + $(phi(beta_1, gamma_1) + phi(beta_2, gamma_2) + ... + phi(beta_k, gamma_k))[n] :=   phi(beta_1, gamma_1) + phi(beta_2, gamma_2) + ... + phi(beta_k, gamma_k)[n]$
   + $phi(0, gamma+1) := omega^gamma dot n$
   + $phi(beta+1,0)[n] := phi^n (beta,0)$
@@ -228,7 +333,31 @@ Much like how all ordinals $<e0$ can be expressed in Cantor Normal Form, all ord
   + $phi(beta, 0)[n] := phi(beta[n],0)$ when $beta$ is a limit ordinal
   + $phi(beta, gamma+1)[n] := phi(beta[n],phi(beta, gamma) + 1)$ when $beta$ is a limit ordinal
 
-  In rule 3 and 4, $phi^n ()$ refers to function iteration, so $phi^n (beta, gamma) = phi(beta, phi^(n-1) (beta, gamma))$
+  In rule 3 and 4, $phi^n ()$ refers to function iteration, so $phi^n (beta, gamma) = phi(beta, phi^(n-1) (beta, gamma))$ and $phi^1(beta,gamma)=phi(beta,gamma)$
+]
+
+#example[
+    - $phi(2,0)[n]$
+        $
+            phi(2,0)[1] &= phi^1(1,0) = phi(1,0) = e0\
+            phi(2,0)[2] &= phi^2(1,0) = phi(1,phi(1,0)) = epsilon_e0\
+            phi(2,0)[3] &= phi^3(1,0) = phi(1,phi(1,phi(1,0))) = epsilon_epsilon_e0\
+        $
+
+    - $phi(2,1)[n]$
+        $
+            phi(2,1)[1] &= phi^1(1, phi(2,0)+1) = epsilon_(z0+1)\
+            phi(2,1)[2] &= phi^2(1, phi(2,0)+1) = phi(1, phi(1, phi(2,0)+1)) = epsilon_epsilon_(z0+1)\
+            phi(2,1)[3] &= phi^3(1, phi(2,0)+1) = phi(1,phi(1, phi(1, phi(2,0)+1))) = epsilon_epsilon_epsilon_(z0+1)\
+        $
+    - $phi(omega,0)[n]$
+        $
+            phi(omega,0)[n] = phi(omega[n],0) = phi(n,0)
+        $
+    - $phi(omega,1)[n]$
+        $
+            phi(omega,1)[n] = phi(omega[n], phi(omega,0)+1) = phi(n, phi(omega,0)+1)
+        $
 ]
 
 == Multivariate Veblen function
@@ -240,7 +369,7 @@ This "Gamma function" can be thought of as $Gamma_beta = (1+beta)^"th"$ fixed po
 We have seen this pattern before -- eventually we reach the _Gamma fixed point_ of $Gamma_#o = #o$, which can be though of as an infinite nesting of Gammas: $Gamma_Gamma_Gamma_dots.down$.
 
 We can then iterate over the fixed points of $Gamma_#o = #o$, but we can systematize this with the _3-argument veblen function_. We let $G0 = phi(1,0,0)$,
-and then $Gamma_1 = phi(1,0,1)$. In general $Gamma_beta = phi(1,0,beta)$, and first Gamma fixed point $Gamma_Gamma_Gamma_dots.down = phi(1,1,0)$, or the first fixed point of $phi(1,0,#o) = #o$.
+and then $Gamma_1 = phi(1,0,1)$. In general $Gamma_beta = phi(1,0,beta)$, and first Gamma fixed point $Gamma_Gamma_Gamma_dots.down = phi(1,1,0)$ can be denoted as the first fixed point of $phi(1,0,#o) = #o$.
 
 We can create a definition of the 3-argument veblen function as such:
 
@@ -256,7 +385,7 @@ We can create a definition of the 3-argument veblen function as such:
     - $phi(1,#o,0)=#o$
 ]
 
-=== Extension to finitely many argument
+=== Extension to finitely many arguments
 
 Now what about a 4-argument veblen function? or an $n$-argument veblen function? We can extend it to any number of arguments as such:
 
@@ -264,10 +393,28 @@ Now what about a 4-argument veblen function? or an $n$-argument veblen function?
     Let $S$ be an arbitrary string of ordinals, and $O$ be a string of $0$s.
     - $phi(gamma) = gamma$
     - $phi(O,S)=phi(S)$, i.e., you can remove zeroes from the left
-    - $phi(S,beta,O,gamma)$ is the $(1+gamma)^"th"$ fixed point of $phi(S,beta,#o,O)=#o$ for all $alpha<beta$
+    - $phi(S,beta,O,gamma)$ is the $(1+gamma)^"th"$ fixed point of $phi(S,alpha,#o,O)=#o$ for all $alpha<beta$
 ]
 
-Wit this, we can define ordinals like $phi(1,0,0,0)$, $phi(1,0,0,0,0)$, and so on. Taking this to its limit yields the *Small Veblen Ordinal*:
+#example[
+    + $phi(1,0,0,0)$
+
+        We have $S = "empty", beta = 1, O = (0,0), gamma=1$:
+        $
+            phi(underbrace(1, beta),underbrace(0\,0,O),underbrace(0,gamma))
+        $
+        As such $phi(1,0,0,0)$ is the $(1+0)^"th"$ fixed point of $phi(alpha,#o,0,0)=#o$ for all $alpha<1$, i.e. $alpha=0$. Rephrasing, we have:
+
+        $phi(1,0,0,0)$ is the $1^"st"$ fixed point of $phi(#o,0,0)=#o$.
+    + $phi(1,2,3,4)$
+        We have $S=(1,2), beta=3, O = "empty", gamma=4$
+
+        As such $phi(1,2,3,4)$ is the $(1+4)^"th"$ fixed point of $phi(1,2,alpha,#o)=#o$ for all $alpha<3$. Rephrasing, we have:
+
+        $phi(1,2,3,4)$ is the $5^"th"$ fixed point of $phi(1,2,alpha,#o)=#o$ for $alpha in {0,1,2}$.
+]
+
+With this, we can define ordinals like $phi(1,0,0,0)$, $phi(1,0,0,0,0)$, and so on. Taking this to its limit yields the *Small Veblen Ordinal*:
 
 $
     SVO = sup{phi(1), phi(1,0), phi(1,0,0), phi(1,0,0,0), phi(1,0,0,0,0), ...}
@@ -286,8 +433,7 @@ We also have an "Extended Veblen Normal Form":
     - $alpha_(i,1) > 0$ and $alpha_(i,j) < phi(s_i)$ for all $i in {1,...,k}$ and $j in {1, ..., k_i}$
 ]
 
-However, I'm going to take a page out of the "Veblen's multivariate function" thread from the Googology discord's education forum, and skip straight to
-the veblen function with _transfinitely_ many arguments, as that generalizes to finitely many arguments too.
+However, I'm going to skip straight to the veblen function with _transfinitely_ many arguments, as that generalizes to finitely many arguments too.
 
 == Transfinitary Veblen function
 
@@ -410,12 +556,6 @@ But how do we even know that these fixed points exist? We need to first show tha
     [WIP]
 ]
 
-#definition[
-    The fundamental sequences for the multivariate veblen function is:
-    [WIP]
-]
-
-=== The Large Veblen Ordinal
 
 Now that we have extended the veblen function yet again, what is the new limit? We can construct $SVO = phi([1@omega])$, but why stop at $omega$?
 We can have $phi([1@G0])$, $phi([1@SVO]) = phi([1@phi([1@omega])])$, or even $phi([1@phi([1@phi([1@omega])])])$.
@@ -438,6 +578,14 @@ We do have to first show that $phi([1@alpha])$ is normal before we know that suc
         $phi([1@y]) = phi([phi([1@y])@x]) > phi([1@x])$ (why? [WIP])
     2. continuous
         [WIP]
+]
+
+#theorem(name: [*_Tranfinitary Veblen Normal Form_*])[
+    All ordinals $alpha < LVO$ can be expressed as
+]
+#definition[
+    The fundamental sequences for the multivariate veblen function is:
+    [WIP]
 ]
 === Schütte's Klammersymbolen
 

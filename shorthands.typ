@@ -74,15 +74,20 @@
 
 
 #let red = color.rgb("#f35667")
+#let orange = color.rgb("#FFA500")
 #let green = color.rgb("#00B600")
 #let blue = color.rgb("#0000ff")
+#let purple = color.rgb("#800080")
+#let lilac = color.rgb("#d69dff")
 
 // fill shorthands
 #let redf(content) = text(content, fill: red)
+#let orangef(content) = text(content, fill: orange)
 #let greenf(content) = text(content, fill: green)
 #let bluef(content) = text(content, fill: blue)
+#let purplef(content) = text(content, fill: purple)
 #let blackf(content) = text(content, fill: black)
-
+#let rainbowf(content) = text(content, fill: gradient.linear(..color.map.rainbow))
 // predefined "macros"
 #let up = $scripts(arrow.t)$ // knuth up arrow
 #let cof = $"cof"$ // cofinality
@@ -97,14 +102,21 @@
 
 #let sup = $limits(sup)^+$ // override supremum with strict supremum to avoid ambiguity
 
+#let o = $circle.filled$ // used for fixed point
+
+
 // Ordinals
 #let e0 = $epsilon_0$
 #let z0 = $zeta_0$
 #let G0 = $Gamma_0$
 #let SVO = $"SVO"$
+// #let SVO.bocf = $psi_0(Omega^Omega^omega)$
 #let LVO = $"LVO"$
-#let BHO = $psi(epsilon_(Omega+1))$
-#let BO = $psi(Omega_omega)$
+#let BHO = $psi_0(epsilon_(Omega+1))$
+#let BO = $psi_0(Omega_omega)$
+#let TFBO = $psi_0(epsilon_(Omega_omega + 1))$
+#let EBO = $psi_0(Omega_Omega_dots.down)$
+
 #let Ord = $"Ord"$ // proper class of all ordinals
 #let Lim = $"Lim"$ // proper class of all limit ordinals
 // Ordinal Notation

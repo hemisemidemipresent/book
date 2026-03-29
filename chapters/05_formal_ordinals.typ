@@ -413,3 +413,6 @@ To show this, we can split non-increasing sequences into a sequence of constant 
 
 All this discussion on lexicographic orderings is quite abstract, but we will use the concepts of orders (especially on non-increasing sets) in the next chapter.
 
+// == Cardinals [WIP]
+
+// We previously introduced $$
