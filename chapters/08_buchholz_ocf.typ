@@ -2,9 +2,22 @@
 = Buchholz's Ordinal Collapsing Function
 
 Buchholz's *Ordinal Collapsing Function* (BOCF) is a way for us to create even larger (countable) ordinals.
-Ironically, to make these larger ordinals, we will be using even larger _uncountable_ ordinals to get there (remember $omega_1$?).
+Ironically, to make these larger ordinals, we will be using even larger _uncountable_ ordinals to get there.
 
-#definition[
+But first, how exactly are ordinals of higher cardinality ($omega_1$, $omega_2, ...$) defined?
+Let's first define the _successor cardinal_ of $aleph_0$, $aleph_1$, and its assigned ordinal $omega_1$ as *the set of all ordinals whose cardinality $<=aleph_0$*:
+$
+    aleph_1 = omega_1 = {alpha in Ord : |alpha| <= aleph_0}
+$
+where $|alpha|$ represents the cardinality of an ordinal $alpha$.
+Similarly, we have the cardinal $aleph_2$ and its assigned ordinal $omega_2$ to be the set of all ordinals whose cardinality is $<=aleph_1$.
+We can repeat this to make $aleph_3, aleph_4, ...$. For a limit ordinal $lambda$, we define $aleph_lambda$ as such:
+$
+    aleph_lambda = union.big_(beta<lambda) aleph_beta
+$
+
+
+#definition(name: [*_Buchholz's $psi$ function_*])[
   Let $Omega_nu$ be defined as such:
   $
       Omega_nu := cases(
@@ -119,6 +132,17 @@ We can additionally show that the $psi$ function only outputs additively princip
     However, this implies $psi_nu (alpha) in C_nu (alpha)$, a contradiction.
 ]
 
+Another interesting property of this function is that subscript of $psi$ represents the cardinality of it's result:
+#proposition[
+    $Omega_nu <= psi_nu(alpha) < Omega_(nu+1)$
+]
+#proof[
+    Since $Omega_nu subset.eq C_nu (alpha)$, we get $Omega_nu <= psi_nu (alpha)$.
+    Since the cardinality of $C_nu (alpha)$ is less than $Omega_(nu+1)$, we have $psi_nu (alpha) < Omega_(nu+1)$.
+]
+
+So $psi_0$ will only spit out countable ordinals $1 <= psi_0(alpha) < Omega$, $psi_1$ will only be in the range $Omega <= psi_1 < Omega_2$, etc....
+
 == Bigger ordinals
 
 Now let's look at $psi_0(2)$. Since $C_0(1) subset.eq C_0(2)$, we will mainly focus on what _additional_ elements are contained with $C_0(2)$.
@@ -155,6 +179,7 @@ We first prove a property about how $psi_nu (alpha+1)$ relates to $psi_nu (alpha
     + If $alpha$ is a limit ordinal, $psi_nu (alpha) = sup{psi_nu (xi) | xi<alpha "and" xi in C_nu (xi)}$
 ]
 #proof[
+    [WIP]
     + Since $alpha in C_nu (alpha)$, and $alpha in C_nu (alpha)$, $psi_nu (alpha) < psi_nu (alpha+1)$.
         // And since $$ $psi_nu (alpha) in P$
         Suppose for contradiction there exists an ordinal $gamma$ such that $psi_nu (alpha) <= gamma < psi_nu (alpha+1)$, and $gamma in P$.
@@ -168,12 +193,7 @@ We first prove a property about how $psi_nu (alpha+1)$ relates to $psi_nu (alpha
     Suppose $alpha in C_0(alpha)$ and $psi_0(alpha) = omega^alpha$. Then $alpha+1 in C_0(alpha+1)$ and $psi_0(alpha+1)$
 ]
 
-Going through all those steps
-
-// We previously saw that for ordinals $alpha < e0$, $alpha in C_0(alpha)$ and $psi_0(alpha) = omega^alpha$, so we have:
-
-
-
+Using the lemma above, we have:
 $
     psi_0(1) &= omega\
     psi_0(2) &= omega^2\
@@ -251,7 +271,14 @@ $, replacing each "stuck" term with $Omega$, and in general, we can relate Buchh
 #proposition[$
     psi_0(Omega^alpha dot (1+beta)) = phi(alpha,beta)
 $]
-You can verify that these expressions satisfies $alpha in C_0(alpha)$ by expressing them in terms of $psi_1$:
+#proof[
+    [WIP] probably shift to some appendix cause its quite long I think.
+]
+We can generalize this to the extended veblen function as such:
+#proposition[$
+    psi_0(Omega^((Omega^n alpha_n + ... + Omega alpha_1 + alpha_0)) (1+beta)) = phi(alpha_n, ..., alpha_1, alpha_0 ,beta)
+$]
+You can verify that these expressions containing $Omega$ satisfies $alpha in C_0(alpha)$ by expressing them in terms of $psi_1$:
 $
     psi_1(0) &= Omega\
     psi_1(alpha) &= omega^(Omega + alpha) = Omega dot omega^alpha\
@@ -273,10 +300,7 @@ $
     &= psi_0(psi_1(psi_1(Omega)))\
     &= psi_0(psi_1(psi_1(psi_1(0))))\
 $
-We can generalize this to the extended veblen function as such:
-#proposition[$
-    psi_0(Omega^((Omega^n alpha_n + ... + Omega alpha_1 + alpha_0)) (1+beta)) = phi(alpha_n, ..., alpha_1, alpha_0 ,beta)
-$]
+
 
 Continuing, we have
 $
@@ -286,12 +310,13 @@ $
 Now that we have "caught up" with the veblen function, we can go even further, with $psi_0(Omega^Omega^Omega^Omega)$.
 Eventually we reach $psi_0(Omega^Omega^dots.up) = BHO$, the *Bachmann-Howard Ordinal (BHO)*.
 (The expression $epsilon_(Omega+1)$ really just means the supremum of ${Omega, Omega^Omega, Omega^Omega^Omega, ...}$).
-This is the limit of the dimensional veblen, and also the proof-theoretic ordinal of several mathematical theories.
+// This is the limit of the dimensional veblen, and also the proof-theoretic ordinal of several mathematical theories.
 
-Just like how we previously got "stuck" at $psi_0(e0) = e0$, we run into the issue where $psi_1(epsilon_(Omega+1)) = epsilon_(Omega+1)$:
+So far we've been using $psi_1$ to construct all our terms containing $Omega$.
+However, just like how we previously got "stuck" at $psi_0(e0) = e0$, we run into the issue where $psi_1(epsilon_(Omega+1)) = epsilon_(Omega+1)$:
 
 $
-    psi_1(epsilon_(Omega+1)) &= omega^(Omega + epsilon_(Omega+1))\
+    psi_1(epsilon_(Omega+1)) &= sup(psi_1(Omega), psi_1(Omega^Omega), psi_1(Omega^Omega^Omega), ...)\
     &= sup {omega^(Omega+Omega), omega^(Omega+Omega^Omega), omega^(Omega+Omega^Omega^Omega), ...}\
     &= sup {Omega^2, Omega^Omega, Omega^Omega^Omega, ...}\
     &= epsilon_(Omega+1)
@@ -302,6 +327,13 @@ To go further than this, we will need to invoke higher $Omega$s, like $Omega_2$,
 The next ordinal larger than $epsilon_(Omega+1)$ that we can access is $psi_2(0) = Omega_2$, so we have $psi_1(Omega_2) = epsilon_(Omega+1)$,
 and can re-express the Bachmann-Howard Ordinal as $psi_0(Omega_2)$ instead.
 
+
+But wait, if we have $"BHO" = psi_0(Omega_2)$ and $"BHO" = psi_0(epsilon_(Omega+1)) = psi_0(psi_1(Omega_2))$, which is the standard way to write it?
+As we have seen earlier, having the property $alpha in C_nu (alpha)$ saves us a lot of headaches by avoiding places where the function "gets stuck".
+So $psi_0(Omega_2)$ is "nicer" as $Omega_2 in C_0(Omega_2)$, whereas $psi_0(epsilon_(Omega+1))=psi_0(psi_1(Omega_2))$ is "less nice" as $epsilon_(Omega+1) in.not C_0(epsilon_(Omega+1))$.
+We'll elaborate more on this when we go over the Normal Form for Buchholz's $psi$. From now on, in this section, we'll color terms where $alpha in.not C_nu (alpha)$ and the values that they get "stuck" at in #purplef("purple").
+
+
 We then have:
 $
     psi_0(Omega_2 + 1) &= "BHO" dot omega\
@@ -309,7 +341,7 @@ $
     psi_0(Omega_2 + "BHO") &= "BHO" dot omega^"BHO" = "BHO"^2\
     psi_0(Omega_2 + "BHO"^2) &= "BHO" dot omega^"BHO"^2 = "BHO"^"BHO"\
     psi_0(Omega_2 + "BHO"^"BHO") &= "BHO" dot omega^"BHO"^"BHO" = "BHO"^"BHO"^"BHO"\
-    psi_0(Omega_2 + epsilon_("BHO"+1)) &= epsilon_("BHO"+1)
+    psi_0(purplef(Omega_2 + epsilon_("BHO"+1))) &= purplef(epsilon_("BHO"+1))
 $
 
 Just like how $psi_0(Omega + epsilon_1) = epsilon_1$, we have $psi_0(Omega_2 + epsilon_("BHO"+1)) = epsilon_("BHO"+1)$, so we replace it with an $Omega$ and get $psi_0(Omega_2 + Omega) = epsilon_("BHO"+1)$.
@@ -319,7 +351,7 @@ $
     psi_0(Omega_2 + Omega + epsilon_("BHO"+1)) &= epsilon_("BHO"+1)^2\
     psi_0(Omega_2 + Omega + epsilon_("BHO"+1)^2) &= epsilon_("BHO"+1)^epsilon_("BHO"+1)\
     psi_0(Omega_2 + Omega + epsilon_("BHO"+1)^epsilon_("BHO"+1)) &= epsilon_("BHO"+1)^epsilon_("BHO"+1)^epsilon_("BHO"+1)\
-    psi_0(Omega_2 + Omega + epsilon_("BHO"+2)) &= epsilon_("BHO"+2)\
+    psi_0(purplef(Omega_2 + Omega + epsilon_("BHO"+2))) &= purplef(epsilon_("BHO"+2))\
     psi_0(Omega_2 + Omega + Omega) &= epsilon_("BHO"+2)\
 
 $
@@ -335,33 +367,74 @@ $
     psi_1(Omega_2 + epsilon_(Omega+1)) &= epsilon_(Omega+1) dot omega^(epsilon_(Omega+1)) = epsilon_(Omega+1)^2\
     psi_1(Omega_2 + epsilon_(Omega+1)^2) &= epsilon_(Omega+1)^epsilon_(Omega+1)\
     psi_1(Omega_2 + epsilon_(Omega+1)^epsilon_(Omega+1)) &= epsilon_(Omega+1)^epsilon_(Omega+1)^epsilon_(Omega+1)\
-    psi_1(Omega_2 + epsilon_(Omega+2)) &= epsilon_(Omega+2)\
+    psi_1(purplef(Omega_2 + epsilon_(Omega+2))) &= purplef(epsilon_(Omega+2))\
 $
 
-So we have to yet again find the next ordinal $alpha > epsilon_(Omega+2))$ such that $alpha in C_1(alpha)$ $psi_1(Omega_2 dot 2) &= epsilon_(Omega+2)$. We again have a similar correspondence going on:
+So we have to yet again find the next ordinal $alpha > Omega_2 + epsilon_(Omega+2)$ such that $alpha in C_1(alpha)$.
+The first ordinal to satisfy that criteria is $alpha = Omega_2 dot 2$, so we get $psi_1(Omega_2 dot 2) &= epsilon_(Omega+2)$.
+We again have a similar correspondence going on:
+// [WIP]: Should we use Omega in veblen I dont feel like revisiting veblen
 $
     psi_1(Omega_2^alpha dot beta) = phi(alpha, Omega+beta)
 $
 But we don't need the veblen function anymore. The limit of what we can do with $Omega_2$ is:
 $
-    psi_1(Omega_2^Omega_2^Omega_2^dots.up) = psi_1(epsilon_(Omega_2+1))
+    psi_1(purplef(Omega_2^Omega_2^Omega_2^dots.up)) = psi_1(purplef(epsilon_(Omega_2+1)))
 $
-This is analogous the BHO earlier, where $psi_2(epsilon_(Omega_2+1)) = epsilon_(Omega_2 + 1)$
+This is analogous the BHO earlier, where instead of $psi_1(purplef(epsilon_(Omega+1))) = purplef(epsilon_(Omega+1))$, we have $psi_2(purplef(epsilon_(Omega_2+1))) = purplef(epsilon_(Omega_2 + 1))$ (Convince yourself that this is true).
+So we get $psi_1(Omega_3) = epsilon_(Omega_2 + 1)$, and $psi_0(purplef(epsilon_(Omega_2 + 1))) = psi_0(Omega_3)$.
 
 // If the BHO is $psi_0(epsilon_(Omega+1))$ and $psi_1(Omega_2) = epsilon_(Omega+1)$ then is the BHO $psi_0(psi_1(Omega_2))$ or $psi_0(Omega_2)$.
 
-This gives us a whole new family of ordinals like $psi_0(Omega_3), psi_0(Omega_4), ...$ up to $BO$, which is known as *Buchholz's Ordinal (BO)*.
+We can keep going $psi_0(Omega_4), psi_0(Omega_5), ...$ up to $BO$, which is known as *Buchholz's Ordinal (BO)*.
 This is the limit of all $psi_0(Omega_n)$ for finite $n$, and while we haven't gotten to the ordinal notation associated with Buchholz's $psi$ yet,
-ordinal notations $<BO$ correspond with many systems.
-// It is also used in reverse mathematics.
+there are many ordinal notations that correspond to ordinals below $BO$.
 
-Of course, the true limit of Buchhol'z OCF is $psi_0(Omega_omega^Omega_omega^Omega_omega^dots.up) = TFBO$, the *Takeuti–Feferman–Buchholz ordinal (TFBO)*
-
-// #text("asdfghjkajsdfhgadshfjsadkfjhadsfasjdkfadsjfh",fill: gradient.linear(..color.map.turbo))
+Of course, the true limit of Buchhol'z OCF is $psi_0(purplef(Omega_omega^Omega_omega^Omega_omega^dots.up)) = psi_0(purplef(epsilon_(Omega_omega + 1)))$, the *Takeuti–Feferman–Buchholz ordinal (TFBO)*, but it is not as commonly used.
 
 
-== Extended Buchholz
-Why do we have to stop at $Omega_omega$? What about $Omega_(omega+1)$?
+== Normal Form and Fundamental Sequences
+#theorem[
+    Every ordinal $alpha < TFBO$ can be uniquely expressed in the form:
+
+    $
+        alpha = psi_k_1 (alpha_1) + ... + psi_k_n (alpha_n)
+    $
+    Where:
+    - $alpha_1,...,alpha_n in C_0(epsilon_(Omega_omega+1))$
+    - $k_1, ..., k_n <= omega$
+    - $psi_k_1 (alpha_1) >= ... >= psi_k_n (alpha_n)$
+    - $alpha_1 in C_k_1 (alpha_1),...,alpha_n in C_k_n (alpha_n)$
+]
+
+Like in Cantor Normal Form, $alpha_i$ does not necessarily have to be in normal form.
+
+#example[
+    Which of the following are in normal form:
+    + $psi_0(0)$
+    + $psi_0(Omega)$
+    + $psi_0(psi_0(Omega))$
+    + $psi_0(psi_1(psi_2(Omega_3)))$
+    // + $psi_0(psi_2(Omega_3))$
+
+    Answers:
+    + $0 in C_0(0)$, normal form
+    + $Omega = psi_1(0) in C_0(Omega)$, normal form
+    + $psi_0(Omega) = e0 in.not C_0(e0)$, not normal form
+    Note that just because an ordinal $alpha$ is expressed in normal form, that does not mean $psi_nu (alpha)$ is in normal form.
+    ($psi_0(Omega)$ is normal form but $psi_0(psi_0(Omega))$ isn't)
+    + Firstly we have $psi_2(Omega_3) = epsilon_(Omega_2 + 1)$. Then we have $psi_1(psi_2(Omega_3)) = psi_1(epsilon_(Omega_2+1))$, which in normal form is $psi_1(Omega_3)$.
+        We then construct the following inequality to solve for $psi_0(psi_1(Omega_3))$:
+        $
+            psi_1(Omega_2) <= psi_1(Omega_3) < Omega_2\
+            psi_0(psi_1(Omega_2)) <= psi_0(psi_1(Omega_3)) <= psi_0(Omega_2)\
+            "BHO" <= psi_0(psi_1(Omega_3)) <= "BHO"
+        $
+        Therefore $psi_0(psi_1(Omega_3)) = "BHO"$. However the BHO has only one unique normal form expression: $psi_0(Omega_2)$.
+        So $psi_0(psi_1(psi_2(Omega_3))) = psi_0(psi_1(Omega_3))$ are both not normal form.
+]
+
+Before we go into the fundamental sequences of $psi$, we first introduce a concept known as *cofinality*:
 #definition[
   The *cofinality* of an ordinal $alpha$, denoted $cof alpha$, is the *least cardinal number* $kappa$ such that there exists a subset $S subset.eq alpha$ of cardinality $kappa$ where $alpha$ is smallest ordinal strictly greater than every element in $S$.
 ]
@@ -383,3 +456,45 @@ Why do we have to stop at $Omega_omega$? What about $Omega_(omega+1)$?
     Therefore the smallest cardinality of $S$ where $omega 2$ is the least ordinal greater than all elements in $S$ is $omega$.
   + $S = {omega 2 + 2} subset omega 2 + 3$, and $S$ has a cardinality of $1$. $S$ can't have a cardinality of $0$ since the smallest ordinal larger than nothing is $0$.
 ]
+
+Now onto fundamental sequences. A fundamental sequence for an ordinal number $alpha$ with cofinality $cof(alpha) = beta$ is a strictly increasing sequence
+$(alpha[0], alpha[1], ...)$ with length $beta$ and limit $alpha$ (i.e. $alpha = sup{alpha[eta] | eta < beta}$)
+
+[WIP: Other systems of fundamental sequences]
+
+#definition(name: [_*Denis Maksudov's system of fundamental sequences*_])[
+    For ordinals $alpha<=TFBO$ (expressed in normal form), the $eta^"th"$ term of the fundamental sequence of $alpha$, $alpha[eta]$ is defined as such:
+    + If $alpha = psi_k_1 (alpha_1) + ... + psi_k_n (alpha_n)$, then $cof(alpha) = cof(psi_k_n (alpha_n))$, and
+        $alpha[eta] = psi_k_1 (alpha_1) + ... + (psi_k_n (alpha_n)[eta])$
+    + If $alpha = psi_0(0) = 1$ then $cof(alpha) = 1$. We need a sequence of length $1$, so we set $alpha[0] = 0$
+    + If $alpha = psi_(nu+1)(0) = Omega_(nu+1)$, then $cof(alpha) = Omega_(nu+1)$.
+        We need a sequence of length $Omega_(nu+1)$, so we set $alpha[eta] = Omega_(nu+1) [eta] = eta$
+    + If $alpha = psi_omega (0)$, then $cof(alpha) = cof(omega) = omega$ and $alpha[eta] = psi_nu[eta] (0) = Omega_nu[eta]$
+    + If $alpha = psi_nu (beta + 1)$ then $cof(alpha) = omega$ and $alpha[eta] = psi_nu (beta) dot eta$
+    + If $alpha = psi_nu (beta)$ where $beta$ is a limit ordinal whose cofinality $cof(beta) in {omega} union {Omega_(mu+1) | mu < nu}$,
+        then we have $cof(alpha) = cof(beta)$, so we need a sequence of length $cof(beta)$, so $alpha[eta] = psi_nu (beta[eta])$
+    + If $alpha = psi_nu (beta)$ where $beta$ is a limit ordinal whose cofinality $cof(beta) = Omega_(mu+1)$ for $mu >= nu$,
+        then $cof(alpha) = omega$ and $alpha[eta] = psi_nu (beta[gamma[n]])$ where $gamma[0] = Omega_mu$, and $gamma[eta+1] = psi_nu (beta[gamma[eta])$
+]
+There's a lot to go through here, so let's go through some examples:
+#example[
+    +
+]
+
+
+== Extended Buchholz's function
+Why do we have to stop at $Omega_omega$? What about $Omega_(omega+1)$? We can extend Buchholz's function as such to allow for even larger ordinals:
+
+#definition(name: [*_Extended Buchholz's function_*])[
+  Using the same definition of $Omega_nu$, we define the *Extended Buchholz's function* $psi$ and the set $C_nu (alpha)$ as such:
+  + $Omega_nu subset.eq C_nu (alpha)$
+  + For any two ordinals $xi, eta in C_nu (alpha)$, their sum $xi+eta in C_nu (alpha)$
+  + For any ordinal $xi in C_nu (alpha)$, as long as $xi < alpha$, then $ psi_mu (xi) in C_nu (alpha)$ for all #redf($mu in C_nu (alpha)$)
+  + $psi_nu (alpha) = min{gamma in Ord | gamma in.not C_nu (alpha)}$, i.e., the smallest ordinal not inside $C_nu (alpha)$
+]
+It's the same as the original, just that instead of being restricted to $psi_mu$ with $mu <= omega$, we now have $mu in C_nu (alpha)$ as highlighted in red.
+
+With this, we can go beyond, letting $"TFBO" = psi_0(Omega_(omega+1))$.
+We can make $psi_0(Omega_e0)), psi_0(Omega_G0)$, or even $psi_0(Omega_Omega)$.
+
+To
