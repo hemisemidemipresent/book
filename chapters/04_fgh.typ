@@ -37,11 +37,11 @@ We see that for every new $f_m$, we get increasingly powerful hyperoperators:
   columns: (auto, auto),
   table.header([FGH function], [corresponding growth rate]),
   align: center,
-  [$f_1(n)$], [Multiplication $2n$],
-  [$f_2(n)$], [Exponentiation $>2^n$],
-  [$f_3(n)$], [Tetration $>2 up up n$],
-  [$f_4(n)$], [Pentation $>2 up up up n$],
-  [$f_m (n)$], [$(m-1)$th hyperoperator $>2 up^(m-1) n$],
+  [$f_1(n)$], [$2n$ (Multiplication-level)],
+  [$f_2(n)$], [$>2^n$ (Exponentiation-level)],
+  [$f_3(n)$], [$>2 up up n$ (Tetration-level)],
+  [$f_4(n)$], [$>2 up up up n$ (Pentation-level)],
+  [$f_m (n)$], [$>2 up^(m-1) n$ ($(m-1)$th hyperoperator-level)],
 )
 ]
 == Fast-Growing Hierarchy for ordinals $<=e0$
@@ -80,6 +80,26 @@ f_(omega 2)(n) = f_(omega+n)(n)\
 f_(omega 2+1)(n) = f_(omega 2)^n (n)\
 f_(omega^2)(n) = f_(omega omega)(n) = f_(omega n)(n)$
 
+
+One property of the fast-growing hierarchy is that it's _hard to go to the next tier_.
+For example, let's say we have a function that generates big numbers, $N(100) = f_(omega^2)(100)$,
+and we want to try to "see" if we can reach $f_(omega^3)(100)$ by using the $N()$ function.
+We can first try something like $N(100)^N(100)$, but that barely makes a dent googologoically. After all, exponentiation is at a measly $f_2$.
+What about nesting $N$, like $N(N(N(100)) = N^3(100)$? What if we go $N^100(100)$? Well, that is "just" $f_(omega^2 + 1)(100) = f_(omega^2)^100 (100) = N^100(100)$.
+And to go to "just" $f_(omega^2+2)(100)$, we have:
+$
+    f_(omega^2+2)(100) &= f_(omega^2+1)^100(100)\
+    &= f_(omega^2+1)^99(f_(omega^2+1)(100))\
+    &= f_(omega^2+1)^99(N^100(100))\
+    &= f_(omega^2+1)^98(f_(omega^2+1)(N^100(100)))\
+    &= f_(omega^2+1)^98(N^(N^100(100))(N^100(100))\
+    &> f_(omega^2+1)^98(N^(N^100(100))(100))\
+    &> f_(omega^2+1)^97(N^(N^(N^100(100))(100))(100))\
+$
+We can sort of see how $N^(N^(dots.up^(N^100(100)) dots.down)(100))(100)$ with 100 layers, is a lower bound of $f_(omega^2+2)(100)$.
+Beyond that, it starts to get very tedious to even try to express $f_(omega^2+3)(100)$, let alone $f_(omega^2+omega)(100)$.
+And $omega^2$ is honestly still quite a small ordinal! We can easily come up with a bigger ordinal to plug into the fast-growing hierarchy, like $omega^omega$.
+Our resulting number, $f_(omega^omega)(100)$, essentially cannot be expressed in terms of $N(100)$ at all (at least, not without using the fast-growing hierarchy).
 
 === Formal Treatment of the Fast-Growing Hierarchy for ordinals $<=e0$
 
@@ -132,9 +152,15 @@ Now that we have a standardized way to uniquely write each ordinal, we can final
   $
       (omega^omega^2 + omega^3)[3] &= omega^omega^2 + omega^2 dot omega[3]\
       &= omega^omega^2 + omega^2 dot 3\
+  $
+  Then we find the fundamental sequence of _that_:
+  $
       omega^omega^2 + (omega^2 dot 3) [3] &= omega^omega^2 + omega^2 dot 2 + omega^2 [3]\
       &= omega^omega^2 + omega^2 dot 2 + omega dot omega [3]\
       &= omega^omega^2 + omega^2 dot 2 + omega dot 3\
+  $
+  And repeat again:
+  $
       omega^omega^2 + omega^2 dot 2 + (omega dot 3)[3] &= omega^omega^2 + omega^2 dot 2 + omega dot 2 + omega[3]\
       &= omega^omega^2 + omega^2 dot 2 + omega dot 2 + 3
   $
@@ -142,12 +168,32 @@ Now that we have a standardized way to uniquely write each ordinal, we can final
   So $f_(omega^omega^2 + omega^omega)(3) = f_(omega^omega^2 + omega^2 dot 2 + omega dot 2 + 3)(3)$. Then
   #let ordinal = $omega^omega^2 + omega^2 dot 2 + omega dot 2$
   $
-      &f_(ordinal + 3)(3) = f_(ordinal redf(+ 2))^redf(3)(3)\
-      =& f_(ordinal + 2)(f_(ordinal + 2)(f_(ordinal + 2)(3)))\
-      =& f_(ordinal + 2)(f_(ordinal + 2)(f_(ordinal redf(+ 1))^redf(3)(3)))\
-      =& f_(ordinal + 2)(f_(ordinal redf(+1))^( bluef(f_(ordinal + 1)^3(3)) )( bluef(f_(ordinal + 1)^3(3)) ))\
+      &f_(ordinal + 3)(3) \
+      = &f_(ordinal redf(+ 2))^redf(3)(3)\
+      = &f_(ordinal + 2)(f_(ordinal + 2)(f_(ordinal + 2)(3)))\
+      = &f_(ordinal + 2)(f_(ordinal + 2)(f_(ordinal redf(+ 1))^redf(3)(3)))\
+      = &f_(ordinal + 2)(f_(ordinal redf(+1))^( bluef(f_(ordinal + 1)^3(3)) )( bluef(f_(ordinal + 1)^3(3)) ))\
   $
   And we will stop there. It's quite clear that this grows wayyy out of control that even expressing it in terms of $f_ordinal$ is basically impossible
+]
+
+#example[
+    $
+        e0[0] &= 0\
+        e0[1] &= omega^(e0[0]) = omega^0 = 1\
+        e0[2] &= omega^(e0[1]) = omega^1 = omega\
+        e0[3] &= omega^(e0[2]) = omega^omega\
+        e0[4] &= omega^(e0[3]) = omega^omega^omega\
+        &...
+    $
+    So:
+    $
+        f_e0 (1) &= f_1(1)\
+        f_e0 (2) &= f_omega (2)\
+        f_e0 (3) &= f_(omega^omega)(3)\
+        f_e0 (4) &= f_(omega^omega^omega)(4)\
+        &...
+    $
 ]
 
 == Other growing hierarchies
