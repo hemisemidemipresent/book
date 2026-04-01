@@ -11,12 +11,10 @@ Think of the decimal system, that allows you to express any number into a finite
 Of course, we also need to define some ordering of these strings too.
 
 #definition[
-  An *Ordinal Notation* is a well-ordered set $("OT",prec)$, where OT is a _recursive_ set of finite formal strings with a finite alphabet, and $prec$ is a _recursive_ order.
+  An *Ordinal Notation* is a well-ordered set $(OT,prec)$, where OT is a _recursive_ set of finite formal strings with a finite alphabet, and $prec$ is a _recursive_ order.
 
   (_recursive_ here means that there exists an algorithm to compute them, i.e. computable)
 ]
-
-
 
 == Iterated Cantor Normal Form
 #definition[
@@ -54,28 +52,28 @@ Of course, we also need to define some ordering of these strings too.
 
 #definition[
   Here we will define a recursive ordering for the ICNF ordinal notation. We define the following inductively:
-  + the set $"OT"_(=k)$ of ordinal notations of height $k$,
-  + the set $"OT"_(<=k)$ of ordinal notations of height $<=k$,
+  + the set $OT_(=k)$ of ordinal notations of height $k$,
+  + the set $OT_(<=k)$ of ordinal notations of height $<=k$,
   + an ordering $scripts(prec)_k$ on $O_(<=k)$
 
-  The sets $"OT"_(=k)$ and $"OT"_(<=k)$ are defined as such:
-  + $zero$ is the only ordinal notation of height 0, so $"OT"_(=0) = "OT"_(<=0) = {zero}$, and $scripts(prec)_0 = {}$, i.e., $zero scripts(prec.not)_0 zero$
+  The sets $OT_(=k)$ and $OT_(<=k)$ are defined as such:
+  + $zero$ is the only ordinal notation of height 0, so $OT_(=0) = OT_(<=0) = {zero}$, and $scripts(prec)_0 = {}$, i.e., $zero scripts(prec.not)_0 zero$
 
-  + If $"OT"_(=k), "OT"_(<=k), scripts(prec)_k$ are defined, then the set $"OT"_(=k+1)$, the set of all ordinal notations of height $k+1$, is defined as:
+  + If $OT_(=k), OT_(<=k), scripts(prec)_k$ are defined, then the set $OT_(=k+1)$, the set of all ordinal notations of height $k+1$, is defined as:
     $
     wpow(al(1)) plus wpow(al(2)) plus ...   plus wpow(al(n))
     $
-    where $al(1) in "OT"_(=k)$, and $al(1) scripts(succ.eq)_k al(2) scripts(succ.eq)_k ... scripts(succ.eq)_k al(n)$ ($al(i) in "OT"_(<=k)$).
+    where $al(1) in OT_(=k)$, and $al(1) scripts(succ.eq)_k al(2) scripts(succ.eq)_k ... scripts(succ.eq)_k al(n)$ ($al(i) in OT_(<=k)$).
 
     We color greek symbols in #greenf[*green*] to represent ordinal notations, rather than ordinals. Note that those colored in #redf[*red*] still represents the symbols themselves. To use a programming analogy, symbols in #greenf[*green*] are like variables containing strings (specifically, ordinal notation strings).
 
-  The order $scripts(prec)_(k+1)$ on $"OT"_(<k+1)$ is defined as such:
+  The order $scripts(prec)_(k+1)$ on $OT_(<k+1)$ is defined as such:
 
-  - Case 1: $alphag$ and $betag$ are both of height $<=k$ ($alphag "and" betag in "OT"_(<=k)$).
+  - Case 1: $alphag$ and $betag$ are both of height $<=k$ ($alphag "and" betag in OT_(<=k)$).
 
     In this case, we just use $scripts(prec)_k$ to compare them, i.e. $alphag scripts(prec)_(k+1) betag$ if $alphag scripts(prec)_k betag$.
 
-  - Case 2: $alphag$ is of height $<=k$ but $betag$ is of height $k+1$ ($alphag in "OT"_(<=k)$ and $betag in "OT"_(=k+1)$). In this case, $alphag scripts(prec)_(k+1) betag$
+  - Case 2: $alphag$ is of height $<=k$ but $betag$ is of height $k+1$ ($alphag in OT_(<=k)$ and $betag in OT_(=k+1)$). In this case, $alphag scripts(prec)_(k+1) betag$
 
   - Case 3: $alphag$ and $betag$ are both of height $k+1$.
 
@@ -96,43 +94,43 @@ Of course, we also need to define some ordering of these strings too.
 
       e.g. $wpow(wpow(zero)) plus wpow(zero) scripts(prec)_2 wpow(wpow(zero)) plus wpow(wpow(zero))$, here $j=1$
 
-  Finally, we can define the set of all ordinal notations $"OT"="OT"_(<=0) union "OT"_(<=1) union "OT"_(<=2) union ...$, and an ordering $prec = scripts(prec)_0 union scripts(prec)_1 union scripts(prec)_2 union ...$
+  Finally, we can define the set of all ordinal notations $OT=OT_(<=0) union OT_(<=1) union OT_(<=2) union ...$, and an ordering $prec = scripts(prec)_0 union scripts(prec)_1 union scripts(prec)_2 union ...$
 ]
 
 We still have to prove that ordering $prec$ on the set OT is a well-ordering. We will assume that it is a strict linear ordering -- the proof of that is left as an exercise to the reader (totally not because I'm lazy).
 
 #proposition[
-  $("OT"_(<=k), prec)$ is a well-ordered set
+  $(OT_(<=k), prec)$ is a well-ordered set
 ]
 #proof[
 
-  $"OT"_(<=0) = {zero}$ is trivially well-ordered, any nonempty subset is just ${zero}$, of which #zero is the smallest element.
+  $OT_(<=0) = {zero}$ is trivially well-ordered, any nonempty subset is just ${zero}$, of which #zero is the smallest element.
 
-  Now for induction, assume $("OT"_(<=k), prec)$ is well-ordered. The set $("OT"_(<=k+1), scripts(prec)_(k+1))$ is order isomorphic to the set of nonincreasing sequences of ordinal notations from $("OT"_(<=k), scripts(prec)_k)$. Why? because we can make a bijection $f: "OT"_(<=k+1) arrow.r.bar "OT"^*_(<=k)$ like this:
+  Now for induction, assume $(OT_(<=k), prec)$ is well-ordered. The set $(OT_(<=k+1), scripts(prec)_(k+1))$ is order isomorphic to the set of nonincreasing sequences of ordinal notations from $(OT_(<=k), scripts(prec)_k)$. Why? because we can make a bijection $f: OT_(<=k+1) arrow.r.bar OT^*_(<=k)$ like this:
 
   $f(wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n))) = (al(1), al(2), ..., al(n))$.
 
-  It should be apparent that the expression in the left hand side $wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n)) in "OT"_(<=k+1)$, and $al(1) succ.eq al(2) succ.eq ... succ.eq al(n)$, and thus the right hand side is an non-increasing sequence of expressions $al(i) in "OT"_(<=k)$ of variable length.
+  It should be apparent that the expression in the left hand side $wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n)) in OT_(<=k+1)$, and $al(1) succ.eq al(2) succ.eq ... succ.eq al(n)$, and thus the right hand side is an non-increasing sequence of expressions $al(i) in OT_(<=k)$ of variable length.
 
-  Since $"OT"_(<=k+1)$ is order isomorphic to the set of all non-increasing sequence of elements from $"OT"_(<=k)$, and $"OT"_(<=k)$ is well-ordered,
-  #link(label("non-increasing sequences well-ordered"))[by this proposition], $("OT"_(<=k+1), prec)$ must therefore be well-ordered too.
+  Since $OT_(<=k+1)$ is order isomorphic to the set of all non-increasing sequence of elements from $OT_(<=k)$, and $OT_(<=k)$ is well-ordered,
+  #link(label("non-increasing sequences well-ordered"))[by this proposition], $(OT_(<=k+1), prec)$ must therefore be well-ordered too.
 ]
 
 #proposition[
-  $("OT", prec)$ is well-ordered
+  $(OT, prec)$ is well-ordered
 ]
 
 #proof[
-  Let $al(1) succ al(2) succ ...$ be an infinite descending sequence of ordinal notations. The first $al(1)$ is of some height $k$. Since any ordinal notation of height $>k$ would be greater than any ordinal notation of height $k$, the height of every $al(i)$ is $<=k$. So $al(1) succ al(2) succ ...$ is an infinite descending sequence in $("OT"_(<=k), scripts(prec)_k)$. However, $("OT"_(<=k), scripts(prec)_k)$ is well-ordered, a contradiction. Therefore no infinite descending sequence can exist in $("OT", prec)$, so it is a well-ordered set.
+  Let $al(1) succ al(2) succ ...$ be an infinite descending sequence of ordinal notations. The first $al(1)$ is of some height $k$. Since any ordinal notation of height $>k$ would be greater than any ordinal notation of height $k$, the height of every $al(i)$ is $<=k$. So $al(1) succ al(2) succ ...$ is an infinite descending sequence in $(OT_(<=k), scripts(prec)_k)$. However, $(OT_(<=k), scripts(prec)_k)$ is well-ordered, a contradiction. Therefore no infinite descending sequence can exist in $(OT, prec)$, so it is a well-ordered set.
 ]
 
-While ordinal notations look like actual ordinals with symbols like #wpow(zero), they are really just complicated sequences of sequences of ... sequences of symbols. Ordinal notations of height 0 is just #zero. Then the ordinal notations of height 1 are #wpow(zero), $wpow(zero) plus wpow(zero), wpow(zero) plus wpow(zero) + wpow(zero), ...$. But we can instead represent them as sequences of ordinal notations of height 0, so $wpow(zero) = (zero), wpow(zero) + wpow(zero) = (zero, zero)$, and so on. We can then lexicographically order these sequences of #zero by length to get our order for $"OT"_(<=1)$, letting #zero be smaller than any sequence of $zero$s:
+While ordinal notations look like actual ordinals with symbols like #wpow(zero), they are really just complicated sequences of sequences of ... sequences of symbols. Ordinal notations of height 0 is just #zero. Then the ordinal notations of height 1 are #wpow(zero), $wpow(zero) plus wpow(zero), wpow(zero) plus wpow(zero) + wpow(zero), ...$. But we can instead represent them as sequences of ordinal notations of height 0, so $wpow(zero) = (zero), wpow(zero) + wpow(zero) = (zero, zero)$, and so on. We can then lexicographically order these sequences of #zero by length to get our order for $OT_(<=1)$, letting #zero be smaller than any sequence of $zero$s:
 
 $
 zero scripts(prec)_1 (zero) scripts(prec)_1 (zero, zero) scripts(prec)_1 (zero, zero, zero) scripts(prec)_1 ...
 $
 
-With this order, we can make a set of non-decreasing sequences of terms from $"OT"_(<=1)$, which corresponds to $"OT"_(<=2)$. For example, $wpow(wpow(zero) plus wpow(zero)) plus wpow(zero) = ((zero,zero),zero)$. We can define a lexicographic order on these sequences based on the order $scripts(prec)_1$ to get $scripts(prec)_2$, and with this method we can keep building ordinal notations of greater and greater height.
+With this order, we can make a set of non-decreasing sequences of terms from $OT_(<=1)$, which corresponds to $OT_(<=2)$. For example, $wpow(wpow(zero) plus wpow(zero)) plus wpow(zero) = ((zero,zero),zero)$. We can define a lexicographic order on these sequences based on the order $scripts(prec)_1$ to get $scripts(prec)_2$, and with this method we can keep building ordinal notations of greater and greater height.
 
 Ordinal notations themselves are *not transfinite sets* (unlike actual ordinals) -- this is why they are highlighted so distinctly in red. If you look closely, we do not need to know anything about transfinite ordinals to show that they are well-ordered (we just needed to know facts about lexicographical orderings of sequences).
 
@@ -143,26 +141,6 @@ We now have two order-isomorphic well-ordered sets of order type $e0$:
 + Ordinal notations $<e0$ ordered by $prec$ (This ordinal notation is known as Iterated Cantor Normal Form)
 
 Another example of a well-ordered set of order type $e0$ is the set of all finite, finitely branching trees.
-
-#let tree(array, r: .4) = [
-  #cetz.canvas({
-  import cetz.tree
-  import cetz.draw: *
-
-  set-style(content: (padding: .1))
-
-  tree.tree(
-    (
-      array
-    ),
-    direction: "up",
-    draw-node: (node, ..) => {
-      circle((), radius: r)
-      content((), node.content)
-    },
-  )
-})
-]
 
 #definition[
   The set $T$ of finite, finitely branching tree can be inductively defined as such:
@@ -280,7 +258,7 @@ Some examples are
 )
 ]
 
-With this, we can construct an order isomorphism from $T$ to #e0, and show that $T$ is of order type #e0. We can basically show via induction that $"OT"_(<=k)$, the set of all ordinal notations of height $<=k$ is order isomorphic to $T_(<=k)$, the set of all trees of height $<=k$ since the way the ordering is defined (lexicographic ordering of elements of lower height) is the same. (informal proof)
+With this, we can construct an order isomorphism from $T$ to #e0, and show that $T$ is of order type #e0. We can basically show via induction that $OT_(<=k)$, the set of all ordinal notations of height $<=k$ is order isomorphic to $T_(<=k)$, the set of all trees of height $<=k$ since the way the ordering is defined (lexicographic ordering of elements of lower height) is the same. (informal proof)
 
 === Kirby-Paris Hydra
 
@@ -606,7 +584,7 @@ We can use this notation to define either _a fast-growing function_, or a _syste
 We now show that PrSS is order isomorphic to #e0.
 
 // PrSS can be defined recursively as such:
-// Let $T_(=0)$ be the set of all "height 0" sequences, i.e. just the empty sequence $()$. It is well-ordered by #lex, and this correponds to $"OT"_0$ in ICNF.
+// Let $T_(=0)$ be the set of all "height 0" sequences, i.e. just the empty sequence $()$. It is well-ordered by #lex, and this correponds to $OT_0$ in ICNF.
 // $T_(=0) = T_(<=0)$
 
 Now, just like in ICNF where we use a non-increasing sequence of ordinal notations of height $<=k$ to define a new height $k+1$:
