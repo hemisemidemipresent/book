@@ -59,6 +59,8 @@ However, we can show that these two definitions lead to the same supremum of $ep
     $
 ]
 
+The fact that there are a wide variety of sequences with the same supremum means that beyond this point,
+fundamental sequences for these ordinals do not have an obvious "standard".
 
 $epsilon_1$ is the second fixed point of $omega^alpha = alpha$. Note that it is also a fixed point of $e0^alpha = alpha$.
 
@@ -233,7 +235,7 @@ In the previous section, we defined $epsilon_1$ as:
 $
     epsilon_1 &= sup{e0+1,omega^(e0+1), omega^omega^(e0+1), ...}\
     &= sup{phi(1,0)+1,phi(0,phi(1,0)+1), phi(0,phi(0,phi(1,0)+1)),...}\
-    &= sup{phi^n (0,phi(1,0)+1)|n in NN}\
+    &= sup{phi^n (0,phi(1,0)+1) | n in NN}\
     &= phi(1,1)
 $
 
@@ -278,7 +280,7 @@ We can instead prove a similar statement for all $phi(alpha+1,beta+1)$:
 ]
 Note that with this definition our $epsilon_1$ sequence would be translated as:
 $
-    phi(1,1) &= sup{f^n(1)|n in NN}\
+    phi(1,1) &= sup{f^n(1) | n in NN}\
     &= sup { phi(0,phi(1,0)+1), phi(0,phi(1,0)+phi(0,phi(1,0)+1)),...}\
     &= sup {omega^(e0+1), omega^(e0+omega^(e0+1)), omega^(e0+omega^(e0+omega^(e0+1))), ...}\
     &= sup {omega^(e0+1), omega^omega^(e0+1), omega^(omega^omega^(e0+1)),...}
@@ -293,7 +295,7 @@ $
 It should be obvious to deduce that it is also the supremum of all $phi(n,1)$ too, i.e., the value of the second argument does not matter.
 In general, for a limit ordinal $lambda$,
 $
-    phi(lambda, 0) = sup{phi(alpha,0)|alpha<lambda}
+    phi(lambda, 0) = sup{phi(alpha,0) | alpha<lambda}
 $
 
 
@@ -438,7 +440,7 @@ However, I'm going to skip straight to the veblen function with _transfinitely_ 
 == Transfinitary Veblen function
 
 === Finitely Supported functions
-#let fsarrow = $scripts(arrow.bar.r)_0$ // arrow for finitely supported functions
+#let fsarrow = $scripts(arrow.bar.r)_0$ // arrow for finitely supported functions, basically only used in this section
 #definition[
     A function $f:X arrow.bar.r Y$ if a *finitely supported* if there are only _finitely many_ values of $x in X$ such that $f(x) != 0$ (assuming $0 in Y$).
 

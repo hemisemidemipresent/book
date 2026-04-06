@@ -421,8 +421,8 @@ Like in Cantor Normal Form, $alpha_i$ does not necessarily have to be in normal 
     + $0 in C_0(0)$, normal form
     + $Omega = psi_1(0) in C_0(Omega)$, normal form
     + $psi_0(Omega) = e0 in.not C_0(e0)$, not normal form
-    Note that just because an ordinal $alpha$ is expressed in normal form, that does not mean $psi_nu (alpha)$ is in normal form.
-    ($psi_0(Omega)$ is normal form but $psi_0(psi_0(Omega))$ isn't)
+        Note that just because an ordinal $alpha$ is expressed in normal form, that does not mean $psi_nu (alpha)$ is in normal form.
+        ($psi_0(Omega)$ is normal form but $psi_0(psi_0(Omega))$ isn't)
     + Firstly we have $psi_2(Omega_3) = epsilon_(Omega_2 + 1)$. Then we have $psi_1(psi_2(Omega_3)) = psi_1(epsilon_(Omega_2+1))$, which in normal form is $psi_1(Omega_3)$.
         We then construct the following inequality to solve for $psi_0(psi_1(Omega_3))$:
         $
@@ -443,42 +443,196 @@ Before we go into the fundamental sequences of $psi$, we first introduce a conce
   Find the cofinality of
   + $omega 2$
   + $omega 2 + 3$
+  + $omega_1 = Omega$
 
   Answers:
   + Let $S = {omega + n | n in NN} subset omega 2$. $S$ has a cardinality of $omega$.
 
     However, we still need to rule out the possibility that there might be a subset $S$ of finite cardinality (i.e. cardinality $<omega$) that still satisfies the criteria that $omega 2$ is the smallest ordinal greater than every element in $S$
 
-    In a subset $S$ which has a nonzero finite cardinality, there is a largest element $beta$, and its successor $beta + 1$ is the smallest ordinal greater than all elements of the subset $S$ while being less than $omega 2$. Therefore $S$ can't have nonzero finite cardinality.
+    In a subset $S$ which has a nonzero finite cardinality, there is a largest element $beta$, and its successor $beta + 1$
+    is the smallest ordinal greater than all elements of the subset $S$ while being less than $omega 2$. Therefore $S$ can't have nonzero finite cardinality.
 
     If $S$ has a cardinality of $0$ (i.e. $S = emptyset = {}$), then $0$ is the smallest ordinal greater than all elements in $S$. Therefore $S$ can't have a cardinality of $0$.
 
     Therefore the smallest cardinality of $S$ where $omega 2$ is the least ordinal greater than all elements in $S$ is $omega$.
   + $S = {omega 2 + 2} subset omega 2 + 3$, and $S$ has a cardinality of $1$. $S$ can't have a cardinality of $0$ since the smallest ordinal larger than nothing is $0$.
+  + $omega_1$ (and its associated cardinal $aleph_1$) is defined as the set of all ordinals whose cardinality is $<=aleph_0$. So the smallest subset where $omega_1$ is the
 ]
 
 Now onto fundamental sequences. A fundamental sequence for an ordinal number $alpha$ with cofinality $cof(alpha) = beta$ is a strictly increasing sequence
 $(alpha[0], alpha[1], ...)$ with length $beta$ and limit $alpha$ (i.e. $alpha = sup{alpha[eta] | eta < beta}$)
 
-[WIP: Other systems of fundamental sequences]
 
-#definition(name: [_*Denis Maksudov's system of fundamental sequences*_])[
+#definition(name: [_*System of fundamental sequences for $psi$*_])[
     For ordinals $alpha<=TFBO$ (expressed in normal form), the $eta^"th"$ term of the fundamental sequence of $alpha$, $alpha[eta]$ is defined as such:
     + If $alpha = psi_k_1 (alpha_1) + ... + psi_k_n (alpha_n)$, then $cof(alpha) = cof(psi_k_n (alpha_n))$, and
         $alpha[eta] = psi_k_1 (alpha_1) + ... + (psi_k_n (alpha_n)[eta])$
     + If $alpha = psi_0(0) = 1$ then $cof(alpha) = 1$. We need a sequence of length $1$, so we set $alpha[0] = 0$
     + If $alpha = psi_(nu+1)(0) = Omega_(nu+1)$, then $cof(alpha) = Omega_(nu+1)$.
         We need a sequence of length $Omega_(nu+1)$, so we set $alpha[eta] = Omega_(nu+1) [eta] = eta$
-    + If $alpha = psi_omega (0)$, then $cof(alpha) = cof(omega) = omega$ and $alpha[eta] = psi_nu[eta] (0) = Omega_nu[eta]$
+    + If $alpha = psi_omega (0)$, then $cof(alpha) = cof(omega) = omega$ and $alpha[eta] = psi_omega[eta] (0) = Omega_omega[eta] = Omega_eta$
     + If $alpha = psi_nu (beta + 1)$ then $cof(alpha) = omega$ and $alpha[eta] = psi_nu (beta) dot eta$
-    + If $alpha = psi_nu (beta)$ where $beta$ is a limit ordinal whose cofinality $cof(beta) in {omega} union {Omega_(mu+1) | mu < nu}$,
-        then we have $cof(alpha) = cof(beta)$, so we need a sequence of length $cof(beta)$, so $alpha[eta] = psi_nu (beta[eta])$
-    + If $alpha = psi_nu (beta)$ where $beta$ is a limit ordinal whose cofinality $cof(beta) = Omega_(mu+1)$ for $mu >= nu$,
-        then $cof(alpha) = omega$ and $alpha[eta] = psi_nu (beta[gamma[n]])$ where $gamma[0] = Omega_mu$, and $gamma[eta+1] = psi_nu (beta[gamma[eta])$
+    + If $alpha = psi_nu (beta)$ where $beta$ is a limit ordinal,
+        #set enum(numbering: "(a)")
+        + If $cof(beta) = omega$ or $cof(beta) <= Omega_nu$,
+            then we have $cof(alpha) = cof(beta)$, so we need a sequence of length $cof(beta)$, so $alpha[eta] = psi_nu (beta[eta])$
+        + Otherwise if $cof(beta) > Omega_nu$ and $cof(beta) != omega$
+            then $cof(alpha) = omega$. This is where the definitions diverge.
+
+            #let mu = redf($mu$)
+            #let nu = pinkf($nu$)
+            We define $mu$ as $cof(beta) = Omega_(mu+1)$.
+
+            $alpha[n] = psi_nu (beta[gamma[n]])$, where $gamma[0] = 0$, and $gamma[eta+1] = psi_mu (beta[gamma[eta]])$.
+            To illustrate this nesting process:
+            $
+                alpha[0] &= psi_nu (beta[gamma[0]]) = psi_nu (beta[0])\
+                alpha[1] &= psi_nu (beta[gamma[1]]) = psi_nu (beta[ psi_mu (beta[0]) ])\
+                alpha[2] &= psi_nu (beta[gamma[2]]) =psi_nu (beta[ psi_mu (beta[ psi_mu (beta[0] ]) ])\
+            $
+            In the case of $mu=nu$ however, we can use a shortcut: $alpha[0] = psi_nu (beta[0])$, and $alpha[eta+1] = psi_nu (beta[alpha[eta]])$
+
+            However there are many other systems out there:
+
+            - #link("https://googology.miraheze.org/wiki/Extended_Buchholz%27s_function#Fundamental_sequences")[Dennis Maksudov]:
+
+                Same definition, except $gamma[0] = Omega_mu$.
+
+            - #link("https://davidexmachina.github.io/garden-of-ordinals")[David_Exmachina]:
+
+                $alpha[0] = 0$, and $gamma[1] = 0$, otherwise $gamma[eta+1]$ unchanged.
+
+            - #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz's Original Paper]
+
+                Then $alpha[eta] = psi_nu (beta[psi_mu (beta[1])])$.
+
+                Note that this is not as commonly used, as this "fundamental sequence" is independent of $eta$ (i.e. $alpha[0] = alpha[1] = ...$).
 ]
 There's a lot to go through here, so let's go through some examples:
 #example[
-    +
+    Calculate the fundamental sequences of the following
+    + $psi_1(0) = Omega$
+    + $psi_0 (omega) = omega^omega$
+    + $psi_0 (Omega) = e0$
+    + $psi_0 (Omega + 1) = e0 dot omega = omega^(e0+1)$
+    + $psi_0 (Omega 2) = epsilon_1$
+    + $psi_0 (Omega^2) = z0$
+    + $psi_0 (Omega_2) = "BHO"$
+
+    Before you peek into the answers, do try your hand at them!
+
+    *Answers*:
+    + For $psi_1(0) = Omega$, this falls under Rule 3, $cof(psi_1(0)) = cof(Omega) = Omega$, so we need a sequence of length $Omega$.
+        As such $psi_1(0)[eta] = Omega[eta] = eta$.
+
+        In fact, for all $Omega_nu, nu in NN\\{0}, Omega_nu [eta] = eta$.
+    + For $psi_0(omega)$, $cof(omega) = omega$ (Rule 6(a)).
+
+        So $cof(alpha) = cof(beta)$, and $psi_0(omega)[n] = psi_0(omega[n]) = omega^n$.
+        Since $psi_0(omega) = omega^omega$, $omega^omega [n] = omega^n$ seems reasonable.
+
+    + For $psi_0(Omega)$, $cof(Omega) > Omega_0 = 1$, and $cof(Omega) != omega$ (Rule 6(b)). So $cof(alpha) = cof(omega)$, and
+        $
+            psi_0(Omega)[0] &= psi_0(Omega[0])\
+            &= psi_0(0)\
+            &= 1\
+            psi_0(Omega)[1] &= psi_0(Omega[psi_0(Omega)[0]])\
+            &= psi_0(Omega[1])\
+            &= psi_0(1)\
+            &= omega\
+        $
+        So we have the following fundamental sequence, which makes sense:
+        $
+            e0[0] &= 0\
+            e0[1] &= omega\
+            e0[2] &= omega^omega\
+            e0[3] &= omega^omega^omega\
+            &thick dots.v
+        $
+    + For $psi_0(Omega + 1)$, this falls under Rule 5 when insides $beta+1$ is a successor ordinal.
+        In this case we just have $psi_0(Omega+1)[eta] = psi_0(Omega) dot eta$, i.e. $(e0 dot omega )[n] = e0 dot n$, which seems reasonable.
+    + For $psi_0(Omega 2)$, we have $cof(Omega 2) = Omega$ which falls under Rule 6(b), and the specical shortcut where $mu=nu$. We first have
+        $
+            psi_0(Omega)[0] &= psi_0(Omega 2[0])\
+        $
+        But what is $Omega 2[eta]$? $Omega 2 [eta] = Omega + Omega[eta] = Omega + eta$. Continuing:
+        $
+            psi_0(Omega 2)[0] &= psi_0(Omega 2 [0])\
+            &= psi_0(Omega + 0)\
+            &= e0\
+
+            psi_0(Omega 2)[1] &= psi_0(Omega 2 [e0])\
+            &= psi_0(Omega + e0)\
+            &= e0 dot omega^e0\
+            &= e0^2 = omega^(e0 dot 2)\
+
+            psi_0(Omega 2)[2] &= psi_0(Omega 2 [e0^2])\
+            &= psi_0(Omega + omega^(e0 dot 2))\
+            &= e0 dot omega^omega^(e0 dot 2)\
+            &= e0^e0 = omega^omega^(e0 dot 2)
+        $
+        So we have the fundamental sequence of $epsilon_1 = psi_0(Omega 2)$:
+        $
+            epsilon_1[0] &= e0\
+            epsilon_1[1] &= e0^2 = omega^(e0 dot 2)\
+            epsilon_1[2] &= e0^e0 = omega^omega^(e0 dot 2)\
+            epsilon_1[3] &= e0^e0^e0 = omega^omega^omega^(e0 dot 2)\
+            &thick dots.v
+        $
+        Note that this is a *different* fundamental sequence than the one we defined with veblen's $phi$.
+    + For $psi_0(Omega^2)$, we have $cof(Omega^2) = Omega$ which falls under Rule 6(b), along with the special shortcut.
+
+        So we have
+        $
+            psi_0(Omega)[0] &= psi_0(Omega^2[0])\
+        $
+        But what is $Omega^2[eta]$? $Omega^2$ itself is $psi_1(Omega)$, and $psi_1(Omega)[eta] = psi_1(Omega[eta]) = psi_1(eta) = omega^(Omega + eta) = Omega dot omega^eta$ (by Rule 6(a)).
+        So $Omega^2[eta] = Omega dot eta$. Continuing:
+        $
+            psi_0(Omega)[0] &= psi_0(Omega^2[0])\
+            &= psi_0(Omega dot omega^0)\
+            &= e0\
+            psi_0(Omega)[1] &= psi_0(Omega^2[psi_0(Omega^2)[0]])\
+            &= psi_0(Omega^2[e0])\
+            &= psi_0(Omega dot omega^e0)\
+            &= psi_0(Omega dot e0)\
+            &= epsilon_e0 "(Recall" psi_0(Omega^alpha dot (1+beta)) = phi(alpha,beta)")"\
+        $
+        So we have the fundamental sequence of $z0 = psi_0(Omega^2)$:
+        $
+            z0[0] &= e0\
+            z0[1] &= epsilon_e0\
+            z0[2] &= epsilon_epsilon_e0\
+            &thick dots.v
+        $
+        This time, this is consistent with the one for veblen.
+    + For $psi_0(Omega_2)$, $cof(Omega_2) = Omega_2 > Omega_0$ and $cof(Omega_2)!=omega$ so once again it falls under Rule 6(b), but we no longer have the special shortcut.
+
+        Let's first evaluate $gamma[eta]$. Since $cof(Omega_2) = Omega_2$, we have $mu = 1$:
+        $
+            gamma[0] &= 0\
+            gamma[1] &= psi_1(Omega_2[gamma[0])\
+                &= psi_1(Omega_2[0])\
+                &= Omega\
+            gamma[2] &= psi_1(Omega_2[gamma[1]])\
+            &= psi_1(Omega_2[Omega])\
+            &= psi_1(Omega)\
+            &= Omega^2\
+            gamma[3] &= psi_1(Omega_2[gamma[2]])\
+            &= psi_1(Omega^2)\
+            &= Omega^Omega
+        $
+        This is a familiar pattern: $0, Omega, Omega^2, Omega^Omega, Omega^Omega^Omega, ...$. Since $psi_0(Omega_2)[n] = psi_0(Omega_2[gamma[n]]) = psi_0(gamma[n])$,
+        we have the following fundamental sequence:
+        $
+            psi_0(Omega_2)[0] &= 0\
+            psi_0(Omega_2)[1] &= psi_0(Omega) = e0\
+            psi_0(Omega_2)[2] &= psi_0(Omega^2) = z0\
+            psi_0(Omega_2)[3] &= psi_0(Omega^Omega) = G0\
+            psi_0(Omega_2)[4] &= psi_0(Omega^Omega^Omega) = LVO\
+            &thick dots.v
+        $
 ]
 
 

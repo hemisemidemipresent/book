@@ -16,16 +16,17 @@ You may also suggest or contribute chapters for new topics, though I'd like it t
 Some concepts that I am currenty nowhere confident enough to write about are:
 
 - Inaccessible cardinals, Mahlo Cardinals, Weakly Compact Cardinals, Stability, Reflection and whatever OCF can use them
-- y sequence
+- Why BMS is so powerful
 - Laver tables
-- Proof Theoretic Ordinals (though ordinal analysis might be way too technical to be summarized in a chapter)
-
+- y sequence
+- Proof Theoretic Ordinals (though ordinal analysis might be way too technical to be summarized in a chapter and require prior reading of several textbooks)
 
 References:
 - Googology wiki(s)
 - The googology discord
 - An Introduction to Proof Theory: Normalization, Cut-elimination, and Consistency Proofs by Paolo Mancosu, Richard Zach, and Sergio Galvan
 - Zhongshu Wu PrSS document on google drive
+- https://codegolf.stackexchange.com/questions/139355/golf-a-number-bigger-than-tree3/219466#219466
 
 == Prerequisites
 

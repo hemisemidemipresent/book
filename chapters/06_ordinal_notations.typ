@@ -24,7 +24,7 @@ Of course, we also need to define some ordering of these strings too.
 )
   - #zero
   - #plus
-  - The function $redf(bold(omega^circle.filled.small))redf("(")"something"redf(")") $ which can also be written as $ wpow("something")$
+  - The function $redf(sans(omega^circle.filled.small))redf("(")"something"redf(")") $ which can also be written as $ wpow("something")$
 
   The ICNF ordinal notation $o(alpha)$ for an ordinal $alpha < e0$ is:
   $
@@ -492,6 +492,9 @@ The goodstein sequence seems to grow forever, but this sequence eventually termi
 
 == The Primitive Sequence System (PrSS)
 
+// This is a system invented by Japanese Googologist Bashicu #link("https://googology.fandom.com/ja/wiki/ユーザーブログ:BashicuHyudora/BASIC言語による巨大数のまとめ#原始数列数(Primitive_sequence_number)")[in 2015],
+// which is very similar to how the Kirby-Paris Hydra works. It can be thought of as a way to encode the hydra in a linear array.
+
 #definition(name: [*_Primitive Sequence System (PrSS)_*])[
     Let the set $T$ be the set of sequences $s = (a_1, a_2, ..., a_l)$ such that:
 
@@ -521,7 +524,7 @@ We can use this notation to define either _a fast-growing function_, or a _syste
     - The *good root* $g$ and the *bad root* $b$ are defined as such:
         - $g = (a_1, ..., a_(p(l)-1))$
         - $b = (a_p(l), ..., a_(l-1))$
-        - if $p(l)$ does not exist (i.e. there is no a_i < a_l), then: $g=(a_1, ..., a_(l-1))$ and $b$ is empty
+        - if $p(l)$ does not exist (i.e. there is no $a_i < a_l$), then: $g=(a_1, ..., a_(l-1))$ and $b$ is empty
     - $s[n] = (g, b, b, ..., b)$ with $n$ copies of $b$, though this can be replaced with any increasing function $f(n)$. The original definition used $f(n) = n^2$.
 
     As for the _fast-growing function_ also confusingly labelled $s[n]$:
@@ -705,31 +708,107 @@ $(greenf(0\,1),redf(2\,3\,3),bluef(3))[3] = (greenf(0\,1),redf(2\,3\,3),redf(2\,
         ]
     )
 ]
+With #greenf[green] representing the good root and #redf[red] representing the bad root.
 
 === Growth rate of $s[n]$
 
 Since we have assigned a mapping from each PrSS sequence to an ordinal, let's compare PrSS expansion rules with the Hardy Hierarchy,
 using the Wainer Hierarchy for fundamental sequences.
-We make just one modification to $H$, that for a limit ordinal $alpha$, $H_alpha (n) = H_alpha[n] (n+1)$ instead of the usual $H_alpha[n](n)$.
-We can rewrite this as $H_alpha (n) = H_(alpha[n]+1)(n)$ since $H_(alpha+1)(n)= H_alpha (n+1)$.
+We make just one modification to $H$, that for a limit ordinal $alpha$, $H'_alpha (n) = H'_alpha[n] (n+1)$ instead of the usual $H'_alpha[n](n)$.
+We can rewrite this as $H'_alpha (n) = H'_(alpha[n])(n+1) = H'_(alpha[n]+1)(n)$.
+// We can rephrase this to be a modification of the Wainer Hierarchy
 
 #set align(center)
 #table(
     align: left + horizon,
     inset: 0.75em,
     columns: (auto, auto),
-    table.header([*PrSS*], [*HH*]),
-    $()[n] = n$, $H_0(n) = n$,
-    $(0)[n] = ()[n+1]$, $H_1(n) = H_0(n+1)$,
-    $(0,0)[n] = (0)[n+1]$, $H_2(n) = H_1(n+1)$,
-    $(0,1)[n] = underbrace((0\,0\,0\,...\,0), n "copies of" 0)[n+1]$, $H_omega (n) = H_n (n+1)$,
-    $(0,1,0)[n] = (0,1)[n+1]$, $H_(omega+1) = H_omega (n+1)$,
-    $(0,1,0,1)[n] = (0\,1\,underbrace(0\,0\,0\,...\,0, n "copies of" 0))[n+1]$, $H_(omega dot 2) (n) = H_(omega + n) (n+1)$,
-    $(0,1,1)[n] = underbrace((0\,1\,...\,0\,1), n "copies of" (0,1))[n+1]$, $H_(omega^2) (n) = H_(omega n) (n+1)$,
-    $(0,1,2)[n] = (0\,1\,underbrace(1\,1\,1\,...\,1, n "copies of" 1))[n+1]$, $H_(omega^omega) (n) = H_(omega^n) (n+1)$,
+    table.header([*PrSS*], [*HH (modified)*]),
+    $()[n] = n$, $H'_0(n) = n$,
+    $(0)[n] = ()[n+1]$, $H'_1(n) = H'_0(n+1)$,
+    $(0,0)[n] = (0)[n+1]$, $H'_2(n) = H'_1(n+1)$,
+    $(0,1)[n] = underbrace((0\,0\,0\,...\,0), n "copies of" 0)[n+1]$, $H'_omega (n) = H'_n (n+1)$,
+    $(0,1,0)[n] = (0,1)[n+1]$, $H'_(omega+1) = H'_omega (n+1)$,
+    $(0,1,0,1)[n] = (0\,1\,underbrace(0\,0\,0\,...\,0, n "copies of" 0))[n+1]$, $H'_(omega dot 2) (n) = H'_(omega + n) (n+1)$,
+    $(0,1,1)[n] = underbrace((0\,1\,...\,0\,1), n "copies of" (0,1))[n+1]$, $H'_(omega^2) (n) = H'_(omega n) (n+1)$,
+    $(0,1,2)[n] = (0\,1\,underbrace(1\,1\,1\,...\,1, n "copies of" 1))[n+1]$, $H'_(omega^omega) (n) = H'_(omega^n) (n+1)$,
 )
 #set align(left)
 
 We see the correspondence between each PrSS sequence and its associated ordinal in our modified Hardy Hierarchy.
-Therefore the maximum growth rate of PrSS is $(0,1,2,3,...)[n]$ which corresponds to $H_e0 (n)$.
+Therefore the maximum growth rate of PrSS is $(0,1,2,3,...)[n]$ which corresponds to $H'_e0 (n)$.
 
+#block[
+    #let HH = $purplef(H)^purplef(')$ // our modified HH
+    Let's first relate our modified $HH$ to the regular Hardy Hierarchy $H$. For finite ordinal $m$, $HH_m (n) = H_m (n)$ since we don't need to take a fundamental sequence.
+    However, things start to diverge past $omega$:
+
+
+    $
+        HH_omega (n) &= HH_n (n+1) = H_(n+1)(n) = H_(omega+1)(n)\
+        HH_(omega + 1) (n) &= HH_omega (n+1) = H_(omega+1)(n+1) = H_(omega+2)(n)\
+        HH_(omega + m) (n) &= H_(omega+m+1)(n)\
+        HH_(omega 2)(n) &= HH_(omega +n+1)(n) = H_(omega+n+2)(n) = H_(omega 2 + 2)(n)\
+        HH_(omega m)(n) &= H_(omega m + m)(n)\
+        HH_(omega^2)(n) &= HH_(omega n + 1)(n) = H_(omega n + n + 1)(n) = H_(omega^2 + omega + 1)(n)\
+        HH_(omega^3)(n) &= HH_(omega^2 n + 1)(n) = H_(omega^3 + omega^2 + omega + 1)(n)\
+        HH_(omega^m)(n) &= H_(omega^m + omega^(m-1) + ... + omega + 1)(n)\
+        HH_(omega^omega)(n) &= H_(omega^n + omega^(n-1) + ... + omega + 1)(n)\
+        HH_(omega^(omega + 1))(n) &= H_(omega^(n+1) + omega^n + ... + omega + 1)(n)\
+        HH_(omega^(omega + m))(n) &= H_(omega^(n+m) + ... + omega + 1)(n)\
+        HH_(omega^(omega + omega))(n) &= HH_(omega^(omega + n)+1)(n) = H_(omega^(2n) + ... + omega + 2)(n)\
+    $
+    #lemma[
+        The maximum growth rate of PrSS is $HH_e0 (n) = H_e0 (n)$.
+    ]
+    #proof[
+        Generally for an ordinal $alpha<e0$, $H_alpha <= HH_alpha < H_(omega^alpha)$, so $H_(omega^alpha) <= HH_(omega^alpha) < H_(omega^omega^alpha)$, so:
+
+        $
+            HH_e0 &= sup {HH_(omega up up n) | n in NN}\
+            sup {H_(omega up up n) | n in NN} &<= sup {HH_(omega up up n) | n in NN} <=  sup {H_(omega up up (n+1)) | n in NN}\
+            H_e0 (n) &<= sup {HH_(omega up up n) | n in NN} <=  H_e0 (n)\
+            therefore HH_e0 (n) &= sup {HH_(omega up up n) | n in NN} =  H_e0 (n)\
+        $
+    ]
+]
+
+But what about the fast-growing hierarchy? How does that relate to the Hardy Hierarchy. We can show that $f_e0 (n) = H_e0 (n)$,
+i.e., the Hardy Hierarchy "catches up" at #e0.
+#lemma[
+    $
+        f_alpha (n) = H_(omega^alpha)(n)
+    $
+]
+#proof[
+    + Base case: $f_0(n) = H_(omega^0)(n) = H_1(n) = n+1$
+    + Successor case: If $f_alpha (n) = H_(omega^alpha)(n)$, then:
+    $
+            H_(omega^alpha + omega^alpha)(n) &= H_(omega^alpha)(H_(omega^alpha)(n))\
+            &= f_alpha^2(n)\
+    $
+
+    $
+            H_(omega^(alpha+1))(n) &= H_(omega^alpha dot n)(n)\
+            &= f_alpha^n (n)\
+            &= f_(alpha+1)(n)
+    $
+    + Limit case: If for a limit ordinal $alpha$, for all $beta<alpha, f_beta (n) = H_(omega^beta)(n)$, then:
+    $
+        H_(omega^beta)(n) &= sup {H_(omega^beta[n]) | n in NN}\
+        &= sup {f_beta[n] (n) | n in NN}\
+        &= f_beta (n)
+    $
+]
+#proposition[
+    $
+        f_e0 (n) = H_e0(n)
+    $
+]
+#proof[
+    $
+        f_e0 (n) &= sup{f_(omega)(n), f_(omega^omega)(n), f_(omega^omega^omega)(n), ...}\
+        &= sup{H_(omega^omega)(n), H_(omega^omega^omega)(n), H_(omega^omega^omega^omega)(n), ...}\
+        &= H_e0 (n)
+    $
+]

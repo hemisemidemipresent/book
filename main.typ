@@ -1,7 +1,3 @@
-// editorial notes:
-// - sections with [WIP] are work in progress/needs help
-// - := usage not standardized for definitions
-
 // packages for textbook-like formatting of chapters and sections
 #import "@preview/beautitled:0.1.0": *
 #beautitled-setup(
@@ -49,12 +45,15 @@
   corollary-label: [_Proof_],
 )
 
-#set page(numbering: "1")
+#set page(
+    numbering: "1",
+    // fill: rgb("#f3ead3")
+)
 
 
 // actual layout starts here
 #align(center)[
-  #text(size:4em)[Ordinal Googology]
+  // #text(size:4em)[Ordinal Googology]
 ]
 #beautitled-toc(title: "Contents")
 #pagebreak()
@@ -63,13 +62,13 @@
 #show link: set text(fill: blue)
 #show link: underline
 
-#include "chapters/01_introduction.typ"
-#include "chapters/02_hyperoperators.typ"
-#include "chapters/03_intro_to_ordinals.typ"
-#include "chapters/04_fgh.typ"
-#include "chapters/05_formal_ordinals.typ"
-#include "chapters/06_ordinal_notations.typ"
-#include "chapters/07_veblen.typ"
+// #include "chapters/01_introduction.typ"
+// #include "chapters/02_hyperoperators.typ"
+// #include "chapters/03_intro_to_ordinals.typ"
+// #include "chapters/04_fgh.typ"
+// #include "chapters/05_formal_ordinals.typ"
+// #include "chapters/06_ordinal_notations.typ"
+// #include "chapters/07_veblen.typ"
 #include "chapters/08_buchholz_ocf.typ"
 #include "chapters/09_buchholz_on.typ"
-#include "chapters/10_bms.typ"
+#include "chapters/10_intro_to_bms.typ"

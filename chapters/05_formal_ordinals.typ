@@ -264,10 +264,35 @@ With the definition of $lex$ extended to any sequence of length $k$, we can now 
   Let $n_1$ be the smallest $n$ such that $(n, m_2, m_3, ..., m_k) in Y$. Then there is no $(m_1, m_2, m_3,..., m_k) in Y$ such that $m_1 < n_1$. Now let $n_2$ be the smallest $n$ such that $(n_1, n, m_3, ..., m_k) in Y$. Again, there is no $(m_1, m_2, m_3, ..., m_k) in Y$ such that $m_1 < n_1$ or $n_1 = m_1 "and" m_2 < n_2$. Continue this process until you finally define $n_k$ as the least $n$ such that $(n_1, n_2, n_3, ..., n) in Y$. Then $(n_1, n_2, n_3, ..., n_k) in Y$ is the least element in the $lex$ ordering.
 ]
 
-// #proposition[$(NN^k, lex)$ has order type $omega^k$.]
-// #proof[
-//   [WIP] idk how to inductively prove this.
-// ]
+#proposition[$(NN^k, lex)$ has order type $omega^k$.]
+#proof[
+    We use successor induction:
+
+    + Base case: $(NN^1, lex)$ has order type $omega^1$
+    + Successor case: Suppose $(NN^k, lex)$ has order type $omega^k$.
+        This means there exists an order isomorphism $o: NN^k arrow.r.bar omega^k$.
+        From this, we show that we can construct an order isomorphism $o':NN^(k+1) arrow.r.bar omega^(k+1)$
+
+        Firstly, it is apparent that there is an order isomorphism from $NN^(k+1)$ to ordered pairs $(n, s)$ where $n in NN$ and $s in NN^k$,
+        where $n$ represents the first entry in a sequence in $NN^(k+1)$ and $s in NN^k$ represents the rest.
+
+        Given a sequence $s' in NN^(k+1)$, we can then define $o'$ as such:
+        $
+            o'(s') &= o'(n,s) "for some" n in NN "and" s in NN^k\
+            &= omega^k dot n + o(s)
+        $
+
+        We prove that this new map $o'$ is order-preserving by contradiction. Suppose there exists two sequences $s'_1, s'_2 in NN^(k+1)$,
+        such that $s'_1 lex s'_2$ but $o'(s'_1) lt.not s'(s'_2)$. We can then express each sequence as ordered pairs as shown earlier, i.e.,
+        $s'_1$ becomes $(n_1, s_1)$ and $s'_2$ becomes $(n_2, s_2)$. If $n_1 = n_2$, then $s_1 lex s_2$ but $o(s_1) lt.not o(s_2)$,
+        which means that $o$ is not order-preserving, which contradictions our assumption. And if $n_1 < n_2$, then
+        $
+            omega^k dot n_1 + o(s_1) &< omega^k dot n_2 + o(s_2)
+        $
+        since $o(s) < omega^k$ for all $n in NN^k$, and therefore $o'(s'_1) < o'(s'_2)$, a contradiction.
+
+
+]
 
 However, what if we want to compare sequences of arbitrary length? Let $NN^*$ be the sequences of natural number of arbitrary length:
 $
@@ -359,7 +384,7 @@ However, if we only consider *decreasing sequences*, #lex is a well-order (Note 
     Therefore $(NN^*_>, lex)$ is a well-ordered set.
 ]
 
-Note that there's nothing special about $NN$ here, we can replace $NN$ with an well-ordered set:
+Note that there is nothing special about $NN$ here, we can replace $NN$ with any well-ordered set:
 #proposition[
 
     Let $(X, <)$ be a well-ordered set.

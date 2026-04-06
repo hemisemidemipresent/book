@@ -2,7 +2,11 @@
 #let warning(content) = remark(content)
 #let proof(content) = corollary(content, number: "")
 
-// tree
+
+// trees
+#import "@preview/cetz:0.4.2"
+#import "@preview/mannot:0.3.2":*
+#import "@preview/fletcher:0.5.8": *
 #import "@preview/tdtr:0.5.4" : *
 // tree with circles
 #let custom-tree-graph = tidy-tree-graph.with(
@@ -73,9 +77,12 @@
   // fill: rgb("#efEaD2"),
 )
 
+// spacing
+#let zws = [\u{200b}] // zero width space
 
-#let maroon = color.rgb("#800000")
-#let red = color.rgb("#f35667")
+// colors
+// #let maroon = color.rgb("#800000")
+#let red = color.rgb("#f85552")
 #let orange = color.rgb("#f78205")
 #let green = color.rgb("#00B600")
 #let lightblue = color.rgb("#90D5FF")
@@ -84,7 +91,7 @@
 #let lilac = color.rgb("#d69dff")
 #let pink = color.rgb("#ff6ec7")
 // fill shorthands
-#let maroonf(content) = text(content, fill:maroon)
+// #let maroonf(content) = text(content, fill:maroon)
 #let redf(content) = text(content, fill: red)
 #let orangef(content) = text(content, fill: orange)
 #let greenf(content) = text(content, fill: green)
@@ -127,14 +134,14 @@
 #let Lim = $"Lim"$ // proper class of all limit ordinals
 
 // Ordinal Notations
-#let zero = redf($bold(0)$)
+#let zero = redf($sans(bold(0))$)
 #let plus = redf($+$)
-#let wpow(content) = $redf(bold(omega))^#content$
-#let OT = $O T$ // set of all ordinal terms
+#let wpow(content) = $redf(sans(omega))^#content$
+#let OT = "OT" // set of all ordinal terms
 // BOCF Ordinal notations
 #let PT = $P T$ // set of principal terms
-#let bocf(nu, alpha) = $redf(bold(psi))_#nu redf(\() #alpha redf(\))$
-#let ternary(s,t,u) = $#s redf(in) redf(bold(C))_#t redf(\() #u redf(\))$ // s in C_t(u)
+#let bocf(nu, alpha) = $redf(bold(psi))_#nu redf(\() #alpha redf(\))$ // serif cause sans psi looks horrific
+#let ternary(s,t,u) = $#s redf(sans(in)) redf(bold(sans(C)))_#t redf(\() #u redf(\))$ // s in C_t(u)
 
 // arrow
 #import "@preview/xarrow:0.4.0": *
