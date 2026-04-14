@@ -4,7 +4,7 @@
 
 == What lies beyond $e0$?
 
-We previously spent a lot of time on ordinals $<e0$. We finally see what lies beyond $e0$. We first start with $e0 + 1$, then $e0 + 2, e0 + omega, e0 + omega^2, e0+omega^omega,$ until we get $e0 + e0 = e0 dot 2$.
+We previously spent a lot of time on ordinals $<e0$. In this chapter, we finally see what lies beyond $e0$. We first start with $e0 + 1$, then $e0 + 2, e0 + omega, e0 + omega^2, e0+omega^omega,$ until we get $e0 + e0 = e0 dot 2$.
 We then have the following ordinals, and their expression in Cantor Normal Form (CNF):
 
 (Note that CNF applies to *all* ordinals, not just ordinals $<e0$. It is the _Ordinal Notations_ discussed last chapter that have this restriction.)

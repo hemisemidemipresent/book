@@ -91,10 +91,7 @@ We previously defined addition recursively #link(<addition>)[here]. Let's add a 
   omega + 1 &= omega + S(0)\
   &= S(omega+0) "(Rule 2)"\
   &= S(omega) "(Rule 1)"\
-  &= omega + 1
-  $
-
-  $
+  &= omega + 1\
   1 + omega &= union.big_(delta<omega) (1 + delta) "(Rule 3)"\
   &= 1 union 2 union 3 union ...\
   &= {0} union {0,1} union {0,1,2} union ...\
@@ -167,7 +164,7 @@ If you recall, $1+omega = omega$. We can show a more general version of this:
     $
         omega^alpha + omega^beta &= omega^alpha + omega^(alpha+gamma)\
         &= omega^alpha + omega^alpha dot omega^gamma\
-        &= omega^alpha(1+omega^gamma)\
+        &= omega^alpha dot (1+omega^gamma)\
         &= omega^alpha dot omega^gamma\
         &= omega^(alpha+gamma)\
         &= omega^beta
@@ -210,7 +207,7 @@ Every natural number is a cardinal. For infinite cardinals, they are labelled as
 We set $aleph_0$ to be the cardinality of $omega$ (and from the above example, this is the cardinality of $omega 2$ too).
 
 But how do we know that there are cardinalities above $aleph_0$? We know there are cardinalities larger than $aleph_0$, as the cardinality of the set of all real numbers $RR$ is $2^(aleph_0)$, which is greater than $aleph_0$.
-But what is $2^(aleph_0)$ in terms of $aleph_n$? Is $2^(aleph_0) = aleph_1$ (This is known as the Continuum Hypothesis)?
+But what is $2^(aleph_0)$ in terms of $aleph_n$? Is $2^(aleph_0) = aleph_1$? (This is known as the Continuum Hypothesis).
 It turns out that we can set $2^(aleph_0) = aleph_n$ for _any_ finite $n$, and it will be consistent with ZFC.
 
 In ZFC, we assign each cardinal to an ordinal via *von Neumann cardinal assignment*:

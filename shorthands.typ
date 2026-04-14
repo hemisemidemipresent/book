@@ -1,13 +1,13 @@
 #import "@preview/beautiframe:0.1.0": *
 #let warning(content) = remark(content)
-#let proof(content) = corollary(content, number: "")
+#let proof(name: none, content) = corollary(content, number: "", name: name)
 
 
 // trees
 #import "@preview/cetz:0.4.2"
 #import "@preview/mannot:0.3.2":*
 #import "@preview/fletcher:0.5.8": *
-#import "@preview/tdtr:0.5.4" : *
+#import "@preview/tdtr:0.5.5" : *
 // tree with circles
 #let custom-tree-graph = tidy-tree-graph.with(
   node-inset: 4pt,
@@ -95,6 +95,7 @@
 #let redf(content) = text(content, fill: red)
 #let orangef(content) = text(content, fill: orange)
 #let greenf(content) = text(content, fill: green)
+#let lightbluef(content) = text(content, fill: lightblue)
 #let bluef(content) = text(content, fill: blue)
 #let purplef(content) = text(content, fill: purple)
 #let pinkf(content) = text(content, fill: pink)

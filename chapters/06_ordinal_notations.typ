@@ -496,41 +496,47 @@ The goodstein sequence seems to grow forever, but this sequence eventually termi
 // which is very similar to how the Kirby-Paris Hydra works. It can be thought of as a way to encode the hydra in a linear array.
 
 #definition(name: [*_Primitive Sequence System (PrSS)_*])[
-    Let the set $T$ be the set of sequences $s = (a_1, a_2, ..., a_l)$ such that:
+    Let the set $T_"PrSS"$ be the set of sequences $s = (s_1, s_2, ..., s_l)$ such that:
 
     + $s$ is either empty $()$ or starts with $0$: $(0,...)$.
-    + For any $a_i$ in $s$, let it's *parent* $a_j$ be the _latest element_ before $a_i$ such that $a_j<a_i$. $a_j$ must be equal to $a_i - 1$.
+    + For any $s_i$ in $s$, let it's *parent* $s_j$ be the _latest element_ before $s_i$ such that $s_j<s_i$. $s_j$ must be equal to $s_i - 1$.
 
-        Put another way, let the _parent index_ $p(i) in NN$ be the largest possible $p(i)<i$ such that $a_p(i)<a_i$. For all $a_i$ in the sequence, $a_p(i) = a_i - 1$.
+        Put another way, let the _parent index_ $p(i) in NN$ be the largest possible $p(i)<i$ such that $s_p(i)<s_i$. For all $s_i$ in the sequence, $s_p(i) = s_i - 1$.
 
         #example[
             $(0,1,3)$ is not a valid sequence as the latest element before $3$ that is less than $3$ is $1$, which is not $3-1 = 2$.
 
             $(0,1,2,1,2)$ is a valid sequence:
             - It starts with $0$
-            - $a_2 = 1$. The latest element less than $1$ is $a_1 = 0$, which is 1 less than $a_2 = 1$
-            - $a_3 = 2$. Similarly, the latest element less than $2$ is $a_2 = 1$ which is 1 less than $a_3=2$
-            - $a_4 = 1$. The latest element less than $a_4 = 1$ is $a_1 = 0$, so no issues
-            - $a_5 = 2$. The latest element less than $a_5=2$ is $a_4 = 1$, so no issues
+            - $s_2 = 1$. The latest element less than $1$ is $s_1 = 0$, which is 1 less than $s_2 = 1$
+            - $s_3 = 2$. Similarly, the latest element less than $2$ is $s_2 = 1$ which is 1 less than $s_3=2$
+            - $s_4 = 1$. The latest element less than $s_4 = 1$ is $s_1 = 0$, so no issues
+            - $s_5 = 2$. The latest element less than $s_5=2$ is $s_4 = 1$, so no issues
         ]
 
     + The ordering $<$ is simply the lexicographic ordering of these sequences.
 ]
+
+The set $T_"PrSS"$ is the set of all valid PrSS sequences.
 We can use this notation to define either _a fast-growing function_, or a _system of fundamental sequences_:
 
 #definition[
-    For a sequence $s = (a_1, a_2, ..., a_l) in T$, we define $s[n]$ as the $n^"th"$  member in its _fundamental sequence_.
+    For a sequence $s = (s_1, s_2, ..., s_l) in T_"PrSS"$, we define $s[n]$ as the $n^"th"$  member in its _fundamental sequence_.
     - $()[n] = n$. Otherwise, for nonempty $s$:
     - The *good root* $g$ and the *bad root* $b$ are defined as such:
-        - $g = (a_1, ..., a_(p(l)-1))$
-        - $b = (a_p(l), ..., a_(l-1))$
-        - if $p(l)$ does not exist (i.e. there is no $a_i < a_l$), then: $g=(a_1, ..., a_(l-1))$ and $b$ is empty
+        - $g = \(s_1, ..., s_(p(l)-1)\)$
+        - $b = \(s_p(l), ..., s_(l-1)\)$
+        - if $p(l)$ does not exist (i.e. there is no $s_i < s_l$, for example if $s_l = 0$), then: $g=(s_1, ..., s_(l-1))$ and $b$ is empty
     - $s[n] = (g, b, b, ..., b)$ with $n$ copies of $b$, though this can be replaced with any increasing function $f(n)$. The original definition used $f(n) = n^2$.
 
     As for the _fast-growing function_ also confusingly labelled $s[n]$:
     - We split the sequence into good root $g$ and bad root $b$ again.
-    - $s[n] = (g, b, b, ..., b)[f(n)]$ with $f(n)$ copies of $b$. The original definition used $f(n) = n^2$, but $f(n) = n+1$ can also be used.
-    The final result is the value in the $[]$ when the sequence is eventually empty.
+    - $s[n] = (g, b, b, ..., b)[f(n)]$ with $f(n)$ copies of $b$. The original definition used $f(n) = n^2$.
+        We will instead use a different definition that makes analysis easier:
+        $
+            f(n) = cases(n &"if" s_l != 0, n+1 &"if" s_l = 0)
+        $
+    The final result is the value in the $[]$ when the sequence is eventually empty, i.e. $()[n] = n$
 ]
 
 #example[
@@ -548,41 +554,36 @@ We can use this notation to define either _a fast-growing function_, or a _syste
 ]
 
 #example[
-    Evaluate $(0,1,1)[1]$ as a fast-growing function with $f(n) = n+1$
+    Evaluate $(0,1,1)[3]$ as a fast-growing function with our definition of $f(n)$
 
     $
-        &(0,1,1)[1]\
+        &(0,1,1)[3]\
         // &#h(1em) g="empty", b=(0,1), f(n) = 2\
-        &=(0,1,0,1)[2]\
+        &=(0,1,0,1)[3]\
         // &#h(1em) g=(0,1), b=(0), f(n) = 3\
         &=(0,1,0,0,0)[3]\
         // &#h(1em) g=(0,1,0,0), b=(), f(n)=4\
-        // &#h(1em) "(there's no index" i "where" a_i < 0" so" p(l) "doesn't exist)"\
+        // &#h(1em) "(there's no index" i "where" s_i < 0" so" p(l) "doesn't exist)"\
         &= (0,1,0,0)[4]\
         // &#h(1em) g=(0,1,0), b=(), f(n)=5 "(same logic)"\
         &= (0,1,0)[5]\
         // &#h(1em) g=(0,1), b=(), f(n)=6 "(same logic)"\
         &= (0,1)[6]\
-    $
-    At this point we see a new pattern: $(a_1, ..., a_(l-1), 0)[n] = (a_1, ..., a_(l-1))[f(n)]$, since there's no parent for $0$ as there are no $a_i < 0$.
-    $
-        &(0,1)[6]\
         // &#h(1em) g="empty", b=(0), f(n)=7\
-        &= (0,0,0,0,0,0,0)[7]\
-        &= (0,0,0,0,0,0)[8]\
-        &= (0,0,0,0,0)[9]\
-        &= (0,0,0,0)[10]\
-        &= (0,0,0)[11]\
-        &= (0,0)[12]\
-        &= (0)[13]\
-        &= ()[14]\
-        &= 14\
+        &= (0,0,0,0,0,0)[6]\
+        &= (0,0,0,0,0)[7]\
+        &= (0,0,0,0)[8]\
+        &= (0,0,0)[9]\
+        &= (0,0)[10]\
+        &= (0)[11]\
+        &= ()[12]\
+        &= 12\
     $
-    Now imagine if we used a bigger value of $n$, making many more copies of the bad root. Or image if we used $f(n) = n^2$ instead of $n+1$.
+    Now imagine if we used a bigger value of $n$, making many more copies of the bad root. Or image if we used $f(n) = n^2$ instead of using $n$ or $n+1$ like we did.
     $s[n]$ is a very powerful function. But we can constrain it's growth rate in the Hardy hierarchy as we'll show later.
 ]
 
-=== Order isomorphism to $e0$
+=== Order Isomorphism to $e0$
 
 We now show that PrSS is order isomorphic to #e0.
 
@@ -609,11 +610,14 @@ $
     redf((0, greenf((1,2)), 0, greenf((1,1,1)), 0, greenf((1,1)), 0, greenf((1,1)) ))\
     redf((0, #greenf[$1,2$], 0, #greenf[$1,1,1$], 0, #greenf[$1,1$], 0, #greenf[$1,1$] ))
 $
-Let's call this function $f$, which acts on _sequences of PrSS_ and returns the concatenated sequence.
+// Let's call this function $f$, which acts on _sequences of PrSS_ and returns the concatenated sequence.
 
 Since the lexicographic ordering of _sequences of PrSS_ is also lexicographic (i.e. to compare 2 _sequences of PrSS_, we first compare
 the first sequence in both, then move onto the second if they are equal), for any two _sequences of PrSS_ $S_1$ and $S_2$, $S_1 lex S_2$ if and only if
 $f(S_1) lex f(S_2)$.
+
+In this was, we can define the set of standard PrSS sequences $OT_"PrSS"$ as the set of all notations of height $k$ created by this process,
+in a very similar method we used to define ordinal notation of Iterative Cantor Normal Form.
 
 Here are some examples of the PrSS correspondence with ordinals.
 I added a third column for the PrSS "hydra" to show how elements in the sequence relate to nodes of the ordinal notation tree.
@@ -681,7 +685,8 @@ I added a third column for the PrSS "hydra" to show how elements in the sequence
 )
 #set align(left)
 
-We can see how this "hydra" behaves quite similarly to the Kirby-Paris Hydra we saw earlier:
+We see that each number in the sequence represents the litearl height of the term on this hydra.
+When taking funamental sequences, this "hydra" behaves quite similarly to the Kirby-Paris Hydra we saw earlier:
 
 $(greenf(0\,1),redf(2\,3\,3),bluef(3))[3] = (greenf(0\,1),redf(2\,3\,3),redf(2\,3\,3),redf(2\,3\,3))$
 
@@ -710,70 +715,35 @@ $(greenf(0\,1),redf(2\,3\,3),bluef(3))[3] = (greenf(0\,1),redf(2\,3\,3),redf(2\,
 ]
 With #greenf[green] representing the good root and #redf[red] representing the bad root.
 
+
 === Growth rate of $s[n]$
 
 Since we have assigned a mapping from each PrSS sequence to an ordinal, let's compare PrSS expansion rules with the Hardy Hierarchy,
 using the Wainer Hierarchy for fundamental sequences.
-We make just one modification to $H$, that for a limit ordinal $alpha$, $H'_alpha (n) = H'_alpha[n] (n+1)$ instead of the usual $H'_alpha[n](n)$.
-We can rewrite this as $H'_alpha (n) = H'_(alpha[n])(n+1) = H'_(alpha[n]+1)(n)$.
-// We can rephrase this to be a modification of the Wainer Hierarchy
+
 
 #set align(center)
 #table(
     align: left + horizon,
     inset: 0.75em,
     columns: (auto, auto),
-    table.header([*PrSS*], [*HH (modified)*]),
-    $()[n] = n$, $H'_0(n) = n$,
-    $(0)[n] = ()[n+1]$, $H'_1(n) = H'_0(n+1)$,
-    $(0,0)[n] = (0)[n+1]$, $H'_2(n) = H'_1(n+1)$,
-    $(0,1)[n] = underbrace((0\,0\,0\,...\,0), n "copies of" 0)[n+1]$, $H'_omega (n) = H'_n (n+1)$,
-    $(0,1,0)[n] = (0,1)[n+1]$, $H'_(omega+1) = H'_omega (n+1)$,
-    $(0,1,0,1)[n] = (0\,1\,underbrace(0\,0\,0\,...\,0, n "copies of" 0))[n+1]$, $H'_(omega dot 2) (n) = H'_(omega + n) (n+1)$,
-    $(0,1,1)[n] = underbrace((0\,1\,...\,0\,1), n "copies of" (0,1))[n+1]$, $H'_(omega^2) (n) = H'_(omega n) (n+1)$,
-    $(0,1,2)[n] = (0\,1\,underbrace(1\,1\,1\,...\,1, n "copies of" 1))[n+1]$, $H'_(omega^omega) (n) = H'_(omega^n) (n+1)$,
+    table.header([*PrSS*], [*Hardy Hierarchy*]),
+    $()[n] = n$, $H_0(n) = n$,
+    $(0)[n] = ()[n+1]$, $H_1(n) = H_0(n+1)$,
+    $(0,0)[n] = (0)[n+1]$, $H_2(n) = H_1(n+1)$,
+    $(0,1)[n] = \(underbrace(0\,0\,0\,...\,0, n "copies of" 0)\)[n]$, $H_omega (n) = H_n (n)$,
+    $(0,1,0)[n] = (0,1)[n]$, $H_(omega+1) = H_omega (n)$,
+    $(0,1,0,1)[n] = \(0\,1\,underbrace(0\,0\,0\,...\,0, n "copies of" 0)\)[n]$, $H_(omega dot 2) (n) = H_(omega + n) (n)$,
+    $(0,1,1)[n] = \(underbrace(0\,1\,0\,1\,...\,0\,1, n "copies of" (0,1))\)[n]$, $H_(omega^2) (n) = H_(omega n) (n)$,
+    $(0,1,2)[n] = \(0\,1\,underbrace(1\,1\,1\,...\,1, n "copies of" 1)\)[n]$, $H_(omega^omega) (n) = H_(omega^n) (n)$,
 )
 #set align(left)
 
 We see the correspondence between each PrSS sequence and its associated ordinal in our modified Hardy Hierarchy.
-Therefore the maximum growth rate of PrSS is $(0,1,2,3,...)[n]$ which corresponds to $H'_e0 (n)$.
+Therefore the maximum growth rate of PrSS is $(0,1,2,3,...)[n]$ which corresponds to $H_e0 (n)$.
 
-#block[
-    #let HH = $purplef(H)^purplef(')$ // our modified HH
-    Let's first relate our modified $HH$ to the regular Hardy Hierarchy $H$. For finite ordinal $m$, $HH_m (n) = H_m (n)$ since we don't need to take a fundamental sequence.
-    However, things start to diverge past $omega$:
-
-
-    $
-        HH_omega (n) &= HH_n (n+1) = H_(n+1)(n) = H_(omega+1)(n)\
-        HH_(omega + 1) (n) &= HH_omega (n+1) = H_(omega+1)(n+1) = H_(omega+2)(n)\
-        HH_(omega + m) (n) &= H_(omega+m+1)(n)\
-        HH_(omega 2)(n) &= HH_(omega +n+1)(n) = H_(omega+n+2)(n) = H_(omega 2 + 2)(n)\
-        HH_(omega m)(n) &= H_(omega m + m)(n)\
-        HH_(omega^2)(n) &= HH_(omega n + 1)(n) = H_(omega n + n + 1)(n) = H_(omega^2 + omega + 1)(n)\
-        HH_(omega^3)(n) &= HH_(omega^2 n + 1)(n) = H_(omega^3 + omega^2 + omega + 1)(n)\
-        HH_(omega^m)(n) &= H_(omega^m + omega^(m-1) + ... + omega + 1)(n)\
-        HH_(omega^omega)(n) &= H_(omega^n + omega^(n-1) + ... + omega + 1)(n)\
-        HH_(omega^(omega + 1))(n) &= H_(omega^(n+1) + omega^n + ... + omega + 1)(n)\
-        HH_(omega^(omega + m))(n) &= H_(omega^(n+m) + ... + omega + 1)(n)\
-        HH_(omega^(omega + omega))(n) &= HH_(omega^(omega + n)+1)(n) = H_(omega^(2n) + ... + omega + 2)(n)\
-    $
-    #lemma[
-        The maximum growth rate of PrSS is $HH_e0 (n) = H_e0 (n)$.
-    ]
-    #proof[
-        Generally for an ordinal $alpha<e0$, $H_alpha <= HH_alpha < H_(omega^alpha)$, so $H_(omega^alpha) <= HH_(omega^alpha) < H_(omega^omega^alpha)$, so:
-
-        $
-            HH_e0 &= sup {HH_(omega up up n) | n in NN}\
-            sup {H_(omega up up n) | n in NN} &<= sup {HH_(omega up up n) | n in NN} <=  sup {H_(omega up up (n+1)) | n in NN}\
-            H_e0 (n) &<= sup {HH_(omega up up n) | n in NN} <=  H_e0 (n)\
-            therefore HH_e0 (n) &= sup {HH_(omega up up n) | n in NN} =  H_e0 (n)\
-        $
-    ]
-]
-
-But what about the fast-growing hierarchy? How does that relate to the Hardy Hierarchy. We can show that $f_e0 (n) = H_e0 (n)$,
+But what about the fast-growing hierarchy? How does that relate to the Hardy Hierarchy? While the Hardy Hierarchy appears to grow slower than the fast-growing hierarchy,
+we can show that $f_e0 (n) = H_e0 (n)$,
 i.e., the Hardy Hierarchy "catches up" at #e0.
 #lemma[
     $
@@ -802,7 +772,7 @@ i.e., the Hardy Hierarchy "catches up" at #e0.
 ]
 #proposition[
     $
-        f_e0 (n) = H_e0(n)
+        f_e0 (n) = H_e0 (n)
     $
 ]
 #proof[
@@ -812,3 +782,171 @@ i.e., the Hardy Hierarchy "catches up" at #e0.
         &= H_e0 (n)
     $
 ]
+
+=== Formal Order Isomorphism to #e0
+
+However, we have another way to define the set of standard PrSS sequences $OT_"PrSS"$:
+#definition[
+    For two sequences $s, t$, we define the relation $s subset.sq t$ if and only if there exists $n_1,n_2,...,n_k in NN$ such that
+    $
+        s = t[n_1][n_2]...[n_k]
+    $
+    Then we define $s supset.sq t$ if and only if $t subset.sq s$.
+]
+#definition[
+    The set of standard PrSS sequences $OT_"PrSS"$ are defined as:
+    $
+        OT_"PrSS" = {s in T | "There exists an" n in NN "such that" s subset.sq (0,1,...,n)}
+    $
+]
+
+This might feel like a strange way to define the set of standard sequences $OT_"PrSS"$, but when we go over more powerful extensions of this notation in later chapters,
+this "top-down" approach will be more useful.
+
+#lemma[
+    For all $s in T$, $n in NN$, $s[n] lex s$
+]
+#proof[
+    Let $s = (s_1,...,s_m)$. Let the parent of $s_m$ be $s_p(m)$. As such $s$ can be re-written as:
+
+    $
+        s = \(underbrace(s_1\,...\,s_(p(m)-1), G), underbrace(s_p(m)\,...\,s_(m-1), B),s_m\)
+    $
+    Then $s[n] lex s$, as the parent has to be smaller than $s_m$ (i.e. $s_p(m) < s_m$)
+    $
+        s[n] &= \(underbrace(redf(s_1\,...\,s_(p(m)-1)), G) redf(\,) underbrace(redf(s_p(m)\,...\,s_(m-1)), B), underbrace(greenf(s_p(m))\,...\,s_(m-1), B), ...\)\
+        &lex (redf(s_1\,...\,s_(p(m)-1)\,s_p(m)\,...\,s_(m-1)), greenf(s_m))\
+        &= (s_1,...,s_m) = s
+    $
+]
+
+
+#lemma[
+    For two sequences $s lex t$, if $s$ is a proper prefix of $t$:
+    $
+        s &= (s_1,...,s_m)\
+        t &= (s_1,...,s_m,c_(m+1),...,c_l)
+    $
+    then $s subset.sq t$.
+]
+#proof[
+    Let $s_p(l)$ be the parent of $c_l$. (Note that it doesn't matter whether $s_p(l)$ is within $(s_1,...,s_m)$ or not).
+    $
+        t &= \(underbrace(s_1\,...\,s_(p(l)-1), G), underbrace(s_p(l)\,...\,c_(l-1), B) ,c_l\)\
+        t[1] &= \(underbrace(s_1\,...\,s_(p(l)-1), G), underbrace(s_p(l)\,...\,c_(l-1), B)\) < t\
+    $
+    With this, we can use $t[1]$ to "cut" the last element of each sequence until $t$ becomes $s$.
+]
+// #lemma[
+//     For two sequences $s<t$ such that:
+//     $
+//         s &= (s_1,...,s_m,b_(m+1),...,b_k)\
+//         t &= (s_1,...,s_m,c_(m+1),...,c_l)
+//     $
+//     where $b_(m+1)<c_(m+1)$, if $s subset.sq (s_1,...,s_m,b_(m+1)+1)$, $s subset.sq t$
+// ]
+// #proof[
+//     We are given that $s = (s_1,...,s_m,b_(m+1),...,b_k) subset.sq (s_1,...,s_m,b_(m+1)+1)$.
+//     Let's call $s' = (s_1,...,s_m,b_(m+1)+1)$, so we have $s subset.sq s'$.
+
+//     Since $b_(m+1)<c_(m+1)$, we have $b_(m+1)+1 <= c_(m+1)$.
+
+//     + If $c_(m+1) = b_(m+1)+1$, we have a case similar to part 1:
+//         $
+//             s' &= (redf(s_1\,...\,s_m\,b_(m+1)+1))\
+//             t &= (redf(s_1\,...\,s_m\,b_(m+1)+1),c_2,...,c_l)\
+//         $
+//         Where we have a common first few terms, and as such we can "cut" the last element from $t$ until we reach $s'$. As such $s subset.sq s' subset.sq t => s subset.sq t$
+//     + If $c_(m+1) > b_(m+1)+1$, we first show that $(s_1,...,s_m,c_(m+1)redf(-1)) subset.sq t$.
+//         From cutting, we already have:
+//         $
+//             (s_1,...,s_m,c_(m+1)) subset.sq (s_1,...,s_m,c_(m+1),...,c_l) = t
+//         $
+//         Then let the parent of $c_(m+1)$ be $s_p(m+1)$. By PrSS rules, the parent must be $1$ less than the element, so $s_p(m+1) = c_(m+1) - 1$. Then:
+//         $
+//             (s_1,...,s_m,c_(m+1))[2] &= \( underbrace(s_1\,...\,s_(p(m+1)-1),G) , underbrace(s_p(m+1)\,...\,s_m, B) ,c_(m+1) \) [2]\
+//             &= \( underbrace(s_1\,...\,s_(p(m+1)-1),G) , underbrace(s_p(m+1)\,...\,s_m, B) , underbrace(s_p(m+1)\,...\,s_m, B) \)\
+//             &supset.sq (redf(s_1\,...\,s_(p(m+1)-1)\,s_p(m+1)\,...\,s_m), greenf(s_p(m+1)) )\
+//             &= (redf(s_1\,...\,s_m), greenf(c_(m+1)-1))
+//         $
+//         We get $(s_1,...,s_m,c_(m+1))[2] supset.sq (s_1,...,s_m,c_(m+1)-1)$, so as such:
+//         $
+//             (s_1,...,s_m,c_(m+1)-1) subset.sq (s_1,...,s_m,c_(m+1))
+//         $
+//         We can use this property to inductively show that $(s_1,...,s_m,b_(m+1)+1) subset.sq t$:
+//         $
+//             (s_1,...,s_m,b_(m+1)+1) subset.sq ... subset.sq (s_1,...,s_m,c_(m+1)-1) subset.sq (s_1,...,s_m,c_(m+1)) subset.sq t
+//         $
+//         And therefore:
+//         $
+//             s &= (s_1,...,s_m,b_(m+1),...,b_k) subset.sq (s_1,...,s_m,b_(m+1)+1) subset.sq t\
+//             => s &subset.sq t
+//         $
+// ]
+// #lemma[
+//     Let $s in OT_"PrSS"$ satisfy $s subset.sq (0,...,n)$. Every element in $s$ must be strictly smaller than $n$.
+// ]
+// #proof[
+//     Well, there's no method in PrSS to make bigger numbers within the sequence, so once the last $n$ is gone, it's gone...
+// ]
+// #lemma[
+//     Let $s in OT_"PrSS"$ satisfy $s subset.sq (0,...,n)$. Then let $n'$ is the minimal such $n$ such that $s subset.sq (0,...,n')$.
+//     In that case, $s$ must start with $(0,1,2,...,n'-1)$.
+// ]
+// #proof[
+//     Every PrSS sequence must start with a consecutively increasing integer sequence, no matter how short.
+//     Even a non-standard PrSS $(0,1,1,2)$ starts with a consecutively increasing integer sequence $(0,1)$.
+//     So the contradiction lies with _which value this consecutively increasing integer sequence stops at_.
+
+//     Suppose $s$ starts with $(0,1,2,...,n-1)$, but $n$ is *not* the minimal $n$ such that $s subset.sq (0,...,n)$.
+//     That means there exists an even smaller $m<n$ such that $s subset.sq (0,...,m)$. However this means every element in $s$ will satisfy $s_i<m<n$.
+//     However there exists no $m$ such that $n-1 < m < n$, a contradiction.
+// ]
+
+#theorem[
+    $s subset.sq t <=> s lex t$ when $s,t in OT_"PrSS"$.
+]
+#proof[
+    Since $s[n] lex s$, $s subset.sq t => s lex t$ is already shown. We just need show that $s lex t => s subset.sq t$.
+
+    Since $s,t in OT_"PrSS"$, we know $s subset.sq (0,...,n_1)$, and $t subset.sq (0,...,n_2)$, where $n_1,n_2$ are both the minimal $n$ satisfying their conditions.
+
+    Then by the previous lemmas, $s$ and $t$ must start with $(0,...,n_1-1)$ and $(0,...,n_2-1)$ respectively,
+    and every element in $s$ and $t$ must be smaller than $n_1$ and $n_2$ respectively.
+    In order for $s lex t$, $n_1 < n_2$:
+
+    $
+        s &= (0,...,n_1-1,...)\
+        t &= (0,...,n_1-1,n_1,...,n_2-1,...)
+    $
+    We can then show that:
+    $
+        s = &(0,...,n_1-1,...)\
+        subset.sq &(0,...,n_1-1,n_1)\
+        subset.sq &(0,...,n_1-1,n_1,...,n_2-1,...)= t\
+        => s subset.sq &t
+    $
+]
+
+We can then define a map $o: OT_"PrSS" arrow.r.bar e0$ to show that $(OT, <)$ is order isomorphic to $(e0, in)$. For a sequence $s in OT_"PrSS"$:
+$
+    o(s) := union.big_(n in NN) (o(s[n])+1)
+$
+For a PrSS sequence corresponding to successor ordinal, it will end with $0$, leading to that last $0$ being chopped off.
+E.g. $s = (0,1,2,0) ~ wpow(wpow(zero)) plus wpow(zero) ~ omega^omega + 1, s[n] = (0,1,2) ~ wpow(wpow(zero)) ~ omega^omega$.
+In general we have:
+$
+    o((s_1,...,s_(m-1),0)) &= union.big_(n in NN) (o((s_1,...,s_(m-1))) + 1)\
+        &= o((s_1,...,s_(m-1))) + 1
+$
+For limit ordinals, since $s[n]$ is an increasing function on sequences corresponding to limit ordinals
+(i.e. if a sequence doesn't end with $0$, if $n_1<n_2, s[n_1] < s[n_2]$).
+
+$
+    o(s) &= union.big_(n in NN) (o(s[n])+1)\
+    &= sup{ o(s[n])+1 | n in NN }\
+    &= sup{ o(s[n]) | n in NN }
+$
+So by transfinite induction, every successor ordinal and every limit ordinal are "hit" by our map $o$. The limit is $s=(0,1,2,...)$,
+which corresponds to an $omega^omega^dots.up$ tower, so PrSS as an order isomorphism with the set of all ordinals $<e0$.
+And of course, an ordinal is the set of all ordinals smaller than itself, so $(OT_"PrSS", lex)$ is order isomorphic to $(e0, in)$.

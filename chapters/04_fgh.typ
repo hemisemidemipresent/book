@@ -63,7 +63,7 @@ But can we grow faster than that? If we _diagonlize_ across all $f_m (n)$, we ge
 )
 ]
 
-This $f_n (n)$ will eventually grow faster than any $f_m (n)$ like $f_1000(n)$. We can formalize this as such:
+This $f_n (n)$ will eventually grow faster than any fixed $f_m (n)$ like $f_1000(n)$. We can formalize this as such:
 
 #definition[
   For 2 functions $f,g : NN arrow.r.bar NN$, we say that $f$ *dominates*, or *eventually dominates* $g$ if there exists an $n_0 in NN$ such that for all $n >= n_0$, $f(n) > g(n)$

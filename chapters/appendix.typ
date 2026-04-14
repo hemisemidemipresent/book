@@ -1,0 +1,2 @@
+#import "../shorthands.typ": *
+= Appendix

@@ -53,7 +53,7 @@
 
 // actual layout starts here
 #align(center)[
-  // #text(size:4em)[Ordinal Googology]
+  // #text(size:4em)[Title goes here]
 ]
 #beautitled-toc(title: "Contents")
 #pagebreak()
@@ -62,13 +62,14 @@
 #show link: set text(fill: blue)
 #show link: underline
 
-// #include "chapters/01_introduction.typ"
-// #include "chapters/02_hyperoperators.typ"
-// #include "chapters/03_intro_to_ordinals.typ"
-// #include "chapters/04_fgh.typ"
-// #include "chapters/05_formal_ordinals.typ"
-// #include "chapters/06_ordinal_notations.typ"
-// #include "chapters/07_veblen.typ"
+#include "chapters/01_introduction.typ"
+#include "chapters/02_hyperoperators.typ"
+#include "chapters/03_intro_to_ordinals.typ"
+#include "chapters/04_fgh.typ"
+#include "chapters/05_formal_ordinals.typ"
+#include "chapters/06_ordinal_notations.typ"
+#include "chapters/07_veblen.typ"
 #include "chapters/08_buchholz_ocf.typ"
 #include "chapters/09_buchholz_on.typ"
-#include "chapters/10_intro_to_bms.typ"
+// #include "chapters/10_extended_buchholz.typ"
+// #include "chapters/11_intro_to_bms.typ"

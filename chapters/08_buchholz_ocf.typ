@@ -407,8 +407,12 @@ Of course, the true limit of Buchhol'z OCF is $psi_0(purplef(Omega_omega^Omega_o
     - $alpha_1 in C_k_1 (alpha_1),...,alpha_n in C_k_n (alpha_n)$
 ]
 
-Like in Cantor Normal Form, $alpha_i$ does not necessarily have to be in normal form.
-
+Like in Cantor Normal Form, each $alpha_i$ does not necessarily have to be expressed in normal form.
+For example, all of the following are in normal form:
+- $psi_0(Omega^2)$
+- $psi_0(1 + Omega^2)$
+- $psi_0(psi_1(Omega))$
+because $Omega^2 = 1 + Omega^2 = psi_1(Omega) in C_0(Omega^2)$
 #example[
     Which of the following are in normal form:
     + $psi_0(0)$
@@ -420,9 +424,10 @@ Like in Cantor Normal Form, $alpha_i$ does not necessarily have to be in normal 
     Answers:
     + $0 in C_0(0)$, normal form
     + $Omega = psi_1(0) in C_0(Omega)$, normal form
-    + $psi_0(Omega) = e0 in.not C_0(e0)$, not normal form
+    + $psi_0(Omega) = e0 in.not C_0(e0)$, not normal form.
+
         Note that just because an ordinal $alpha$ is expressed in normal form, that does not mean $psi_nu (alpha)$ is in normal form.
-        ($psi_0(Omega)$ is normal form but $psi_0(psi_0(Omega))$ isn't)
+        (e.g. $psi_0(Omega)$ is normal form but $psi_0(psi_0(Omega))$ isn't)
     + Firstly we have $psi_2(Omega_3) = epsilon_(Omega_2 + 1)$. Then we have $psi_1(psi_2(Omega_3)) = psi_1(epsilon_(Omega_2+1))$, which in normal form is $psi_1(Omega_3)$.
         We then construct the following inequality to solve for $psi_0(psi_1(Omega_3))$:
         $
@@ -626,7 +631,7 @@ There's a lot to go through here, so let's go through some examples:
         This is a familiar pattern: $0, Omega, Omega^2, Omega^Omega, Omega^Omega^Omega, ...$. Since $psi_0(Omega_2)[n] = psi_0(Omega_2[gamma[n]]) = psi_0(gamma[n])$,
         we have the following fundamental sequence:
         $
-            psi_0(Omega_2)[0] &= 0\
+            psi_0(Omega_2)[0] &= psi_0(0) = 1\
             psi_0(Omega_2)[1] &= psi_0(Omega) = e0\
             psi_0(Omega_2)[2] &= psi_0(Omega^2) = z0\
             psi_0(Omega_2)[3] &= psi_0(Omega^Omega) = G0\
@@ -636,19 +641,3 @@ There's a lot to go through here, so let's go through some examples:
 ]
 
 
-== Extended Buchholz's function
-Why do we have to stop at $Omega_omega$? What about $Omega_(omega+1)$? We can extend Buchholz's function as such to allow for even larger ordinals:
-
-#definition(name: [*_Extended Buchholz's function_*])[
-  Using the same definition of $Omega_nu$, we define the *Extended Buchholz's function* $psi$ and the set $C_nu (alpha)$ as such:
-  + $Omega_nu subset.eq C_nu (alpha)$
-  + For any two ordinals $xi, eta in C_nu (alpha)$, their sum $xi+eta in C_nu (alpha)$
-  + For any ordinal $xi in C_nu (alpha)$, as long as $xi < alpha$, then $ psi_mu (xi) in C_nu (alpha)$ for all #redf($mu in C_nu (alpha)$)
-  + $psi_nu (alpha) = min{gamma in Ord | gamma in.not C_nu (alpha)}$, i.e., the smallest ordinal not inside $C_nu (alpha)$
-]
-It's the same as the original, just that instead of being restricted to $psi_mu$ with $mu <= omega$, we now have $mu in C_nu (alpha)$ as highlighted in red.
-
-With this, we can go beyond, letting $"TFBO" = psi_0(Omega_(omega+1))$.
-We can make $psi_0(Omega_e0)), psi_0(Omega_G0)$, or even $psi_0(Omega_Omega)$.
-
-To

@@ -6,27 +6,25 @@ I then (re-)discovered about the Fast-Growing Hierarchy and how it can systemati
 However, when I tried digging into the formal definitions of the things I was writing, I realized that there was a lot that I wasn't sure of myself.
 If I want to compute something like $f_Gamma_0 (3)$, what exactly am I supposed to do?
 There's #link("https://www.youtube.com/watch?v=EKLzsWAzsec")[a Geometry Dash level] where I have to click $f_(psi_0(Omega_omega))(520)$ times, what does that mean?
-This book is a compilation of my attempts to understand the math involved in googology.
-
+So I tried learning Googology more formally with a more solid math foundation, and started taking down notes.
+Eventually, I compiled these notes into something resembling a book, though many of the later chapters were much more of a work-in-progress.
 Generally, I introduce new concepts more informally, then go back around to formalize them, though I feel in some sections I might have frontloaded the formality too much.
 
+Q: Why write out so much when you can contribute to the wiki?\
+A: I don't trust myself to give accurate information, I have already went back to fix errors in earlier chapters many times when learning more.
+Also because I can't go back to latex after using Typst omfg its so much easier to do everything.
+That and wikis in general suffer from "Wikipedia Math" problem where it may serve as a useful reference if you already know the thing, but it's terrible for learning,
+so I'm writing this more explicitly as a ladder to go from power towers to the Buchholz Ordinal.
 
-Feel free to correct any mistakes or re-work some sections.
-You may also suggest or contribute chapters for new topics, though I'd like it to fit within the general "skill level" of the book.
-Some concepts that I am currenty nowhere confident enough to write about are:
-
-- Inaccessible cardinals, Mahlo Cardinals, Weakly Compact Cardinals, Stability, Reflection and whatever OCF can use them
-- Why BMS is so powerful
-- Laver tables
-- y sequence
-- Proof Theoretic Ordinals (though ordinal analysis might be way too technical to be summarized in a chapter and require prior reading of several textbooks)
+Feel free to contribute! Like correcting any mistakes or re-working some sections.
+The best way is probably a pull request on #link("https://github.com/hemisemidemipresent/book")[github], but you can just ping/dm me on discord `@hemidemisemipresent`.
 
 References:
 - Googology wiki(s)
-- The googology discord
+- The googology discord (too many random scraps of messages)
 - An Introduction to Proof Theory: Normalization, Cut-elimination, and Consistency Proofs by Paolo Mancosu, Richard Zach, and Sergio Galvan
-- Zhongshu Wu PrSS document on google drive
-- https://codegolf.stackexchange.com/questions/139355/golf-a-number-bigger-than-tree3/219466#219466
+- Zongshu Wu PrSS document on google drive
+- #link("https://codegolf.stackexchange.com/questions/139355/golf-a-number-bigger-than-tree3/219466#219466")[Patcail's first answer on a codegolf challenge]
 
 == Prerequisites
 

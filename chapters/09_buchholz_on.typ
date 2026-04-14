@@ -1,44 +1,41 @@
 #import "../shorthands.typ": *
-= Ordinal Notations up to #TFBO
+= Ordinal Notations up to #BO
+
+Technically Buchholz's OCF goes up to #TFBO but as we'll see later, #BO is a more "natural" stopping point.
+
+== Ordinal Notation associated with BOCF
+
 #let E = $epsilon_(Omega_omega + 1)$
 We introduce a set of ordinal notations $OT$ corresponding to Buchholz's OCF, along with a recursive way to order them $prec$,
-such that $(OT, prec)$ is order isomorphic to $(C_0(#E),<)$
-
-
+such that $(OT, prec)$ is order isomorphic to $(C_0(#E),in)$
 
 #definition[
     #let s = purplef[*$s$*]
     #let t = pinkf[*$t$*]
 
-    Let $T$ be the set of terms and $PT$ be the set of all prinicpal terms (the terms in $PT$ are associated to additively principal ordinals).
+    Let $T_B$ be the set of terms and $PT$ be the set of all _prinicpal terms_ (the terms in $PT$ are associated to additively principal ordinals).
 
     - $zero in T$
-    - Given a principal term $s in PT$ and a term $t in T$, $s plus t in T$
     - Given a term $t in T$, $mu <=omega$, $bocf(mu,t) in T "and" PT$
+    - For principal terms $t_1,...,t_k in PT$, $t_1 plus ... plus t_k in T_B$
 
     Let $prec$ be a binary relation on $T$.
 
-
-
     For terms $#s, #t in T$, $#s prec #t$ is defined as:
     - If $#s = zero$ then $#s prec #t$ if $#t != zero$
-    - If $#t = zero$ then $#s prec #t$ is false
-    - If $#s = a plus b$ where $a in PT$ and $b in T\\{zero}$, then
-        - If $#t = c plus d$ for some $c in PT$ and $d in T\\{zero}$
-            - If $a != c$ then $#s prec #t$ if and only if $a prec c$
-            - If $a = c$ then $#s prec #t$ if and only if $b prec d$
-        - If $#t in PT$ then $#s prec #t$ if and only if $a prec #t$
-    - If $#s = bocf(mu,a)$ for some $a in T, mu <= omega$ then:
-        - If $#t = c plus d$ for some $c in PT$ and $d in T\\{zero}$, then $#s prec #t$ if and only if $#s prec.eq c$
-        - If $#t = bocf(nu,b)$ for some $b in T, nu <= omega$ then:
-            - If $mu != nu$ then $#s prec #t$ if and only if $mu prec nu$
-            - If $mu = nu$ then $#s prec #t$ if and only if $a prec b$
+    - If $#s = bocf(u,a)$ and $#t = bocf(v,b)$, then $#s prec t$ if:
+        - $u < v$, or
+        - $u = v$ and $a prec b$
+    - If $#s = s_0 plus ... plus s_n, #t = t_0 plus ... plus t_m$, then we do it lexicographically, i.e., $#s prec #t$ if:
+        - $s_i = t_i$ for all $i<=n$ and $n<m$, i.e. #s is a proper prefix of #t
+        - $s_i = t_i$ for all $i<k$ and $s_k prec t_k$
+
 
     For terms $#s, #t$, we have a family of the binary relations $ternary(#s,mu,#t)$ for $mu <= omega$ if and only if:
 
     - $#s prec bocf(mu,zero)$
     - $#s = a plus b$ for some $a in PT$ and $b in T\\{zero}$ and $ternary(a,mu,#t)$ and $ternary(b,mu,#t)$
-    - $#s = bocf(nu,a)$ for some $a in T, nu <= omega$ and $ternary(a,mu,#t)$ and $b prec #t$
+    - $#s = bocf(nu,a)$ for some $a in T, nu <= omega$ and $ternary(a,mu,#t)$ and $a prec #t$
 
     Let $OT$ be a subset of $T$. $OT$ corresponds to the set of all ordinal notations of normal form.
     $OT$ is defined as:
@@ -48,65 +45,107 @@ such that $(OT, prec)$ is order isomorphic to $(C_0(#E),<)$
     - For a term $a in T$, $bocf(mu, a) in OT$ if and only if $a in OT$ and $ternary(a, mu, a)$
 ]
 
+The definition of $OT$ basically restricts all the non-standard notation that are possible but causes headaches.
+Examples of non-standard notation include:
+- $bocf(0,zero) + bocf(0,bocf(1,zero)) ~ psi_0(0) + psi_0(psi_1(0)) = 1 + e0 = e0$
+- $bocf(0,bocf(0,bocf(1,zero))) ~ psi_0(psi_0(psi_1(0))) = psi_0(e0) = e0$ (not normal form, $e0 in.not C_0(e0)$)
+
 We can now define a map to associate each ordinal notation to an ordinal below $TFBO$:
 
 #definition[
-
-The map $o : OT arrow.r.bar C_0(#E)$ is defined recursively as such:
-
-+ $o(zero) := 0$
-+ $o(a_0 plus ... plus a_k) = o(a_0) + ... + o(a_k)$
-+ $o(bocf(nu, a)) = psi_nu (o(a))$
+    The map $o : OT arrow.r.bar C_0(#E)$ is defined recursively as such:
+    + $o(zero) := 0$
+    + $o(a_0 plus ... plus a_k) = o(a_0) + ... + o(a_k)$
+    + $o(bocf(nu, a)) = psi_nu (o(a))$
 ]
+
 This should be fairly self-explanatory with the notation that has been chosen essentially being red versions of the usual ordinals.
 $OT$ here reprsents all ordinal notations that recursively satisfy the normal form, i.e. $bocf(a,b)$ always satisfies $ternary(b,a,b)$.
-We call this #OT the subset of *standard form* terms.
 
-From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showed that $({a in OT | a prec bocf(1,zero) }, prec)$ is order isomorphic to $(C_0(#E),<)$,
-that they are well-ordered (no infinite descending sequence), and that these two sets have order type $TFBO$.
-He additionally showed that for every ordinal notation $a prec bocf(1,zero)$, the ordinal $o(a)$ is the order type of ${x in OT | x prec a}$ under $prec$.
 
-[WIP: His proofs is not that long, maybe we can break it down here? This section isn't as formal as the one on $<e0$]
+From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showed that:
+#theorem(name:[_*Correspondence of Ordinal Notation with Buchholz's OCF*_])[
+    The set ${a in OT | a prec bocf(1,zero) }$ under $prec$ is :
+    - order isomorphic to $(C_0(#E),in)$
+    - a well-ordered set
+    - has order type $TFBO$
 
-Note that Buchholz used $D_nu a$ instead of our red $bocf(nu, a)$, $\#$ instead of our #plus,
-and he uses $G_nu (b)$ is somewhat analogous to $C_nu (b)$. [WIP: What is $G_v$ in his paper?]
+    Additionally, for every ordinal notation $a prec bocf(1,zero)$, the ordinal $o(a)$ is the order type of the set ${x in OT | x prec a}$ under $prec$.
+]
+[WIP: His proofs is not that long, maybe we can break it down here? Maybe move it to an appendix or something]
 
-Now just like how the fundamental sequence of an ordinal $alpha[n] < alpha$, we can similarly define a fundamental sequence $a[n]$ for each ordinal notation $a$,
-where $a[n] prec a$. This requires defining a computable version of _cofinality_ ($"dom"$ in Buchholz's paper)
-// While we skipped over a lot of the formalism that was present, this ordinal notation is basically identical to the actual $psi$, just that it is computable.
-Another thing to note about the fundamental sequences is that for a term $t in OT$, all terms in its fundamental sequence $t[n] in OT$.
-[WIP: no proof/proof is left as an exercise]
+// Note that Buchholz used $D_nu a$ instead of our red $bocf(nu, a)$, $\#$ instead of our #plus,
+// and he uses $G_nu (b)$ is somewhat analogous to $C_nu (b)$.
 
-Recall that when defining ordinal notations $<e0$, we build up in layers from the bottom-up with Cantor Normal Form.
-Here, we go for a more "top-down" approach, where every ordinal notation $a prec bocf(omega,zero)$ can be expressed as taking fundamental sequences:
-$
-    a = bocf(omega,zero)[n_1][n_2]...[n_k]
-$
-For example, to get $bocf(0,bocf(1,zero) plus bocf(1,zero)) ~ epsilon_1$, (using David_Exmachina's fundamental sequences):
+#[
+    #let dom(content) = $redf(sans(cof)\()content redf(\))$
 
-- $bocf(0,bocf(omega,zero)) ~ BO$
-    - $dots.v$
-    - `[2]` $bocf(0,bocf(2,zero)) ~ "BHO"$
-        - $dots.v$
-        - `[4]` $bocf(0,bocf(1,bocf(1,bocf(1,zero)))) ~ psi_0(Omega^Omega) = G0$
-        - `[3]` $bocf(0,bocf(1,bocf(1,zero))) ~ psi_0(Omega^2) = z0$
-            - $dots.v$
-            - `[2]` $bocf(0,bocf(1,bocf(0,bocf(1,zero)))) ~ psi_0(Omega dot e0) = epsilon_e0$
-                - $dots.v$
-                - `[2]` $bocf(0,bocf(1,bocf(0,bocf(0,zero)))) ~ psi_0(Omega omega^omega) = epsilon_(omega^omega)$
-                - `[1]` $bocf(0,bocf(1,bocf(0,zero))) ~ psi_0(Omega omega) = epsilon_omega$
-                    - $dots.v$
-                    - #box(fill: yellow, inset: 0.25em)[`[2]` $bocf(0,bocf(1,zero) plus bocf(1,zero)) ~ psi_0(Omega 2) = epsilon_1$]
-                    - `[1]` $bocf(0,bocf(1,zero)) ~ psi_0(Omega) = e0$
-                    - `[0]` $bocf(0,zero) ~ 1$
-                - `[0]` $bocf(0,bocf(1,zero)) ~ psi_0(Omega) = e0$
-            - `[1]` $bocf(0,bocf(1,zero)) ~ psi_0(Omega) = e0$
-            - `[0]` $zero ~ 0$
-        - `[2]` $bocf(0,bocf(1,zero)) ~ psi_0(Omega)$
-        - `[1]` $bocf(0,zero) ~ 1$
-        - `[0]` $zero ~ 0$
-    - `[1]` $bocf(0,bocf(1,zero)) ~ psi_0(Omega) = e0$
-    - `[0]` $bocf(0,bocf(0,zero)) ~ psi_0(1) = omega$
+    Now just like how the fundamental sequence of an ordinal $alpha[n] < alpha$, we can similarly define a fundamental sequence $a[n]$ for each ordinal notation $a$,
+    where $a[n] prec a$. This requires defining a computable version of _cofinality_ (denoted $"dom"$ in Buchholz's paper)
+    #definition[
+        We will define "cofinality" $dom(zws)$ of each ordinal notation term, and the fundamental sequence of an ordinal notation term $t[z]$.
+        This is essentially a 1-to-1 copy of the fundamental sequence rules, except that since we are dealing with finite strings, they are recursive and computable.
+
+        - $dom(zero) := emptyset$
+        - $dom(a_0 plus ... plus a_k) = dom(a_k)$ ($a_i in OT$)
+
+            $(a_0 plus ... plus a_k)[z] = a_0 plus ... plus (a_k [z])$
+        - $dom(bocf(0,zero)) := {zero}$, and $bocf(0,zero)[0] = 0$
+            (${zero}$ is analogous with $1$)
+        - $dom(bocf(n+1, zero)) := T_u := {t in OT | t prec bocf(u+1,zero)}$ for $n in NN$ ($T_u$ is analogous with $Omega_(u+1)$), $bocf(n+1,zero)[z] = z$
+        - $dom(bocf(omega, b)) := NN$ (i.e. $omega$), $bocf(omega,b)[n] = bocf(n,b)$
+        - $dom(bocf(v,b))$ where $b != zero$ and $v in NN$
+            - $dom(b) = {zero} => dom(bocf(v,b)) = NN$ (Analogous with rule 5) $bocf(v,b)[n] = bocf(v,b[0]) dot n$
+            - If $dom(b) = NN$ or $dom(b) = T_u$ for some $u < v$ then $dom(bocf(v,b)) = dom(b)$ (Analogous with rule 6a),
+                $bocf(v,b)[z] = bocf(v,b[z])$
+            - If $dom(b) = T_u$ for some $u >= v$ then $dom(bocf(v,b)) = NN$ (Analogous with rule 6b),
+                $bocf(v,b)[n] = bocf(v,b[G[n]])$, where $G[0] = 0, G[n+1] = bocf(u,b[G[n]])$
+    ]
+    // While we skipped over a lot of the formalism that was present, this ordinal notation is basically identical to the actual $psi$, just that it is computable.
+    Another thing to note about the fundamental sequences is that for a term $t in OT$, all terms in its fundamental sequence $t[n] in OT$. (Also is Buchholz's paper)
+    #lemma[
+        If $a,z in OT$, and $z in dom(a)$, then $a[z] in OT$ and $a[z] prec a$
+    ]
+
+    Recall that when defining ordinal notations of order type $<e0$, we mainly build up in layers from the bottom-up with Cantor Normal Form,
+    but for PrSS we introduced a "top-down" approach, where each standard form sequence was nested fundamental sequences of the limit of PrSS.
+    Here, we go for a similar "top-down" approach, where every ordinal notation $a prec bocf(omega,zero)$ can be expressed as taking fundamental sequences:
+    $
+        a = bocf(omega,zero)[n_1][n_2]...[n_k]
+    $
+    For example, to get $bocf(0,bocf(1,zero) plus bocf(1,zero)) ~ epsilon_1$:
+
+    #figure(
+        box[
+            #set text(font: "Dejavu Sans Mono", size:8.5pt)
+            #set par(leading: 0.4em)
+            #set align(left)
+
+            $bocf(0,bocf(omega,zero)) ~ BO$\
+            ├─ $dots.v$\
+            ├─[2]$bocf(0,bocf(2,zero)) ~ "BHO"$\
+            │~~├─~$dots.v$\
+            │~~├─[3]$bocf(0, bocf(1, bocf(1, bocf(1, zero)))) ~ G0$\
+            │~~├─[2]$bocf(0, bocf(1, bocf(1, zero))) ~ z0$\
+            │~~│~~├─ $dots.v$\
+            │~~│~~├─[1]#box[$bocf(0, bocf(1, bocf(0, bocf(1, zero)))) ~ epsilon_e0$]\
+            │~~│~~│~~├─ $dots.v$\
+            │~~│~~│~~├─[1]$bocf(0, bocf(1, bocf(0, bocf(0, zero)))) ~ epsilon_(omega^omega)$\
+            │~~│~~│~~└─[0]$bocf(0, bocf(1, bocf(0, zero))) ~ epsilon_omega$\
+            │~~│~~│~~~~~├─~$dots.v$\
+            │~~│~~│~~~~~├─[2]$bocf(0, bocf(1, zero) plus bocf(1, zero)) ~ epsilon_1$\
+            │~~│~~│~~~~~├─[1]$bocf(0, bocf(1, zero)) ~ e0$\
+            │~~│~~│~~~~~└─[0]$bocf(0, zero) ~ 1$\
+            │~~│~~└─[0]$bocf(0, bocf(1, zero)) ~ e0$\
+            │~~├─[1]$bocf(0, bocf(1, zero)) ~ e0$\
+            │~~└─[0]$bocf(0, zero) ~ 1$\
+            ├─[1]$bocf(0,bocf(1,zero)) ~ e0$\
+            └─[0]$bocf(0,bocf(0,zero)) ~ omega$\
+        ]
+
+    )
+]
+
 
 == Buchholz's Hydra
 
@@ -119,6 +158,7 @@ For example, to get $bocf(0,bocf(1,zero) plus bocf(1,zero)) ~ epsilon_1$, (using
             orange: (fill: orange),
             green: (fill: green),
             blue: (fill: lightblue),
+            "none": (stroke: 0pt),
           ),
         ),
         // (stroke: 0pt),
@@ -131,6 +171,7 @@ For example, to get $bocf(0,bocf(1,zero) plus bocf(1,zero)) ~ epsilon_1$, (using
             orange: (stroke: orange + 0.75pt),
             green: (stroke: green + 0.75pt),
             blue: (stroke: blue + 0.75pt),
+            "none": (stroke: 0pt),
           ),
           default: (stroke: black + 0.5pt)
         ),
@@ -474,8 +515,87 @@ Here are some examples of Buchholz's hydra and the associated ordinal notations 
 
 By restricting Buchholz Hydra to only those corresponding to $OT$ (rather than all of $T$), we can prove the termination of Buchholz Hydras.
 
+=== Termination
 
+It is obvious how case 1 would cause termiantion is just Kirby-Paris hydra all over again. The main complication comes from case 2:
 
+#figure[
+    #set align(horizon)
+    #stack(
+        dir: ltr,
+        buchholz-hydra[
+            - $+$ #node-attr(rotate: -180deg)
+                - $v <= u$ <red>
+                    // + #metadata("red")
+                    - $mu>u$
+                        // + #metadata("red")
+                        - $u+1$ <blue>
+                        // + #metadata("red")
+                        - $xi_1$
+                    // + #metadata("red")
+                    - $xi_0$
+        ],
+        $&= psi_v (xi_0 + psi_mu (xi_1 + psi_(u+1)(0)))\ &= psi_v (xi_0 + psi_mu (xi_1 + Omega_(u+1)))$
+    )
+]
+And we have $S(T)$ as:
+#figure[
+    #set align(horizon)
+    #stack(
+        dir: ltr,
+        spacing: 0.5em,
+        $S(T) = $,
+        buchholz-hydra[
+                - $u$ <blue> #node-attr(rotate: -180deg)
+                    - $mu$
+                        - $T$ <none>
+                        - $xi_1$
+                    - $xi_0$
+        ],
+        $S(emptyset) = $,
+        buchholz-hydra[
+                - $u$ <blue> #node-attr(rotate: -180deg)
+                    - $mu$
+                        + #metadata("none")
+                        - #zws <none>
+                        - $xi_1$
+                    - $xi_0$
+        ],
+        $= psi_u (xi_0 + psi_mu (xi_1))$,
+    )
+]
+#figure[
+    #set align(horizon)
+    #stack(
+        dir: ltr,
+        spacing: 0.5em,
+        $S^2(emptyset) = $,
+        buchholz-hydra[
+                - $u$ <blue> #node-attr(rotate: -180deg)
+                    - $mu$
+                        - $S(emptyset)$ <none>
+                        - $xi_1$
+                    - $xi_0$
+        ],
+        $=$,
+        buchholz-hydra[
+                - $u$ <blue> #node-attr(rotate: -180deg)
+                    - $mu$
+                        - $u$ <blue>
+                            - $mu$
+                                + #metadata("none")
+                                - #zws <none>
+                                - $xi_1$
+                            - $xi_0$
+                        - $xi_1$
+                    - $xi_0$
+        ],
+        $&= psi_u (xi_0 + psi_mu (xi_1 + S(emptyset)))\ &= psi_u (xi_0 + psi_mu (xi_1 + psi_u (xi_0 + psi_mu (xi_1))))$,
+    )
+]
+
+Since $psi_u (alpha) < Omega_(u+1) = psi_(u+1)(0)$, which is the ordinal notation corresponding to our original $u+1$ leaf node that we cut,
+it stands to reason that cutting off the head decreases the associated ordinal notation of the whole tree as a result.
 
 == The Hyper Primitive Sequence System (HPrSS)
 
@@ -590,7 +710,7 @@ where $f(n)$ is a fast-growing function, usually $f(n) = n + 1$.
 
         So concatenating $G, B(0), ...,B(n)$, we concatenate $(), (0), (1),...,(n)$:
         $
-            (0,2)[n] = underbrace((0,1,2,3,...), "of length" n)
+            (0,2)[n] = (0,1,2,3,...,n)
         $
     + For $s = (0,2,1,3)$, the parent of $s_4 = 3$ is $s_3=1$, whose parent is $s_1=0$, so we have
         #figure(
@@ -614,79 +734,121 @@ where $f(n)$ is a fast-growing function, usually $f(n) = n + 1$.
 
 ]
 
+
 #definition[
-    The *standard form* of sequences in HPrSS $OT_"HPrSS"$ is a subset of $T_"HPrSS"$ defined as such;
+    The set of *standard form* of sequences in HPrSS, $OT_"HPrSS"$ is a subset of $T_"HPrSS"$ defined as such;
     + For any $n in NN, (0,n) in OT_"HPrSS"$.
     + For any $S in OT\\{()}$ and $n in NN$, $s[n] in OT_"HPrSS"$
 ]
 
-Again, the $OT$ here is built in a "top-down" approach. It might not seem like a "top-down" approach,
-but it will make more sense when we define a correspondence with the ordinal notation.
+Similar to our section on formalizing the order isomorphism of PrSS to #e0, the $OT$ here is built in a "top-down" approach.
+We re-use the definition of $subset.sq$ from our PrSS section:
 
-
-=== Association with Ordinal Notation and Buchholz Hydras
-#[
-    #let trans = $"Trans"$
-    #definition[
-        We can define a map $trans: T_B arrow.r.bar T_"HPrSS"$, where $T_B$ is the set of terms associated to Buchholz's OCF except those containing $bocf(omega,zws)$,
-        and $T_"HPrSS"$ is the set of all HPrSS terms.
-
-        $trans(t)$ is defined as such:
-        - $trans(zero) = ()$
-        - Suppose $t = t_0 plus bocf(u,t_1)$ for some $u in NN$, and $t_0, t_1 in T_B$
-            - If $t_1 = bocf(0,zero) dot m$ for some $m in NN$, then
-                $
-                    trans(t_0 plus bocf(u,bocf(0,zero) dot m)) = trans(t_0)^frown \(u, underbrace(u+1\,...\,u+1, m)\)
-                $where $zws^frown$ represents concatenation.
-                Note that if $t = bocf(u,zero)$ this becomes $t_0 = "empty", m=0$, and as such:
-                $
-                    trans(bocf(u,0)) = (u)
-                $
-            - Otherwise, $trans(t)$ is the concatenation of $trans(t_0)$, $(u)$, and $trans(t_1)$ with $(u+1)$ added to each element.
-                $
-                    trans(t_0 plus bocf(u,t_1)) = trans(t_0)^frown (u)^frown [trans(t_1)]^(+(u+1))
-                $
-                (We use $[s]^(+k)$ to represent adding $k$ to every element of a sequence $s$).\
-                Again, we can see that if $t=bocf(0,bocf(v,zero))$, $u=0$ and
-                $
-                    trans(bocf(0,bocf(v,zero))) = (0)^frown [trans(bocf(v,zero))]^(+1) = (0, v+1)
-                $
-    ]
-
-    If we restrict #trans to $OT_B arrow$, #trans is an _order isomorphism_ from $(OT_B, prec)$ and $(OT_"HPrSS", lex)$.
-    We can then prove the termination of all normal form HPrSS sequences by showing that $s[n] lex s:$
-    #lemma[
-        Let $OT_B$ be the set of ordinal terms associated with Buchholz's OCF $OT$ except those containing $bocf(omega,zws)$.
-        If we restrict $trans$'s domain to $OT_B$, it satisfies the following:
-        + It is a bijective map onto $OT_"HPrSS"$, the set of normal form HPrSS sequences
-        + For any $t in OT_B \\ {zero}$ and $n in NN$, and there exists a $t' in OT_B$ such that $trans(t') = trans(t)[n]$ and $t' prec t$.
-            If $n>0$ then such a $t[n-1] < t' <= t[n]$
-    ]
-    #proof[
-        [WIP: I do not understand the proof given in the #link("https://googology.miraheze.org/wiki/Hyper_primitive_sequence_system#Termination")[Googology wiki]].
-        Obviously $trans(t) = trans(t'[n])$, but I don't know how to prove $trans(t'[n]) = trans(t')[n]$
-        // For an $m in NN$, we define $Sigma_m subset OT_B$ recursively as such:
-        // + If $m = 0$, then $Sigma_0 = {bocf(0,bocf(u,zero)) | u in NN "and" u > 0}$
-        // + If $m > 0$, then $Sigma_m = Sigma_(m-1) union {t[n] | t in Sigma_(m-1) "and" n in NN}$
-
-        // This is analogous to the "drop-down" list we showed earlier where we define $epsilon_1$ from chained fundamental sequences of $bocf(0,bocf(omega,0))$.
-
-        // We have $limits(union.big)_(m in NN)Sigma_m = OT_B$.
-
-        // Let $t in OT_B$. Since $limits(union.big)_(m in NN)Sigma_m = OT_B$, there exists an $m in NN$ such that $t in Sigma_m$. Let $mu$ be the minimum of such an $m$.
-        // We show that $trans(t) in OT_"HPrSS"$ by induction on $mu$.
-
-        // + Base case $mu = 0$, then $t = bocf(0,bocf(u,zero))$ for some $u in NN$ satisfying $u > 0$, and hence $trans(t) = (0,u+1) in OT_"HPrSS"$.
-
-        // + Induction step: Suppose $mu > 0$, and for all $a in Sigma_m$ where $m < mu$, $trans(a) in OT_"HPrSS"$.
-
-        //     Then there exists a $t' in Sigma_(mu-1)$ such that $t = t'[n]$ for some $n in NN$.
-        //     We also know that $t'[n] prec t'$, so $t = t'[n] prec t$, so $t != t'$.
-        //     From the Induction Hypothesis, since $t' in Sigma_m$, $trans(t') in OT_"HPrSS"$.
-        //     As such, from the definition of $OT_"HPrSS"$, $"Expand"(trans(t'),n) in OT_"HPrSS"$.
-
-    ]
+#definition[
+    For two sequences $s, t$, we define the relation $s subset.sq t$ if and only if there exists $n_1,n_2,...,n_k in NN$ such that
+    $
+        s = t[n_1][n_2]...[n_k]
+    $
+    Then we define $s supset.sq t$ if and only if $t subset.sq s$.
 ]
+And as such we can re-define $OT_"HPrSS"$:
+#definition[
+    The set of *standard form* of sequences in HPrSS, $OT_"HPrSS"$ is a subset of $T_"HPrSS"$ defined as such;
+    $
+        OT_"HPrSS" = {s in T_"HPrSS" | "There exists an" n in NN "such that" s subset.sq (0,n)}
+    $
+]
+
+=== Order Isomorphism to #BO
+We can prove that $(OT_"HPrSS", lex)$ is order isomorphic to $(BO, in)$ in a similar way as we did for PrSS.
+
+[WIP] How to prove this is beyond me
+// below was some of my attempts
+// #[
+
+//     #lemma[
+//         For any $s in T_"HPrSS"$ and $n in NN$, $s[n] lex s$.
+
+//         Note that this means $s subset.sq t => s lex t$, and its contrapositive $s lexgt t => s subset.sq.not t$
+//     ]
+//     #proof[
+//         Let $s = (s_1,...,s_m)$. We can denote the good root as $G = (s_1,...,s_(r-1))$ and the bad root function as $(s_r,...,s_(m-1))$,
+//         making $s=G^frown B^frown (s_m)$, where $zws^frown$ represents concatenation. Then the ascension factor $delta = s_m - s_r - 1$.
+
+//         Then
+//         $
+//             s[n] &= \( underbrace(s_1\,...\,s_(r-1),G), underbrace(s_r\,...\,s_(m-1),B(0)), underbrace(s_r + delta\,...\,s_(m-1) + delta,B(1)),... \)\
+//             &= \( underbrace(s_1\,...\,s_(r-1),G), underbrace(s_r\,...\,s_(m-1),B(0)), underbrace(s_r + s_m - s_r - 1\,...\,s_(m-1) + delta,B(1)),... \)\
+//             &= \( underbrace(s_1\,...\,s_(r-1),G), underbrace(s_r\,...\,s_(m-1),B(0)), underbrace(s_m - 1\,...\,s_(m-1) + delta,B(1)),... \)\
+//             &= (s_1,...,s_(m-1),s_m-1,...)\
+//             &lex (s_1,...,s_(m-1),s_m) = s
+//         $
+//     ]
+//     #lemma[
+//         If $s lex t$ where $s$ is a proper prefix of $t$:
+//         $
+//             s &= (s_1,...,s_m)\
+//             t &= (s_1,...,s_m,t_(m+1),...,t_l)
+//         $
+//         then $s subset.sq t$.
+//     ]
+//     #proof(name: [_Informal_])[
+//         We can "chop off" the last term as we did for PrSS:
+
+//         Let $t' = (s_1,...,s_m,t_(m+1))$. Then we have:
+//         $
+//             t'[0] = \( underbrace(s_1\,...\,s_(r-1), G), underbrace(s_r\,...\,s_m, B(0)) \) = s
+//         $
+//         So using this technique we can keep chopping off each term of $t$ until it reaches $s$.
+//     ]
+//     #lemma[
+//         If $n_1 < n_2$, then $(0,n_1) subset.sq (0,n_2)$.
+//     ]
+//     #proof(name: [_Informal_])[
+//         $(0,n_2)[1] = (0,(n_2-1))$. With this, we can keep decreasing $(0,n)$ until it reaches $(0,n_1)$
+//     ]
+//     #lemma[
+//         Let $s in OT_"HPrSS"$. $(0,u) subset.sq s subset.sq (0,u+1)$ if and only if $s$ starts with (but not equals) $(0,u)$
+//     ]
+//     #proof[
+//         By Induction:
+//         - Base case: $(0,0) subset.sq s subset.sq (0,1)$ if and only if $s$ starts with but not equals $(0,0)$ -- trivial since $(0,1)[n] = (0,0,...)$.
+//         - Successor case: prove $(0,u) subset.sq s subset.sq (0,u+1)$ if and only if $s$ starts with (but not equals) $(0,u)$ assuming it holds for all $v < u$.
+//             - $=>$\
+//                 - If $s$ starts with (but not equals) $(0,u')$ where $u' < u$, then by induction hypothesis
+//                     $(0,u') subset.sq s subset.sq (0,u'+1) subset.sq.eq (0,u)$, a contradiction.
+//                 - If $s$ starts with (but not equals) $(0,u')$ where $u' > u$, then $s lexgt (0,u+1) => s subset.sq.not (0,u+1)$, a contradiction
+
+//                 Therefore $(0,u) subset.sq s subset.sq (0,u+1)$ implies that $s$ starts with (but not equals) $(0,u)$.
+
+//             - $arrow.l.double$\
+//                 If $s subset.sq (0,u)$ then $s lex (0,u)$ which contradicts when s starting with $(0,u)$.
+//                 If $(0,u+1) subset.sq s$ then $(0,u+1) lex s$, also contradicts s starting with $(0,u)$
+//     ]
+
+//     #theorem[
+//         $s lex t <=> s subset.sq t$ if $s,t in OT_"HPrSS"$.
+//     ]
+//     #proof[
+//         Since $s[n] lex s$, $s subset.sq t => s lex t$ is already shown. We just need to show that $s lex t => s subset.sq t$.
+
+//         Let $(0,u_1) subset.sq s subset.sq (0,u_1+1)$ and $(0,u_2) subset.sq t subset.sq (0,u_2+1)$
+
+//         If $u_1 < u_2$ its obvious but if $u_1 = u_2$ ughhhhhhh
+//     ]
+//     // #lemma[
+//     //     If $s in OT_"HPrSS"$, then $s subset.sq (0,n)$. Let $n'$ be the minimal such $n$ satisfying $s subset.sq (0,n')$.
+//     //     Letting $u = n'-1$, then $s$ must start with $(0,u,2u,...,k dot u)$,
+//     // ]
+//     // #proof[
+//     //     Every HPrSS sequence will start with $(0,u,2u,...,k dot u)$. For example, $(0,2,1)$ starts with $(0,2)$.
+//     //     The contradiction is
+//     // ]
+
+
+// ]
+
+
 #[
     As we saw earlier in PrSS, $(0,1,2,3,...)$ is equivalent to $omega^omega^dots.up = e0$. Since we now have $(0,2)[n]$ which expands to $(0,1,2,3,...)$,
     we have $(0,2)$ corresponding to $e0$. In fact, we can expand upon this and define larger and larger ordinals:
@@ -712,11 +874,10 @@ but it will make more sense when we define a correspondence with the ordinal not
         $(0,2,2)$, $bocf(0,#W plus #W)$, $epsilon_1$,
 
     )
-
 ]
-
-There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hydras
-
+=== Growth rate
+=== Association with Buchholz Hydras
+There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hydras (unproven)
 // torturous diagram drawing
 #[
     Suppose we have a sequence: $(0,2,4,3,5,1)$. We label each element's parent:\ \
@@ -742,7 +903,7 @@ There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hy
 
         bezier-through("s3.south", (rel: (x: -.2, y: -.25)), "s2.south", stroke: red + .75pt)
 
-        bezier-through("s4.north", (rel: (x: -.5, y: .25)), "s1.north", stroke: red + .75pt)
+        bezier-through("s4.north", (rel: (x: -.5, y: .25)), "s2.north", stroke: red + .75pt)
         bezier-through("s5.south", (rel: (x: -.2, y: -.25)), "s4.south", stroke: red + .75pt)
         bezier-through("s6.north", (rel: (x: -.5, y: .5)), "s1.north", stroke: red + .75pt)
       },
@@ -845,8 +1006,9 @@ There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hy
     // ])
 ]
 
-
 == The Pair Sequence System (PSS)
+
+// https://discord.com/channels/206932820206157824/206933380942528514/1288722679787950122
 
 The Pair Sequence System (PSS) can also be considered an extension to the primitive sequence system, where instead of it being a sequence of natural numbers,
 the Pair Sequence System can be thought og as a sequence of _pairs_ of natural numbers. There are two common ways to write PSS, either inline, like
@@ -855,56 +1017,120 @@ $
     mat(0,1,2,2;0,1,1,0)
 $
 
+#definition[
+    The Pair Sequence System is a two-row matrix $M$, which can also be thought of as a sequence of pairs.
+
+    $
+        M = mat(a_1,a_2,...,a_m;b_1,b_2,...,b_m)
+    $
+
+    The first row $(a_1,a_2,...,a_m)$ must satisfy PrSS rules, i.e.:
+    1. the row must start with 0 (i.e. $a_1 = 0$)
+    2. for each element in a row, the value of its parent must be 1 less than its own value
+    For the second row, every element in the second row must be lesser than or equal to the corresponding value in the first row, i.e. $a_i >= b_i$ for all $1<=i<=m$.
+
+    It's fundamental sequence $M[n]$ is defined as such:
+
+    + If $mat(a_m;b_m)=mat(0;0)$, then we just remove $mat(a_m;b_m)=mat(0;0)$:
+
+        $
+            M[n] = mat(a_1,a_2,...,a_(m-1);b_1,b_2,...,b_(m-1))
+        $
+        This is similar to PrSS when a sequence ends with a $0$.
+
+    + If $mat(a_m;b_m)$ if of the form $mat(a_m;0)$, where $a_m>0$, then within row one we find the parent of $a_m$.
+        Let's denote the index of the parent as $m_1$, and the value of the parent becomes $a_m_1$.
+        We define *Good Root* $G$ and *Bad Root* $B$ as:
+
+        $
+            G = mat(a_1,...,a_(m_1-1);b_1,...,b_(m_1-1)), #h(1em) B = mat(a_m_1, ..., a_(m_1-1);b_m_1,...,b_(m_1-1))
+        $
+        Then $s[n]$ becomes $G^frown underbrace(B^frown ...^frown B, n "times")$, where $zws^frown$ represents "matrix concatenation".
+        This case, along with the previous case, basically the same mechanism as PrSS.
+
+    + If $a_m>0$ and $b_m>0$, we first focus only on the first row of the matrix.
+        Like HPrSS, we find the parent of $a_m$, then its parent, then its parent, all the way until $0$.
+        Let's label $m_0 = m$, $m_1$ to be the index of $a_m_0$'s parent, etc..., similar to how we did HPrSS.
+
+        $
+            M = mat(a_m_k,...,a_m_2,...,a_m_1,...,a_m_0;b_m_k,...,b_m_2,...,b_m_1,...,b_m_0;)
+        $
+
+        Then now within the sequence $(b_m_k,...,b_m_2,b_m_1,b_m_0)$, we find the rightmost element such that $b_m_i < b_m_0$.
+        The column that this element is part of, $mat(a_m_i, b_m_i)$, will serve as our separator between good root and bad root.
+        Note how you first search for all of $a_m$'s "ancestors", then exclusively within those columns, we search for $b_m$'s parent.
+
+        Continuing, the *Good Root* is then defined as
+        $
+            G = mat(a_0,...,a_(m_i-1);b_0,...,b_(m_i-1))
+        $
+        and the *Bad Root* is a function, with a similar definition to HPrSS. We define the *ascension matrix* $Delta$ as:
+        $
+            Delta = mat(a_m - a_m_i;0)
+        $
+        $
+            B(0) = mat(a_m_i,...,a_(m-1);b_m_i,...,b_(m-1))\
+            B(1) = mat(a_m_i,...,a_(m-1);b_m_i,...,b_(m-1))\
+
+        $
+]
+
 The PSS is not as comptabile with Buchholz's ordinal notation as HPrSS. Nonetheless it is possible to show a correspondence with PSS and Buchholz's ordinal notation.
 
 divergence at $psi_0(Omega_omega dot (Omega + 1))$
 
+#align(center)[
+    #table(
+        columns:3,
+        align: horizon,
+        inset: 0.75em,
+        table.header([*PSS*], [*Ordinal Notation*], [*Ordinal*]),
+        $
+            mat(0,1;0,1)
+        $, $psi_0(psi_1(zero))$, $e0$,
+        $
+            mat(0,1,0,1;0,1,0,1)
+        $, $psi_0(psi_1(zero)) plus psi_0(psi_1(zero))$, $e0 dot 2$,
+        $
+            mat(0,1,1;0,1,0)
+        $, $psi_0(psi_1(zero) plus psi_0(zero))$, $epsilon_0 dot omega = omega^(e0+1)$,
+        $
+            mat(0,1,1;0,1,0)
+        $, $psi_0(psi_1(zero) plus psi_0(zero))$, $epsilon_0 dot omega = omega^(e0+1)$,
+        $
+            mat(0,1,1,2;0,1,0,1)
+        $, $psi_0(psi_1(zero) plus psi_0(psi_1(zero))$, $psi_0(Omega dot e0) = e0^2$,
+        $
+            mat(0,1,1,2,2,3;0,1,0,1,0,1)
+        $, $psi_0(psi_1(zero) plus psi_0(psi_1(zero plus psi_0(psi_1(zero))))$, $psi_0(Omega dot e0^2) = e0^e0$,
+        $
+            mat(0,1,1;0,1,1)
+        $, $psi_0(psi_1(zero) plus psi_1(zero))$, $psi_0(Omega 2) = epsilon_1$,
+
+        $
+            mat(0,1,2;0,1,0)
+        $, $psi_0(psi_1(psi_0(zero))$, $psi_0(Omega dot omega) = epsilon_omega$,
+    )
+]
+
 == Patcail's Hydra/Mini-Nuclear Array Notation
 
-
-== Ordinal notation associated with Extended Buchholz's function
-
-#definition[
-    #let s = purplef[*$s$*]
-    #let t = pinkf[*$t$*]
-    #let u = lilacf[*$u$*]
-    Let $T$ be the set of terms and $PT$ be the set of all prinicpal terms (terms whose associated ordinal are additively principal ordinals).
-
-    - $zero in T$
-    - Given a principal term $s in PT$ and a term $t in T$, $s plus t in T$
-    - Given terms $s,t in T$, $bocf(s,t) in T "and" PT$
-
-    Let $prec$ be a binary relation on $T$.
-
-
-
-    For terms $#s, #t in T$, $#s prec #t$ is defined as:
-    - If $#s = zero$ then $#s prec #t$ if $#t != zero$
-    - If $#t = zero$ then $#s prec #t$ is false
-    - If $#s = a plus b$ where $a in PT$ and $b in T\\{zero}$, then
-        - If $#t = c plus d$ for some $c in PT$ and $d in T\\{zero}$
-            - If $a != c$ then $#s prec #t$ if and only if $a prec c$
-            - If $a = c$ then $#s prec #t$ if and only if $b prec d$
-        - If $#t in PT$ then $#s prec #t$ if and only if $a prec #t$
-    - If $#s = bocf(a,b)$ for some $a,b in T$ then:
-        - If $#t = c plus d$ for some $c in PT$ and $d in T\\{zero}$, then $#s prec #t$ if and only if $#s prec.eq c$
-        - If $#t = bocf(c,d)$ for some $c,d in T$ then:
-            - If $a != c$ then $#s prec #t$ if and only if $a prec c$
-            - If $a = c$ then $#s prec #t$ if and only if $b prec d$
-
-    #let ternary(s,t,u) = $#s redf(in) redf(bold(C))_#t redf(\() #u redf(\))$
-    For terms $#s, #t, #u$, we define the ternary relation $ternary(#s,#t,#u)$ if and only if:
-
-    - $#s prec bocf(#t,zero)$
-    - $#s = a plus b$ for some $a in PT$ and $b in T\\{zero}$ and $ternary(a,#t,#u)$ and $ternary(b,#t,#u)$
-    - $#s = bocf(a,b)$ for some $a,b in T$ and $ternary(a,#t,#u)$ and $ternary(b,#t,#u)$ and $b prec #u$
-
-    Let $OT$ be a subset of $T$. $OT$ corresponds to the set of all ordinal notations of normal form.
-    For a term $#s$, $#s in OT$ is defined as:
-
-    - If $#s = zero$ then $#s in OT$
-    - If $#s = a plus b$ for some $a,b in PT$, then $#s in OT$ if and only if $a,b in OT$ and $b prec.eq a$
-    - If $#s = a plus b plus c$ for some $a,b in PT$ and $c in T\\{zero}$ then $#s in OT$ if and only if $a,(b plus c) in OT$ and $b prec.eq a$
-    - If $#s = bocf(a,b)$ for some $a,b in T$ then $#s in OT$ if and only if $a,b in OT$ and $ternary(b,a,b)$
-
-]
+```
+# FSes FOR PATCAIL NOTATION
+## Normalization function
+The function Norm(x) is defined as follows:
+1. Norm(0) = 0
+2. If x = [[0,a],b]:
+   Norm(x) = [c,[A,b]], where
+   A = Norm(a)
+   c = A but all instances of b are replaced with [A,b].
+3. Otherwise, Norm([a,b]) = [Norm(a),b]
+## FSes
+The function FS(x,k) is defined as follows:
+1. FS(0,k) = 0
+2. FS([0,a],c) = a
+3. FS(n,k) = k
+4. FS([a,b],k) = FS(Norm(x),k) if Norm(a) is of the form [0,c].
+5. Otherwise, FS([a,b],k) = [FS(a,k),b].
+Note that n is a term, equivalent to ω.
+```
