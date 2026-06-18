@@ -134,7 +134,7 @@ We can additionally show that the $psi$ function only outputs additively princip
 
 Another interesting property of this function is that subscript of $psi$ represents the cardinality of it's result:
 #proposition[
-    $Omega_nu <= psi_nu(alpha) < Omega_(nu+1)$
+    $Omega_nu <= psi_nu (alpha) < Omega_(nu+1)$ for all ordinals $alpha$.
 ]
 #proof[
     Since $Omega_nu subset.eq C_nu (alpha)$, we get $Omega_nu <= psi_nu (alpha)$.
@@ -187,6 +187,9 @@ We first prove a property about how $psi_nu (alpha+1)$ relates to $psi_nu (alpha
 #lemma[
     + For all ordinals $alpha < e0$, $alpha in C_0(alpha)$ and $psi_0(alpha) = omega^alpha$
     + For all ordinals $alpha < epsilon_(Omega_nu + 1)$ where $nu!=0$, $alpha in C_nu (alpha)$ and $psi_nu (alpha) = omega^(Omega_nu + alpha)$
+
+    (The expression $epsilon_(Omega_nu+1)$ really just means the supremum of ${Omega_nu, Omega_nu^Omega_nu, Omega_nu^Omega_nu^Omega_nu, ...}$,
+    i.e. an infinite power tower of $Omega_nu$, similar to how $e0$ is an infinite power tower of $omega$)
 ]
 
 #proof[
@@ -210,13 +213,29 @@ $
     &= e0
 $
 
-Therefore we have $psi_0(e0) = e0$, and $e0 in.not C_0(e0)$. As such, we can't use $e0$ in $C_0(e0+1)$ (i.e., $psi_0(e0)=e0 in.not C_0(e0+1)$),
-and $C_0(e0+1) = C_0(e0+1)$. So $psi_0(e0+1) = psi(e0)=e0$
-In fact, none of the ordinals we have mentioned will cut it, $psi_0(G0) = psi_0(SVO) = psi_0(LVO) = e0$. This is where $psi_1()$ comes in.
+Therefore we have $psi_0(e0) = e0$, and $e0 in.not C_0(e0)$.
+What about $C_0(e0+1)$? Let's think about at what increasing the $alpha$ in $C_0(alpha)$ does.
+It loosens the restriction on what elements in $C_0(alpha)$ that $psi_0$ can be applied to.
+For example, $C_0(omega)$ means that as long as $xi in C_0(omega)$ and $xi < omega$, $psi_0(xi) in C_0(omega)$.
+In this case, we can produce ordinals like $psi_0(2) = omega^2$ within $C_0(omega)$ (since $2 < omega$).
+The only thing stopping us from feeding $omega^2$ into $psi_0$, and letting $psi_0(omega^2) in C_0(omega)$ is the rule that $xi < omega$.
+However, for $e0$ and larger ordinals, no matter what (finite) combination of addition and $psi_0$ we throw at it, we can't reach $e0$:
 
-We (now) know that $psi_1(0) = Omega_1$. If you recall from the start, our $C_0(1)$ contains not only $psi_0(0) = 1$, but also $psi_1(0) = Omega_1, psi_2(0) = Omega_2, ...$.
-From now on, we will use $Omega$ as a shorthand for $Omega_1$. $e0 in.not C_0(Omega)$, so $psi_0(Omega) = e0$. But since $Omega in C_0(Omega) subset.eq C_0(Omega+1)$,
-we *can* use $psi_0(Omega)$ in $C_0(Omega+1)$, i.e., $e0 in C_0(Omega+1)$, so we have:
+$
+  psi_0(0) &= 1\
+  psi_0(psi_0(0)) = psi_0(1) &= omega\
+  psi_0(psi_0(psi_0(0))) = psi_0(omega) &= omega^omega\
+  psi_0(psi_0(psi_0(psi_0(0)))) = psi_0(omega^2) &= omega^omega^omega\
+$
+
+We can see that $psi_0(psi_0(...)) = omega^omega^dots.up $ "approaches" $e0$.
+The "limiting factor" is no longer the $xi < omega$ condition, but rather the "innate strength" of $psi_0$.
+So no matter how large we make $alpha$, we will not be able to generate $e0$ within $C_0(alpha)$.
+We can throw the largest ordinals we have come up with: $psi_0(G0) = psi_0(SVO) = psi_0(LVO) = e0$. This is where $psi_1$ comes in.
+
+We know (from an earlier lemma) that $psi_1(0) = Omega_1$. If you recall from the start, our $C_0(1)$ contains not only $psi_0(0) = 1$, but also $psi_1(0) = Omega_1, psi_2(0) = Omega_2, ...$.
+From now on, we will use $Omega$ as a shorthand for $Omega_1$. $e0 in.not C_0(Omega)$, so $psi_0(Omega) = e0$.
+But since $Omega in C_0(Omega+1)$ as $Omega < Omega+1$, we *can* use $psi_0(Omega)$ in $C_0(Omega+1)$, i.e., $e0 in C_0(Omega+1)$, so we have:
 $
     psi_0(Omega) &= e0\
     psi_0(Omega + 1) &= e0 dot omega = omega^(e0+1)\
@@ -257,17 +276,59 @@ We can actually prove that $psi_0(Omega + alpha) = omega^(e0+alpha)$:
     So therefore, for all $alpha <= epsilon_1, psi_0(Omega + alpha) = omega^(e0+alpha)$
 ]
 
-We see that our function gets "stuck" once again on $psi_0(Omega+epsilon_1)$.
+We see that our function gets "stuck" once again on $psi_0(Omega+epsilon_1)$:
+$
+  psi_0(Omega) &= e0\
+  psi_0(Omega + psi_0(Omega)) &= omega^(e0+e0) = e0^2\
+  psi_0(Omega + psi_0(Omega)) &= omega^(e0 + e0^2) = omega^(e0^2) = e0^e0\
+  psi_0(Omega + psi_0(Omega + psi_0(Omega))) &= omega^(e0 + e0^e0) = omega^(e0^e0) = e0^e0^e0\
+  psi_0(Omega + psi_0(Omega + psi_0(Omega + ...))) &= e0^e0^e0^dots.up\
+
+$
 It only becomes "unstuck" once again when we have an ordinal $alpha > Omega+epsilon_1$ such that $alpha in C_0(alpha)$.
 The next such ordinal is $Omega + Omega$, or $Omega dot 2$, and we have $psi_0(Omega dot 2) = epsilon_1$.
 
-We can similarly have
+We similarly have:
 $
     psi_0(Omega dot 3) &= epsilon_2\
     psi_0(Omega dot omega) &= epsilon_omega\
-    psi_0(Omega dot e0) &= epsilon_e0\
-    psi_0(Omega dot Omega) &= z0
-$, replacing each "stuck" term with $Omega$, and in general, we can relate Buchholz's function to the Veblen function as such:
+    psi_0(Omega dot e0) &= epsilon_e0
+$
+You might be wondering how we can get terms like $Omega dot omega$ from our $psi$ functions.
+We use the property that for $alpha < epsilon_(Omega_nu + 1)$, $psi_nu (alpha) = omega^(Omega_nu + alpha)$;
+$
+  psi_1(1) = omega^(Omega+1) = omega^Omega dot omega^1 = Omega dot omega\
+  psi_1(e0) = omega^(Omega + e0) = Omega dot e0
+$
+and in general, $psi_1(alpha) = Omega dot omega^alpha$, or just $Omega dot alpha$ if $omega^alpha = alpha$.
+
+So we can create another series of expressions "approaching" $z0$:
+$
+  psi_0(Omega) &= e0\
+  psi_0(psi_1(fuchsiaf(psi_0(Omega))))& = psi_0(Omega dot fuchsiaf(e0))\
+  &= epsilon_fuchsiaf(e0)\
+  psi_0(psi_1(fuchsiaf(psi_0(psi_1(psi_0(Omega)))))) &= psi_0(Omega dot fuchsiaf(epsilon_e0))\
+  &= epsilon_fuchsiaf(epsilon_e0)\
+  psi_0(psi_1(psi_0(psi_1(psi_0(psi_1(...)))))) &= psi_0(Omega dot psi_0(Omega dot psi_0(...)))\
+  &= psi_0(Omega dot epsilon_epsilon_dots.down)\
+  &= epsilon_epsilon_epsilon_dots.down
+$
+This suggests that
+$
+    psi_0(psi_1(z0)) = psi_0(Omega dot z0) = z0
+$
+Which checks out since $z0$ is a fixed point of $epsilon_#o$:
+$
+  psi_0(psi_1(#o)) = psi_0(Omega dot #o) = epsilon_#o
+$
+
+However, $z0 in.not C_0(Omega dot z0)$, just like how $e0 in.not C_0(e0)$.
+The function once agains becomes "stuck" where $psi_0(Omega dot z0) = psi_0(Omega dot G0) = psi_0(Omega dot LVO) = z0$.
+We need to find the next ordinal $alpha$ larger than $z0$ such that $alpha in C_0(Omega dot alpha)$ (Spoiler alert: its $Omega$ again).
+
+Just like how $psi_0(Omega)$ is still $e0$, $psi_0(Omega dot Omega) = psi_0(Omega^2)$ is still $z0$,
+but since $Omega^2 = psi_1(Omega) in C_0(Omega^2)$, $psi_0(Omega^2 + 1) = z0 dot omega$ and we can produce larger and larger ordinals.
+In general, we can relate Buchholz's function to the Veblen function as such:
 #proposition[$
     psi_0(Omega^alpha dot (1+beta)) = phi(alpha,beta)
 $]
@@ -285,7 +346,8 @@ $
     psi_1(psi_1(0)) &= psi_1(Omega) = omega^(Omega+Omega) = Omega^2\
     psi_1(psi_1(alpha)) &= psi_1(Omega dot omega^alpha) \
     psi_1(Omega dot alpha) &= omega^(Omega+Omega dot alpha) = omega^(Omega dot alpha) = Omega^(alpha)\
-    psi_1(Omega^2) &= Omega^Omega
+    psi_1(Omega^2) &= Omega^Omega\
+    psi_1(Omega^Omega) &= Omega^Omega^Omega\
 $
 So for example:
 $
@@ -309,7 +371,7 @@ $
 
 Now that we have "caught up" with the veblen function, we can go even further, with $psi_0(Omega^Omega^Omega^Omega)$.
 Eventually we reach $psi_0(Omega^Omega^dots.up) = BHO$, the *Bachmann-Howard Ordinal (BHO)*.
-(The expression $epsilon_(Omega+1)$ really just means the supremum of ${Omega, Omega^Omega, Omega^Omega^Omega, ...}$).
+.
 // This is the limit of the dimensional veblen, and also the proof-theoretic ordinal of several mathematical theories.
 
 So far we've been using $psi_1$ to construct all our terms containing $Omega$.
@@ -324,8 +386,8 @@ $
 
 Since $epsilon_(Omega+1) in.not C_1(epsilon_(Omega+1))$ and $C_0(epsilon_(Omega+1)) subset C_1(epsilon_(Omega+1))$, $epsilon_(Omega+1) in.not C_0(epsilon_(Omega+1))$.
 To go further than this, we will need to invoke higher $Omega$s, like $Omega_2$, $Omega_3$, and so on.
-The next ordinal larger than $epsilon_(Omega+1)$ that we can access is $psi_2(0) = Omega_2$, so we have $psi_1(Omega_2) = epsilon_(Omega+1)$,
-and can re-express the Bachmann-Howard Ordinal as $psi_0(Omega_2)$ instead.
+The next ordinal larger than $epsilon_(Omega+1)$ that we can access is $psi_2(0) = Omega_2$,
+so we can re-express the Bachmann-Howard Ordinal as $psi_0(Omega_2)$ instead.
 
 
 But wait, if we have $"BHO" = psi_0(Omega_2)$ and $"BHO" = psi_0(epsilon_(Omega+1)) = psi_0(psi_1(Omega_2))$, which is the standard way to write it?
@@ -390,7 +452,7 @@ We can keep going $psi_0(Omega_4), psi_0(Omega_5), ...$ up to $BO$, which is kno
 This is the limit of all $psi_0(Omega_n)$ for finite $n$, and while we haven't gotten to the ordinal notation associated with Buchholz's $psi$ yet,
 there are many ordinal notations that correspond to ordinals below $BO$.
 
-Of course, the true limit of Buchhol'z OCF is $psi_0(purplef(Omega_omega^Omega_omega^Omega_omega^dots.up)) = psi_0(purplef(epsilon_(Omega_omega + 1)))$, the *Takeuti–Feferman–Buchholz ordinal (TFBO)*, but it is not as commonly used.
+Of course, the true limit of Buchhol'z OCF is $psi_0(purplef(Omega_omega^Omega_omega^Omega_omega^dots.up)) = psi_0(purplef(epsilon_(Omega_omega + 1)))$, the *Takeuti–Feferman–Buchholz ordinal (TFBO)*, but it is not as commonly used in googology.
 
 
 == Normal Form and Fundamental Sequences

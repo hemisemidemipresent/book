@@ -20,18 +20,20 @@ Of course, we also need to define some ordering of these strings too.
 #definition[
   *Iterated Cantor Normal Form* (ICNF) is an ordinal notation for ordinals $< e0$.
 
-  The ordinal notation here is a string consisting of finitely many of the following symbols: (Only the symbols highlighted in red are allowed to be used in ICNF.
-)
+  The ordinal notation here is a string consisting of finitely many of the following symbols:
+
+  (We use a different font to highlight the fact that these are not true ordinals)
+
   - #zero
   - #plus
-  - The function $redf(sans(omega^circle.filled.small))redf("(")"something"redf(")") $ which can also be written as $ wpow("something")$
+  - The function $fira(omega^#o \() alpha fira(\))$ which can also be written as $wpow(alpha)$
 
   The ICNF ordinal notation $o(alpha)$ for an ordinal $alpha < e0$ is:
   $
-  o(alpha) := cases(
-    zero &"if" alpha = 0,
-    wpow(o(alpha_1)) plus wpow(o(alpha_2)) plus ... plus wpow(o(alpha_n)) &"if the CNF of" alpha "is" omega^(alpha_1) + omega^(alpha_2) + ... + omega^(alpha_n)
-  )
+    o(alpha) := cases(
+      zero & "if" alpha = 0,
+      wpow(o(alpha_1)) plus wpow(o(alpha_2)) plus ... plus wpow(o(alpha_n)) &"if the CNF of" alpha "is" omega^(alpha_1) + omega^(alpha_2) + ... + omega^(alpha_n)
+    )
   $
 
   This works as a notation because Cantor normal form is unique, and for $alpha < e0$, $alpha_i < alpha$.
@@ -40,8 +42,7 @@ Of course, we also need to define some ordering of these strings too.
 ]
 
 #example[
-  $
-  o(omega^omega + omega^3 + omega^2 + 1) &= o(omega^omega + omega^3 + omega^2 + omega^0) "(convert to CNF within "o()")"\
+  $o(omega^omega + omega^3 + omega^2 + 1) &= o(omega^omega + omega^3 + omega^2 + omega^0) "(convert to CNF within "o()")"\
   &=wpow(o(omega)) plus wpow(3) plus wpow(2) plus wpow(0)\
   &=wpow(o(omega^1)) plus wpow(o(omega^0 + omega^0 + omega^0)) plus wpow(o(omega^0 + omega^0)) plus wpow(o(omega^0))\
   &"(convert to CNF within "o()")"\
@@ -61,7 +62,7 @@ Of course, we also need to define some ordering of these strings too.
 
   + If $OT_(=k), OT_(<=k), scripts(prec)_k$ are defined, then the set $OT_(=k+1)$, the set of all ordinal notations of height $k+1$, is defined as:
     $
-    wpow(al(1)) plus wpow(al(2)) plus ...   plus wpow(al(n))
+      wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n))
     $
     where $al(1) in OT_(=k)$, and $al(1) scripts(succ.eq)_k al(2) scripts(succ.eq)_k ... scripts(succ.eq)_k al(n)$ ($al(i) in OT_(<=k)$).
 
@@ -79,8 +80,8 @@ Of course, we also need to define some ordering of these strings too.
 
     In this case, we can express $alphag$ and $betag$ as such they are of the form:
     $
-    alphag &= wpow(al(1)) plus ... plus wpow(al(n))\
-    betag &= wpow(be(1)) plus ... plus wpow(be(m))\
+      alphag & = wpow(al(1)) plus ... plus wpow(al(n)) \
+       betag & = wpow(be(1)) plus ... plus wpow(be(m)) \
     $
 
     We order this lexicographically, comparing $al(1)$ and $be(1)$. If they are equal, move onto $al(2)$ and $be(2)$, and if they are still equal, move on until either you find a $al(i) prec be(i)$ or, if all exponents are equal, that $alphag$ has less terms than $betag$. A formal way to write this is:
@@ -127,7 +128,7 @@ We still have to prove that ordering $prec$ on the set OT is a well-ordering. We
 While ordinal notations look like actual ordinals with symbols like #wpow(zero), they are really just complicated sequences of sequences of ... sequences of symbols. Ordinal notations of height 0 is just #zero. Then the ordinal notations of height 1 are #wpow(zero), $wpow(zero) plus wpow(zero), wpow(zero) plus wpow(zero) + wpow(zero), ...$. But we can instead represent them as sequences of ordinal notations of height 0, so $wpow(zero) = (zero), wpow(zero) + wpow(zero) = (zero, zero)$, and so on. We can then lexicographically order these sequences of #zero by length to get our order for $OT_(<=1)$, letting #zero be smaller than any sequence of $zero$s:
 
 $
-zero scripts(prec)_1 (zero) scripts(prec)_1 (zero, zero) scripts(prec)_1 (zero, zero, zero) scripts(prec)_1 ...
+  zero scripts(prec)_1 (zero) scripts(prec)_1 (zero, zero) scripts(prec)_1 (zero, zero, zero) scripts(prec)_1 ...
 $
 
 With this order, we can make a set of non-decreasing sequences of terms from $OT_(<=1)$, which corresponds to $OT_(<=2)$. For example, $wpow(wpow(zero) plus wpow(zero)) plus wpow(zero) = ((zero,zero),zero)$. We can define a lexicographic order on these sequences based on the order $scripts(prec)_1$ to get $scripts(prec)_2$, and with this method we can keep building ordinal notations of greater and greater height.
@@ -160,7 +161,7 @@ Another example of a well-ordered set of order type $e0$ is the set of all finit
         - $T_3$ <blue>
         - $T_2$ <blue>
         - $T_1$ <blue>
-      ])
+    ])
 
     (nodes in blue represents trees)
 
@@ -171,14 +172,14 @@ Another example of a well-ordered set of order type $e0$ is the set of all finit
   The tree `((((),()),()),(()),())` is of height 4:
 
   #figure(custom-tree-graph[
-      - \u{200b} #node-attr(rotate: -180deg)
+    - \u{200b} #node-attr(rotate: -180deg)
+      - \u{200b}
+      - \u{200b}
+        - \u{200b}
+      - \u{200b}
         - \u{200b}
         - \u{200b}
           - \u{200b}
-        - \u{200b}
-          - \u{200b}
-          - \u{200b}
-            - \u{200b}
   ])
 ]
 
@@ -210,7 +211,7 @@ Another example of a well-ordered set of order type $e0$ is the set of all finit
           - $T'_2$ <blue>
           - $T'_1$ <blue>
       ],
-      spacing: 10pt
+      spacing: 10pt,
     )]
 
     We can then order these lexicographically, i.e. $T<T'$ if:
@@ -235,18 +236,24 @@ Some examples are
     align: center + horizon,
     inset: 10pt,
     table.header([*Ordinal notation*], [*Associated tree*]),
-    zero, custom-tree-graph[
+    zero,
+    custom-tree-graph[
       - \u{200b}
     ],
-    wpow(zero), custom-tree-graph[
+
+    wpow(zero),
+    custom-tree-graph[
       - \u{200b}
         - \u{200b}
     ],
-    [#wpow(zero) #plus #wpow(zero)], custom-tree-graph[
+
+    [#wpow(zero) #plus #wpow(zero)],
+    custom-tree-graph[
       - \u{200b} #node-attr(rotate: -180deg)
         - \u{200b}
         - \u{200b}
     ],
+
     [$wpow(wpow(zero)plus wpow(zero)) plus wpow(zero)$],
     custom-tree-graph[
       - \u{200b} #node-attr(rotate: -180deg)
@@ -255,7 +262,7 @@ Some examples are
           - \u{200b}
           - \u{200b}
     ],
-)
+  )
 ]
 
 With this, we can construct an order isomorphism from $T$ to #e0, and show that $T$ is of order type #e0. We can basically show via induction that $OT_(<=k)$, the set of all ordinal notations of height $<=k$ is order isomorphic to $T_(<=k)$, the set of all trees of height $<=k$ since the way the ordering is defined (lexicographic ordering of elements of lower height) is the same. (informal proof)
@@ -285,7 +292,7 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
           + #metadata("red")
           - \u{200b} <red>
   ],
-  align(center+horizon)[#sym.arrow.r],
+  align(center + horizon)[#sym.arrow.r],
   custom-tree-graph[
     - \u{200b} #node-attr(rotate: -180deg)
       - \u{200b}
@@ -312,7 +319,7 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
           - \u{200b} <red>
           + #metadata("red")
           - \u{200b} <red>
-  ]
+  ],
 )
 
 #theorem(name: [*_Kirby-Paris Hydra_*])[
@@ -347,17 +354,20 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
     ],
     align(horizon)[#sym.arrow.r],
     text-tree-graph[
-    - $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$ #node-attr(rotate: -180deg)
-      - #zero
-      - #zero
-      - #box[$wpow(wpow(zero)3) plus wpow(zero)2$]
+      - $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$ #node-attr(
+          rotate: -180deg,
+        )
         - #zero
-        - $wpow(zero)3$
-          - #zero
-          - #zero
-          - #zero
         - #zero
-  ])
+        - #box[$wpow(wpow(zero)3) plus wpow(zero)2$]
+          - #zero
+          - $wpow(zero)3$
+            - #zero
+            - #zero
+            - #zero
+          - #zero
+    ],
+  )
   #set align(left)
 
   Now let's look at what happens when a leaf node (filled in black) is removed. We set $n=3$ for this example. Here we denote $alphag = wpow(al(1)) plus ... wpow(al(n))$
@@ -366,35 +376,39 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
     dir: ttb,
     spacing: 1em,
     text-tree-graph[
-    - $wpow(alphag plus wpow(zero)) plus wpow(betag)$ #node-attr(rotate: -180deg)
-      - #betag
-      - $wpow(al(1)) plus ... plus wpow(al(n)) plus wpow(zero)\ =alphag plus wpow(zero)$
-        - #zero <black>
-        - $al(n)$
-        - $...$
-        - $al(1)$
-  ],
-  align(horizon)[#sym.arrow.b],
+      - $wpow(alphag plus wpow(zero)) plus wpow(betag)$ #node-attr(
+          rotate: -180deg,
+        )
+        - #betag
+        - $wpow(al(1)) plus ... plus wpow(al(n)) plus wpow(zero)\ =alphag plus wpow(zero)$
+          - #zero <black>
+          - $al(n)$
+          - $...$
+          - $al(1)$
+    ],
+    align(horizon)[#sym.arrow.b],
 
-  text-tree-graph[
-    - $wpow(alphag) dot 3 plus wpow(betag)$ #node-attr(rotate: -180deg)
-      - #betag
-      - #alphag
-        - $al(1) ... al(n)$
-      - #alphag
-        - $al(1) ... al(n)$
-      - $wpow(al(1)) plus ... plus wpow(al(n))\ =alphag$ #node-attr(forest:true)
-        - $al(n)$
-        - $...$
-        - $al(1)$
-  ]
+    text-tree-graph[
+      - $wpow(alphag) dot 3 plus wpow(betag)$ #node-attr(rotate: -180deg)
+        - #betag
+        - #alphag
+          - $al(1) ... al(n)$
+        - #alphag
+          - $al(1) ... al(n)$
+        - $wpow(al(1)) plus ... plus wpow(al(n))\ =alphag$ #node-attr(
+            forest: true,
+          )
+          - $al(n)$
+          - $...$
+          - $al(1)$
+    ],
   )
 
   #set align(left)
   The ordinal notation at the bottom decreases whenever we remove a head:
   $
-  wpow(alphag) dot n &< wpow(alphag plus wpow(zero)) "since"\
-  omega^alpha dot n &< omega^(alpha + 1)
+    wpow(alphag) dot n & < wpow(alphag plus wpow(zero)) "since" \
+     omega^alpha dot n & < omega^(alpha + 1)
   $
 
   Therefore, eventually, the root will reach #zero and the hydra will die.
@@ -405,89 +419,89 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
 === Goodstein sequences
 In base 10, we represent a number using powers of 10:
 $
-    25739 = 2 dot 10^4 + 5 dot 10^3 + 7 dot 10^2 + 3 dot 10^1 + 9
+  25739 = 2 dot 10^4 + 5 dot 10^3 + 7 dot 10^2 + 3 dot 10^1 + 9
 $
 
 In other bases, e.g. base 3, we can do the same:
 $
-    25739 = 3^9 + 2 dot 3^7 + 2 dot 3^4 + 2 dot 3^3 + 2 dot 3 + 2
+  25739 = 3^9 + 2 dot 3^7 + 2 dot 3^4 + 2 dot 3^3 + 2 dot 3 + 2
 $
 We can take a page out of our Iterated Cantor Normal Form and demand that the exponents of 3 must also be in terms of power of 3:
 #let t = redf($3$)
 $
-    25739 = #t^#t^2 + 2 dot #t^(2 dot #t + 1) + 2 dot #t^(#t+1) + 2 dot #t^#t + 2 dot #t + 2
+  25739 = #t^#t^2 + 2 dot #t^(2 dot #t + 1) + 2 dot #t^(#t+1) + 2 dot #t^#t + 2 dot #t + 2
 $
 We call this "hereditary" base-3 representation.
 
 Now the next term in the *Goodstein sequence* for this number would be equivalent to taking every "3^" and replacing it with a "4^", then subtracting 1 from it.
 #let t = redf($4$)
 $
-    4297067018 = #t^#t^2 + 2 dot #t^(2 dot #t + 1) + 2 dot #t^(#t+1) + 2 dot #t^#t + 2 dot #t + 2 greenf(-1)
+  4297067018 = #t^#t^2 + 2 dot #t^(2 dot #t + 1) + 2 dot #t^(#t+1) + 2 dot #t^#t + 2 dot #t + 2 greenf(-1)
 $
 #definition[
-    The *Goodstein sequence* for some number $n$ is the sequence $(n_2, n_3, n_4, ...)$ where
-    the number $n_(i+1)$ is obtained by writing $n_i$ in hereditary base-$i$ notation, changing
-    the $i$s into $(i + 1)$s and subtracting 1.
+  The *Goodstein sequence* for some number $n$ is the sequence $(n_2, n_3, n_4, ...)$ where
+  the number $n_(i+1)$ is obtained by writing $n_i$ in hereditary base-$i$ notation, changing
+  the $i$s into $(i + 1)$s and subtracting 1.
 ]
 #example[
-    Let's start with $n_2 = 10$. We first write $10$ in hereditary base-$2$ notation:
-    #let t = redf($2$)
-    $
-        n_2 = #t^(#t+1) + #t
-    $
-    #let t = redf($3$)
-    Then $n_3$ is:
-    $
-        n_3 = #t^(#t+1) + #t greenf(-1) = #t^(#t+1) + 2 = 83
-    $
-    We can repeat this for $n_4, n_5, ...$:
-    $
-        #let t = redf($4$)
-        n_4 &= #t^(#t+1) + 2 greenf(-1) = #t^(#t+1) + 1 = 1025 \
-        #let t = redf($5$)
-        n_5 &= #t^(#t+1) + 1 greenf(-1) = #t^(#t+1) = 15625 \
-        #let t = redf($6$)
-        n_6 &= #t^(#t+1) greenf(-1) = 279935 \
-        &= 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 5\
-        #let t = redf($7$)
-        n_7 &= 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 5 greenf(-1)\
-        &= 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 4\
-        &= 4215754
-    $
+  Let's start with $n_2 = 10$. We first write $10$ in hereditary base-$2$ notation:
+  #let t = redf($2$)
+  $
+    n_2 = #t^(#t+1) + #t
+  $
+  #let t = redf($3$)
+  Then $n_3$ is:
+  $
+    n_3 = #t^(#t+1) + #t greenf(-1) = #t^(#t+1) + 2 = 83
+  $
+  We can repeat this for $n_4, n_5, ...$:
+  $
+    #let t = redf($4$)
+    n_4 & = #t^(#t+1) + 2 greenf(-1) = #t^(#t+1) + 1 = 1025 \
+    #let t = redf($5$)
+    n_5 & = #t^(#t+1) + 1 greenf(-1) = #t^(#t+1) = 15625 \
+    #let t = redf($6$)
+    n_6 & = #t^(#t+1) greenf(-1) = 279935 \
+        & = 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 5 \
+    #let t = redf($7$)
+    n_7 & = 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 5 greenf(-1) \
+        & = 5dot #t^#t + 5 dot #t^5 + 5 dot #t^4 + 5 dot #t^3 + 5 dot #t^2 + 5 dot #t + 4 \
+        & = 4215754
+  $
 ]
 
 The goodstein sequence seems to grow forever, but this sequence eventually terminates at 0!
 
 #theorem[
-    The Goodstein sequence for $n$ eventually reaches $0$, for all $n$
+  The Goodstein sequence for $n$ eventually reaches $0$, for all $n$
 ]
 
 #proof[
-    let $alpha(n, b)$ be the ordinal notation resulting from it by replacing every $b$ by $wpow("")$.
+  let $alpha(n, b)$ be the ordinal notation resulting from it by replacing every $b$ by $wpow("")$.
 
-    With this, for each $n_i$ in the Goodstein sequence, we can assign an ordinal notation $alpha(n_i, i)$ to it.
-    We now show that $alpha(n_(i+1),i+1) prec alpha(n_i,i)$.
+  With this, for each $n_i$ in the Goodstein sequence, we can assign an ordinal notation $alpha(n_i, i)$ to it.
+  We now show that $alpha(n_(i+1), i+1) prec alpha(n_i, i)$.
 
-    #let i = redf($i$)
-    Suppose $n_i = a_k #i^k + ... + a_j #i^j + a_0$. Then $alpha(n_i,i)= wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0$.
+  #let i = redf($i$)
+  Suppose $n_i = a_k #i^k + ... + a_j #i^j + a_0$. Then $alpha(n_i, i)= wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0$.
 
-    If $a_0 > 0$, then
-    #let i = redf($(i+1)$)
-    $
-        n_(i+1) &= a_k #i^k + ... + a_j #i^j + a_0 greenf(-1)\
-        alpha(n_(i+1),i+1) &= wpow(k) dot a_i plus ... plus wpow(j) dot a_j + (a_0 - 1)\
-        &prec wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0 = alpha(n_i, i)
-    $
-    If $a_0 = 0$, then:
-    $
-        n_(i+1) &= a_k #i^k + ... + a_j #i^j greenf(-1)\
-        &= a_k #i^k + ... + (a_j-1) #i^j + #i^j greenf(-1)\
-        &= a_k #i^k + ... + (a_j-1) #i^j + sum_(s=0)^(j-1) i#i^s\
-        alpha(n_(i+1),i+1) &= wpow(k) dot a_k plus ... plus wpow(j) dot (a_j - 1) + sum_(s=0)^(j-1) wpow(s) dot i\
-        &prec wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0 = alpha(n_i, i)
-    $
-    In the last line, we compare the factor on $wpow(j)$ (the largest power of $wpow("")$ in which they differed),
-    and find that $alpha(n_i, i) succ alpha(n_(i+1),i+1)$ no matter the value of $a_0$, and therefore the sequence reaches 0.
+  If $a_0 > 0$, then
+  #let i = redf($(i+1)$)
+  $
+                n_(i+1) & = a_k #i^k + ... + a_j #i^j + a_0 greenf(-1) \
+    alpha(n_(i+1), i+1) & = wpow(k) dot a_i plus ... plus wpow(j) dot a_j + (a_0 - 1) \
+                        & prec wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0 = alpha(n_i, i)
+  $
+  If $a_0 = 0$, then:
+  $
+                n_(i+1) & = a_k #i^k + ... + a_j #i^j greenf(-1) \
+                        & = a_k #i^k + ... + (a_j-1) #i^j + #i^j greenf(-1) \
+                        & = a_k #i^k + ... + (a_j-1) #i^j + sum_(s=0)^(j-1) i#i^s \
+    alpha(n_(i+1), i+1) & = wpow(k) dot a_k plus ... plus wpow(j) dot (a_j - 1) + sum_(s=0)^(j-1) wpow(s) dot i \
+                        & prec wpow(k) dot a_k plus ... plus wpow(j) dot a_j + a_0 = alpha(n_i, i)
+  $
+  In the last line, we compare the factor on $wpow(j)$ (the largest power of $wpow("")$ in which they differed),
+  and find that $alpha(n_i, i) succ alpha(n_(i+1), i+1)$ no matter the value of $a_0$, and therefore the sequence reaches 0.
 ]
 
 == The Primitive Sequence System (PrSS)
@@ -496,91 +510,94 @@ The goodstein sequence seems to grow forever, but this sequence eventually termi
 // which is very similar to how the Kirby-Paris Hydra works. It can be thought of as a way to encode the hydra in a linear array.
 
 #definition(name: [*_Primitive Sequence System (PrSS)_*])[
-    Let the set $T_"PrSS"$ be the set of sequences $s = (s_1, s_2, ..., s_l)$ such that:
+  Let the set $T_"PrSS"$ be the set of sequences $s = (s_1, s_2, ..., s_l)$ such that:
 
-    + $s$ is either empty $()$ or starts with $0$: $(0,...)$.
-    + For any $s_i$ in $s$, let it's *parent* $s_j$ be the _latest element_ before $s_i$ such that $s_j<s_i$. $s_j$ must be equal to $s_i - 1$.
+  + $s$ is either empty $()$ or starts with $0$: $(0,...)$.
+  + For any $s_i$ in $s$, let it's *parent* $s_j$ be the _latest element_ before $s_i$ such that $s_j<s_i$. $s_j$ must be equal to $s_i - 1$.
 
-        Put another way, let the _parent index_ $p(i) in NN$ be the largest possible $p(i)<i$ such that $s_p(i)<s_i$. For all $s_i$ in the sequence, $s_p(i) = s_i - 1$.
+    Put another way, let the _parent index_ $p(i) in NN$ be the largest possible $p(i)<i$ such that $s_p(i)<s_i$. For all $s_i$ in the sequence, $s_p(i) = s_i - 1$.
 
-        #example[
-            $(0,1,3)$ is not a valid sequence as the latest element before $3$ that is less than $3$ is $1$, which is not $3-1 = 2$.
+    #example[
+      $(0,1,3)$ is not a valid sequence as the latest element before $3$ that is less than $3$ is $1$, which is not $3-1 = 2$.
 
-            $(0,1,2,1,2)$ is a valid sequence:
-            - It starts with $0$
-            - $s_2 = 1$. The latest element less than $1$ is $s_1 = 0$, which is 1 less than $s_2 = 1$
-            - $s_3 = 2$. Similarly, the latest element less than $2$ is $s_2 = 1$ which is 1 less than $s_3=2$
-            - $s_4 = 1$. The latest element less than $s_4 = 1$ is $s_1 = 0$, so no issues
-            - $s_5 = 2$. The latest element less than $s_5=2$ is $s_4 = 1$, so no issues
-        ]
+      $(0,1,2,1,2)$ is a valid sequence:
+      - It starts with $0$
+      - $s_2 = 1$. The latest element less than $1$ is $s_1 = 0$, which is 1 less than $s_2 = 1$
+      - $s_3 = 2$. Similarly, the latest element less than $2$ is $s_2 = 1$ which is 1 less than $s_3=2$
+      - $s_4 = 1$. The latest element less than $s_4 = 1$ is $s_1 = 0$, so no issues
+      - $s_5 = 2$. The latest element less than $s_5=2$ is $s_4 = 1$, so no issues
+    ]
 
-    + The ordering $<$ is simply the lexicographic ordering of these sequences.
+  + The ordering $<$ is simply the lexicographic ordering of these sequences.
 ]
 
 The set $T_"PrSS"$ is the set of all valid PrSS sequences.
 We can use this notation to define either _a fast-growing function_, or a _system of fundamental sequences_:
 
 #definition[
-    For a sequence $s = (s_1, s_2, ..., s_l) in T_"PrSS"$, we define $s[n]$ as the $n^"th"$  member in its _fundamental sequence_.
-    - $()[n] = n$. Otherwise, for nonempty $s$:
-    - The *good root* $g$ and the *bad root* $b$ are defined as such:
-        - $g = \(s_1, ..., s_(p(l)-1)\)$
-        - $b = \(s_p(l), ..., s_(l-1)\)$
-        - if $p(l)$ does not exist (i.e. there is no $s_i < s_l$, for example if $s_l = 0$), then: $g=(s_1, ..., s_(l-1))$ and $b$ is empty
-    - $s[n] = (g, b, b, ..., b)$ with $n$ copies of $b$, though this can be replaced with any increasing function $f(n)$. The original definition used $f(n) = n^2$.
+  For a sequence $s = (s_1, s_2, ..., s_l) in T_"PrSS"$, we define $s[n]$ as the $n^"th"$  member in its _fundamental sequence_.
+  - $()[n] = n$. Otherwise, for nonempty $s$:
+  - The *good root* $g$ and the *bad root* $b$ are defined as such:
+    - $g = \(s_1, ..., s_(p(l)-1)\)$
+    - $b = \(s_p(l), ..., s_(l-1)\)$
+    - if $p(l)$ does not exist (i.e. there is no $s_i < s_l$, for example if $s_l = 0$), then: $g=(s_1, ..., s_(l-1))$ and $b$ is empty
+  - $s[n] = (g, b, b, ..., b)$ with $n$ copies of $b$, though this can be replaced with any increasing function $f(n)$. The original definition used $f(n) = n^2$.
 
-    As for the _fast-growing function_ also confusingly labelled $s[n]$:
-    - We split the sequence into good root $g$ and bad root $b$ again.
-    - $s[n] = (g, b, b, ..., b)[f(n)]$ with $f(n)$ copies of $b$. The original definition used $f(n) = n^2$.
-        We will instead use a different definition that makes analysis easier:
-        $
-            f(n) = cases(n &"if" s_l != 0, n+1 &"if" s_l = 0)
-        $
-    The final result is the value in the $[]$ when the sequence is eventually empty, i.e. $()[n] = n$
+  The action of finding the fundamental sequence of a PrSS sequence is often called *expanding*.
+
+  As for the _fast-growing function_ also confusingly labelled $s[n]$:
+  - We split the sequence into good root $g$ and bad root $b$ again.
+  - $s[n] = (g, b, b, ..., b)[f(n)]$ with $f(n)$ copies of $b$. The original definition used $f(n) = n^2$.
+    We will instead use a different definition that makes analysis easier:
+    $
+      f(n) = cases(n &"if" s_l != 0, n+1 &"if" s_l = 0)
+    $
+    i.e. $n$ only increases by $1$ if the sequence ends with $0$.
+  The final result is the value in the $[]$ when the sequence is eventually empty, i.e. $()[n] = n$
 ]
 
 #example[
-    Expand the following:
-    + $(0,0)[3]$
-    + $(0,1)[3]$
-    + $(0,1,2,3,2)[3]$
-    + $(0,1,2,3,4,3,4,2,3)[3]$
-    Seriously, try it yourself. I'll provide the answers in case you get stuck:
+  Expand the following:
+  + $(0,0)[3]$
+  + $(0,1)[3]$
+  + $(0,1,2,3,2)[3]$
+  + $(0,1,2,3,4,3,4,2,3)[3]$
+  Seriously, try it yourself. I'll provide the answers in case you get stuck:
 
-    + $0$ has no parent, so good root is $greenf(0)$ and bad root is empty. We get $(greenf(0))$. Note that $n$ doesn't matter when the last element is $0$.
-    + The parent of $1$ is $0$, so we have an empty good root and a bad root of $redf(0)$. We replicate the bad root $n=3$ times, so we get $(redf(0),redf(0),redf(0))$
-    + The parent of $2$ is $1$, so we have a good root of $greenf(0)$ and a bad root of $redf(1\,2\,3)$, so we get $(greenf(0),redf(1\,2\,3),redf(1\,2\,3),redf(1\,2\,3))$
-    + $(0,1,2,3,4,2,3,2,2,2)$
+  + $0$ has no parent, so good root is $greenf(0)$ and bad root is empty. We get $(greenf(0))$. Note that $n$ doesn't matter when the last element is $0$.
+  + The parent of $1$ is $0$, so we have an empty good root and a bad root of $redf(0)$. We replicate the bad root $n=3$ times, so we get $(redf(0),redf(0),redf(0))$
+  + The parent of $2$ is $1$, so we have a good root of $greenf(0)$ and a bad root of $redf(1\,2\,3)$, so we get $(greenf(0),redf(1\,2\,3),redf(1\,2\,3),redf(1\,2\,3))$
+  + $(0,1,2,3,4,2,3,2,2,2)$
 ]
 
 #example[
-    Evaluate $(0,1,1)[3]$ as a fast-growing function with our definition of $f(n)$
+  Evaluate $(0,1,1)[3]$ as a fast-growing function with our definition of $f(n)$
 
-    $
-        &(0,1,1)[3]\
-        // &#h(1em) g="empty", b=(0,1), f(n) = 2\
-        &=(0,1,0,1)[3]\
-        // &#h(1em) g=(0,1), b=(0), f(n) = 3\
-        &=(0,1,0,0,0)[3]\
-        // &#h(1em) g=(0,1,0,0), b=(), f(n)=4\
-        // &#h(1em) "(there's no index" i "where" s_i < 0" so" p(l) "doesn't exist)"\
-        &= (0,1,0,0)[4]\
-        // &#h(1em) g=(0,1,0), b=(), f(n)=5 "(same logic)"\
-        &= (0,1,0)[5]\
-        // &#h(1em) g=(0,1), b=(), f(n)=6 "(same logic)"\
-        &= (0,1)[6]\
-        // &#h(1em) g="empty", b=(0), f(n)=7\
-        &= (0,0,0,0,0,0)[6]\
-        &= (0,0,0,0,0)[7]\
-        &= (0,0,0,0)[8]\
-        &= (0,0,0)[9]\
-        &= (0,0)[10]\
-        &= (0)[11]\
-        &= ()[12]\
-        &= 12\
-    $
-    Now imagine if we used a bigger value of $n$, making many more copies of the bad root. Or image if we used $f(n) = n^2$ instead of using $n$ or $n+1$ like we did.
-    $s[n]$ is a very powerful function. But we can constrain it's growth rate in the Hardy hierarchy as we'll show later.
+  $
+    & (0,1,1)[3] \
+    // &#h(1em) g="empty", b=(0,1), f(n) = 2\
+    & =(0,1,0,1)[3] \
+    // &#h(1em) g=(0,1), b=(0), f(n) = 3\
+    & =(0,1,0,0,0)[3] \
+    // &#h(1em) g=(0,1,0,0), b=(), f(n)=4\
+    // &#h(1em) "(there's no index" i "where" s_i < 0" so" p(l) "doesn't exist)"\
+    & = (0,1,0,0)[4] \
+    // &#h(1em) g=(0,1,0), b=(), f(n)=5 "(same logic)"\
+    & = (0,1,0)[5] \
+    // &#h(1em) g=(0,1), b=(), f(n)=6 "(same logic)"\
+    & = (0,1)[6] \
+    // &#h(1em) g="empty", b=(0), f(n)=7\
+    & = (0,0,0,0,0,0)[6] \
+    & = (0,0,0,0,0)[7] \
+    & = (0,0,0,0)[8] \
+    & = (0,0,0)[9] \
+    & = (0,0)[10] \
+    & = (0)[11] \
+    & = ()[12] \
+    & = 12 \
+  $
+  Now imagine if we used a bigger value of $n$, making many more copies of the bad root. Or image if we used $f(n) = n^2$ instead of using $n$ or $n+1$ like we did.
+  $s[n]$ is a very powerful function. But we can constrain it's growth rate in the Hardy hierarchy as we'll show later.
 ]
 
 === Order Isomorphism to $e0$
@@ -594,21 +611,19 @@ We now show that PrSS is order isomorphic to #e0.
 Now, just like in ICNF where we use a non-increasing sequence of ordinal notations of height $<=k$ to define a new height $k+1$:
 
 $
-    al(1) >= al(2) >=  ... >= al(n)\
-    wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n))\
+  al(1) >= al(2) >= ... >= al(n)\
+  wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n))\
 $
 
 In PrSS we can make a new notation of new height $k+1$ from sequences of height $<=k$ as such:
 
 Given a non-increasing _sequence of PrSS sequences_ of height $<=k$, e.g.
-$
-    (0,1) lexgteq (0,0,0) lexgteq (0,0) lexgteq (0,0)
-$, we add 1 to each term in the sequence and join them up with $0$s:
+$ (0,1) lexgteq (0,0,0) lexgteq (0,0) lexgteq (0,0) $, we add 1 to each term in the sequence and join them up with $0$s:
 
 $
-    (0,1) lexgteq (0,0,0) lexgteq (0,0) lexgteq (0,0) -> (1,2) lexgteq (1,1,1) lexgteq (1,1) lexgteq (1,1)\
-    redf((0, greenf((1,2)), 0, greenf((1,1,1)), 0, greenf((1,1)), 0, greenf((1,1)) ))\
-    redf((0, #greenf[$1,2$], 0, #greenf[$1,1,1$], 0, #greenf[$1,1$], 0, #greenf[$1,1$] ))
+  (0,1) lexgteq (0,0,0) lexgteq (0,0) lexgteq (0,0) -> (1,2) lexgteq (1,1,1) lexgteq (1,1) lexgteq (1,1)\
+  redf((0, greenf((1,2)), 0, greenf((1,1,1)), 0, greenf((1,1)), 0, greenf((1,1)) ))\
+  redf((0, #greenf[$1,2$], 0, #greenf[$1,1,1$], 0, #greenf[$1,1$], 0, #greenf[$1,1$] ))
 $
 // Let's call this function $f$, which acts on _sequences of PrSS_ and returns the concatenated sequence.
 
@@ -624,64 +639,115 @@ I added a third column for the PrSS "hydra" to show how elements in the sequence
 
 #set align(center)
 #table(
-    columns: (auto, auto, auto, auto),
-    align: left + horizon,
-    inset: 0.75em,
-    table.header([*Ordinal*],[*Ordinal Notation*],[*PrSS tree*],[*PrSS*]),
-    $0$, $zero$, [```•```], $()$,
-    $1$, $wpow(zero)$, [```
-          0
-        •─┘```], $(0)$,
-    $2$, $wpow(zero) plus wpow(zero)$, box[```
-          0 0
-        •─┴─┘```], $(0,0)$,
-    $3$, $wpow(zero) plus wpow(zero) plus wpow(zero)$, box[```
-          0 0 0
-        •─┴─┴─┘```], $(0,0,0)$,
-    $omega$, $wpow(wpow(zero))$, box[```
-        1
-      0─┘
-    •─┘```], $(0,1)$,
-    $omega+1$, $wpow(wpow(zero)) plus wpow(zero)$, box[```
-        1
-      0─┘ 0
-    •─┴───┘```], $(0,1,0)$,
-    $omega+2$, $wpow(wpow(zero)) plus wpow(zero) plus wpow(zero)$, box[```
-        1
-      0─┘ 0 0
-    •─┴───┴─┘```], $(0,1,0,0)$,
-    $omega dot 2$, $wpow(wpow(zero)) plus wpow(wpow(zero))$, box[```
-        1   1
-      0─┘ 0─┘
-    •─┴───┘```], $(0,1,0,1)$,
-    $omega dot 2 + 1$, $wpow(wpow(zero)) plus wpow(wpow(zero)) plus wpow(zero)$, box[```
-        1   1
-      0─┘ 0─┘ 0
-    •─┴───┴───┘```], $(0,1,0,1,0)$,
-    $omega^2$, $wpow(wpow(zero) plus wpow(zero))$, box[```
-        1 1
-      0─┴─┘
-    •─┘```], $(0,1,1)$,
-    $omega^3$, $wpow(wpow(zero) plus wpow(zero) plus wpow(zero))$, box[```
-        1 1 1
-      0─┴─┴─┘
-    •─┘```], $(0,1,1,1)$,
-    $omega^omega$, $wpow(wpow(wpow(zero)))$, box[```
+  columns: (auto, auto, auto, auto),
+  align: left + horizon,
+  inset: 0.75em,
+  table.header([*Ordinal*], [*Ordinal Notation*], [*PrSS tree*], [*PrSS*]),
+  $0$, $zero$, [```•```], $()$,
+  $1$,
+  $wpow(zero)$,
+  [```
+    0
+  •─┘```],
+  $(0)$,
+
+  $2$,
+  $wpow(zero) plus wpow(zero)$,
+  box[```
+    0 0
+  •─┴─┘```],
+  $(0,0)$,
+
+  $3$,
+  $wpow(zero) plus wpow(zero) plus wpow(zero)$,
+  box[```
+    0 0 0
+  •─┴─┴─┘```],
+  $(0,0,0)$,
+
+  $omega$,
+  $wpow(wpow(zero))$,
+  box[```
+      1
+    0─┘
+  •─┘```],
+  $(0,1)$,
+
+  $omega+1$,
+  $wpow(wpow(zero)) plus wpow(zero)$,
+  box[```
+      1
+    0─┘ 0
+  •─┴───┘```],
+  $(0,1,0)$,
+
+  $omega+2$,
+  $wpow(wpow(zero)) plus wpow(zero) plus wpow(zero)$,
+  box[```
+      1
+    0─┘ 0 0
+  •─┴───┴─┘```],
+  $(0,1,0,0)$,
+
+  $omega dot 2$,
+  $wpow(wpow(zero)) plus wpow(wpow(zero))$,
+  box[```
+      1   1
+    0─┘ 0─┘
+  •─┴───┘```],
+  $(0,1,0,1)$,
+
+  $omega dot 2 + 1$,
+  $wpow(wpow(zero)) plus wpow(wpow(zero)) plus wpow(zero)$,
+  box[```
+      1   1
+    0─┘ 0─┘ 0
+  •─┴───┴───┘```],
+  $(0,1,0,1,0)$,
+
+  $omega^2$,
+  $wpow(wpow(zero) plus wpow(zero))$,
+  box[```
+      1 1
+    0─┴─┘
+  •─┘```],
+  $(0,1,1)$,
+
+  $omega^3$,
+  $wpow(wpow(zero) plus wpow(zero) plus wpow(zero))$,
+  box[```
+      1 1 1
+    0─┴─┴─┘
+  •─┘```],
+  $(0,1,1,1)$,
+
+  $omega^omega$,
+  $wpow(wpow(wpow(zero)))$,
+  box[```
         2
       1─┘
     0─┘
-  •─┘```], $(0,1,2)$,
-    $omega^(omega^3 + 2) + 2$, $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$, box[```
+  •─┘```],
+  $(0,1,2)$,
+
+  $omega^(omega^3 + 2) + 2$,
+  $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$,
+  box[```
         2 2 2
       1─┴─┴─┘ 1 1
     0─┴───────┴─┘ 0 0
-  •─┴─────────────┴─┘```], $(0,1,2,2,2,1,1,0,0)$,
-    $omega^omega^omega$, $wpow(wpow(wpow(wpow(zero))))$, box[```
-        3
-      2─┘
-    1─┘
-  0─┘
-•─┘```], $(0,1,2,3)$,
+  •─┴─────────────┴─┘```],
+  $(0,1,2,2,2,1,1,0,0)$,
+
+  $omega^omega^omega$,
+  $wpow(wpow(wpow(wpow(zero))))$,
+  box[```
+          3
+        2─┘
+      1─┘
+    0─┘
+  •─┘```],
+  $(0,1,2,3)$,
 )
 #set align(left)
 
@@ -691,27 +757,27 @@ When taking funamental sequences, this "hydra" behaves quite similarly to the Ki
 $(greenf(0\,1),redf(2\,3\,3),bluef(3))[3] = (greenf(0\,1),redf(2\,3\,3),redf(2\,3\,3),redf(2\,3\,3))$
 
 #align(center)[
-    #set text(font: "Dejavu Sans Mono")
-    #stack(
-        dir: ltr,
-        spacing: 3em,
-        box[
-            #set align(left)
-            ~~~~~~~~#redf("3 3") #bluef("3")\
-            ~~~~~~#redf("2─┴─┴")#bluef("─┘")\
-            ~~~~#greenf("1─┘")\
-            ~~#greenf("0─┘")\
-            #greenf("•─┘")\
-        ],
-        box[
-            #set align(left)
-            ~~~~~~~~#redf("3 3   3 3   3 3")\
-            ~~~~~~#redf("2─┴─┘ 2─┴─┘ 2─┴─┘")\
-            ~~~~#greenf("1─┴─────┴─────┘")\
-            ~~#greenf("0─┘")\
-            #greenf("•─┘")\
-        ]
-    )
+  #set text(font: "Dejavu Sans Mono")
+  #stack(
+    dir: ltr,
+    spacing: 3em,
+    box[
+      #set align(left)
+      ~~~~~~~~#redf("3 3") #bluef("3")\
+      ~~~~~~#redf("2─┴─┴")#bluef("─┘")\
+      ~~~~#greenf("1─┘")\
+      ~~#greenf("0─┘")\
+      #greenf("•─┘")\
+    ],
+    box[
+      #set align(left)
+      ~~~~~~~~#redf("3 3   3 3   3 3")\
+      ~~~~~~#redf("2─┴─┘ 2─┴─┘ 2─┴─┘")\
+      ~~~~#greenf("1─┴─────┴─────┘")\
+      ~~#greenf("0─┘")\
+      #greenf("•─┘")\
+    ],
+  )
 ]
 With #greenf[green] representing the good root and #redf[red] representing the bad root.
 
@@ -724,18 +790,21 @@ using the Wainer Hierarchy for fundamental sequences.
 
 #set align(center)
 #table(
-    align: left + horizon,
-    inset: 0.75em,
-    columns: (auto, auto),
-    table.header([*PrSS*], [*Hardy Hierarchy*]),
-    $()[n] = n$, $H_0(n) = n$,
-    $(0)[n] = ()[n+1]$, $H_1(n) = H_0(n+1)$,
-    $(0,0)[n] = (0)[n+1]$, $H_2(n) = H_1(n+1)$,
-    $(0,1)[n] = \(underbrace(0\,0\,0\,...\,0, n "copies of" 0)\)[n]$, $H_omega (n) = H_n (n)$,
-    $(0,1,0)[n] = (0,1)[n]$, $H_(omega+1) = H_omega (n)$,
-    $(0,1,0,1)[n] = \(0\,1\,underbrace(0\,0\,0\,...\,0, n "copies of" 0)\)[n]$, $H_(omega dot 2) (n) = H_(omega + n) (n)$,
-    $(0,1,1)[n] = \(underbrace(0\,1\,0\,1\,...\,0\,1, n "copies of" (0,1))\)[n]$, $H_(omega^2) (n) = H_(omega n) (n)$,
-    $(0,1,2)[n] = \(0\,1\,underbrace(1\,1\,1\,...\,1, n "copies of" 1)\)[n]$, $H_(omega^omega) (n) = H_(omega^n) (n)$,
+  align: left + horizon,
+  inset: 0.75em,
+  columns: (auto, auto),
+  table.header([*PrSS*], [*Hardy Hierarchy*]),
+  $()[n] = n$, $H_0(n) = n$,
+  $(0)[n] = ()[n+1]$, $H_1(n) = H_0(n+1)$,
+  $(0,0)[n] = (0)[n+1]$, $H_2(n) = H_1(n+1)$,
+  $(0,1)[n] = \(underbrace(0\,0\,0\,...\,0, n "copies of" 0)\)[n]$, $H_omega (n) = H_n (n)$,
+
+  $(0,1,0)[n] = (0,1)[n]$, $H_(omega+1) = H_omega (n)$,
+  $(0,1,0,1)[n] = \(0\,1\,underbrace(0\,0\,0\,...\,0, n "copies of" 0)\)[n]$, $H_(omega dot 2) (n) = H_(omega + n) (n)$,
+
+  $(0,1,1)[n] = \(underbrace(0\,1\,0\,1\,...\,0\,1, n "copies of" (0,1))\)[n]$, $H_(omega^2) (n) = H_(omega n) (n)$,
+
+  $(0,1,2)[n] = \(0\,1\,underbrace(1\,1\,1\,...\,1, n "copies of" 1)\)[n]$, $H_(omega^omega) (n) = H_(omega^n) (n)$,
 )
 #set align(left)
 
@@ -743,210 +812,505 @@ We see the correspondence between each PrSS sequence and its associated ordinal 
 Therefore the maximum growth rate of PrSS is $(0,1,2,3,...)[n]$ which corresponds to $H_e0 (n)$.
 
 But what about the fast-growing hierarchy? How does that relate to the Hardy Hierarchy? While the Hardy Hierarchy appears to grow slower than the fast-growing hierarchy,
-we can show that $f_e0 (n) = H_e0 (n)$,
+we can show that $f_e0 (n) approx H_e0 (n)$,
 i.e., the Hardy Hierarchy "catches up" at #e0.
 #lemma[
-    $
-        f_alpha (n) = H_(omega^alpha)(n)
-    $
+  $
+    f_alpha (n) = H_(omega^alpha)(n)
+  $
 ]
 #proof[
-    + Base case: $f_0(n) = H_(omega^0)(n) = H_1(n) = n+1$
-    + Successor case: If $f_alpha (n) = H_(omega^alpha)(n)$, then:
-    $
-            H_(omega^alpha + omega^alpha)(n) &= H_(omega^alpha)(H_(omega^alpha)(n))\
-            &= f_alpha^2(n)\
-    $
+  + Base case: $f_0(n) = H_(omega^0)(n) = H_1(n) = n+1$
+  + Successor case: If $f_alpha (n) = H_(omega^alpha)(n)$, then:
+  $
+    H_(omega^alpha + omega^alpha)(n) & = H_(omega^alpha)(H_(omega^alpha)(n)) \
+                                     & = f_alpha^2(n) \
+  $
 
-    $
-            H_(omega^(alpha+1))(n) &= H_(omega^alpha dot n)(n)\
-            &= f_alpha^n (n)\
-            &= f_(alpha+1)(n)
-    $
-    + Limit case: If for a limit ordinal $alpha$, for all $beta<alpha, f_beta (n) = H_(omega^beta)(n)$, then:
-    $
-        H_(omega^beta)(n) &= sup {H_(omega^beta[n]) | n in NN}\
-        &= sup {f_beta[n] (n) | n in NN}\
-        &= f_beta (n)
-    $
+  $
+    H_(omega^(alpha+1))(n) & = H_(omega^alpha dot n)(n) \
+                           & = f_alpha^n (n) \
+                           & = f_(alpha+1)(n)
+  $
+  + Limit case: If for a limit ordinal $alpha$, then we presume for all $beta<alpha, f_beta (n) = H_(omega^beta)(n)$, then:
+  $
+    H_(omega^alpha)(n) & = H_(omega^alpha[n])(n) \
+                       & = f_alpha[n] (n) "(Since "alpha[n] < alpha")"\
+                       & = f_alpha (n)
+  $
 ]
 #proposition[
-    $
-        f_e0 (n) = H_e0 (n)
-    $
+  $
+    f_e0 (n) approx H_e0 (n+1) approx H_e0 (n)
+  $
 ]
 #proof[
-    $
-        f_e0 (n) &= sup{f_(omega)(n), f_(omega^omega)(n), f_(omega^omega^omega)(n), ...}\
-        &= sup{H_(omega^omega)(n), H_(omega^omega^omega)(n), H_(omega^omega^omega^omega)(n), ...}\
-        &= H_e0 (n)
-    $
+  $
+    f_e0 (n) & = f_(e0[n])(n)\
+             & = f_(omega up up n)(n) \
+             & = H_(omega up up n+1)(n) \
+             & = H_(e0[n+1]) (n) \
+             & approx H_e0 (n+1) \
+             & approx H_e0 (n)
+  $
 ]
 
 === Formal Order Isomorphism to #e0
 
 However, we have another way to define the set of standard PrSS sequences $OT_"PrSS"$:
 #definition[
-    For two sequences $s, t$, we define the relation $s subset.sq t$ if and only if there exists $n_1,n_2,...,n_k in NN$ such that
-    $
-        s = t[n_1][n_2]...[n_k]
-    $
-    Then we define $s supset.sq t$ if and only if $t subset.sq s$.
+  For two sequences $s, t$, we define the relation $s subset.sq t$ if and only if there exists $n_1,n_2,...,n_k in NN$ such that
+  $
+    s = t[n_1][n_2]...[n_k]
+  $
+  That is, $s subset.sq t$ if we can derive $s$ from $t$ using expansions.
+  Then naturally for $supset.sq$ we define $s supset.sq t$ if and only if $t subset.sq s$.
 ]
 #definition[
-    The set of standard PrSS sequences $OT_"PrSS"$ are defined as:
-    $
-        OT_"PrSS" = {s in T | "There exists an" n in NN "such that" s subset.sq (0,1,...,n)}
-    $
+  The set of standard PrSS sequences $OT_"PrSS"$ are defined as:
+  $
+    OT_"PrSS" = {s in T | "There exists an" n in NN "such that" s subset.sq (0,1,...,n)}
+  $
 ]
 
 This might feel like a strange way to define the set of standard sequences $OT_"PrSS"$, but when we go over more powerful extensions of this notation in later chapters,
 this "top-down" approach will be more useful.
 
 #lemma[
-    For all $s in T$, $n in NN$, $s[n] lex s$
+  For all $s in T$, $n in NN$, $s[n] lex s$
 ]
 #proof[
-    Let $s = (s_1,...,s_m)$. Let the parent of $s_m$ be $s_p(m)$. As such $s$ can be re-written as:
+  Let $s = (s_1,...,s_m)$. Let the parent of $s_m$ be $s_p(m)$. As such $s$ can be re-written as:
 
-    $
-        s = \(underbrace(s_1\,...\,s_(p(m)-1), G), underbrace(s_p(m)\,...\,s_(m-1), B),s_m\)
-    $
-    Then $s[n] lex s$, as the parent has to be smaller than $s_m$ (i.e. $s_p(m) < s_m$)
-    $
-        s[n] &= \(underbrace(redf(s_1\,...\,s_(p(m)-1)), G) redf(\,) underbrace(redf(s_p(m)\,...\,s_(m-1)), B), underbrace(greenf(s_p(m))\,...\,s_(m-1), B), ...\)\
-        &lex (redf(s_1\,...\,s_(p(m)-1)\,s_p(m)\,...\,s_(m-1)), greenf(s_m))\
-        &= (s_1,...,s_m) = s
-    $
+  $
+    s = \(underbrace(s_1\,...\,s_(p(m)-1), G), underbrace(s_p(m)\,...\,s_(m-1), B),s_m\)
+  $
+  Then $s[n] lex s$, as the parent has to be smaller than $s_m$ (i.e. $s_p(m) < s_m$)
+  $
+    s[n] &= \(underbrace(redf(s_1\,...\,s_(p(m)-1)), G) redf(\,) underbrace(redf(s_p(m)\,...\,s_(m-1)), B), underbrace(greenf(s_p(m))\,...\,s_(m-1), B), ...\)\
+    &lex (redf(s_1\,...\,s_(p(m)-1)\,s_p(m)\,...\,s_(m-1)), greenf(s_m))\
+    &= (s_1,...,s_m) = s
+  $
+]
+#lemma[
+  Expansion (i.e. taking fundamental sequences) does not lead to an infinite descending chain
+  $ s lexgt s[n_1] lexgt s[n_1][n_2] lexgt ... $
+]
+#proof[
+  We previously saw how we can assign each PrSS sequence a corresponding tree (by taking each number in the PrSS sequence literally as its height),
+  and that we can assign each tree to a corresponding ordinal notation.
+  In this manner we assigned each PrSS sequence to an ordinal:
+  #align(center + horizon)[
+    #let smolprss(seq) = [
+      #set text(size: 8pt)
+      #prss(seq)
+    ]
+    #table(
+      columns: 4,
+      table.header([*PrSS*], [*Tree*], [*Ordinal Notation*], [*Ordinal*]),
+      $()$, smolprss(()), $zero$, $0$,
+      $(0)$, smolprss((0,)), $wpow(zero)$, $1$,
+      $(0,1)$, smolprss((0, 1)), $wpow(wpow(zero))$, $omega$,
+      $(0,1,0)$, smolprss((0, 1, 0)), $wpow(wpow(zero)) plus wpow(zero)$, $omega + 1$,
+      $(0,1,0,1)$, smolprss((0, 1, 0, 1)), $wpow(wpow(zero)) plus wpow(wpow(zero))$, $omega 2$,
+      $(0,1,1)$, smolprss((0, 1, 1)), $wpow(wpow(zero) plus wpow(zero))$, $omega^2$,
+      $(0,1,2)$, smolprss((0, 1, 2)), $wpow(wpow(wpow(zero)))$, $omega^omega$,
+    )
+  ]
+  Earlier, we also saw how expansion behaves identically to Kirby-Paris Hydra, which we have already proven its termination by associating each tree with an ordinal.
+  So we can essentially just piggyback off on our termination of Kirby-Paris Hydra proof to prove this.
 ]
 
+To connect this to our previous definition of $OT_"PrSS"$, we will show the following:
+#theorem[
+  For every standard PrSS sequence in $OT_"PrSS"$, when interpreted as a tree, each node's children are arranged in non-increasing lexicographic order.
+
+  Let's call this property _"normality"_. (This is not a formal name, just a name I made up for this property).
+
+  This property is analogous to the property of cantor normal form, where the exponents of $omega$ are in non-increasing order.
+]
+To put this theorem in another way, for any element $a_i$ in a PrSS sequence $s$, with children subtrees $s_1, s_2, s_3,...$:
+
+#figure(
+  diagram(
+    node-stroke: 1pt,
+    edge-stroke: 1pt,
+    spacing: (0.8em, 0.4em),
+    node-inset: 0.4em,
+    edge-corner-radius: 8pt,
+    node((0, 0), width: 1.25em, shape: "circle", $a_i$),
+    node((1, -1), width: 1.25em, shape: "circle", $s_1$),
+    node((2, -1), width: 1.25em, shape: "circle", $s_2$),
+    node((3, -1), width: 1.25em, shape: "circle", $s_3$),
+    edge((0, 0), "r,u"),
+    edge((0, 0), "r,r,u"),
+    edge((0, 0), "r,r,r,u"),
+  ),
+)
+
+If $s in OT_"PrSS"$, then $s_1 lexgteq s_2 lexgteq ...$. For example, for the sequence $(0,1,2,3,2,1)$, we have:
+#figure(prss((0, 1, 2, 3, 2, 1)))
+
+We see that for each of the nodes with multiple children, this property holds:
+
+#align(horizon)[
+  #stack(
+    dir: ltr,
+    spacing: 1em,
+    diagram(
+      node-stroke: 1pt,
+      edge-stroke: 1pt,
+      spacing: (0.8em, 0.4em),
+      node-inset: 0.4em,
+      edge-corner-radius: 8pt,
+      node((0, 0), width: 1.25em, shape: "circle", $1$),
+      node((1, -1), width: 1.25em, shape: "circle", $2$),
+      node((2, -2), width: 1.25em, shape: "circle", $3$),
+      node((3, -1), width: 1.25em, shape: "circle", $2$),
+      edge((0, 0), "r,u"),
+      edge((1, -1), "r,u"),
+      edge((0, 0), "r,r,r,u"),
+    ),
+    [holds as],
+    diagram(
+      node-stroke: 1pt,
+      edge-stroke: 1pt,
+      spacing: (0.8em, 0.4em),
+      node-inset: 0.4em,
+      edge-corner-radius: 8pt,
+      node((1, -1), width: 1.25em, shape: "circle", $2$),
+      node((2, -2), width: 1.25em, shape: "circle", $3$),
+      edge((1, -1), "r,u"),
+    ),
+    $>=$,
+    diagram(
+      node-stroke: 1pt,
+      edge-stroke: 1pt,
+      spacing: (0.8em, 0.4em),
+      node-inset: 0.4em,
+      edge-corner-radius: 8pt,
+      node((1, -1), width: 1.25em, shape: "circle", $2$),
+    ),
+  )
+]
+#align(horizon)[
+  #stack(
+    dir: ltr,
+    spacing: 1em,
+    diagram(
+      node-stroke: 1pt,
+      edge-stroke: 1pt,
+      spacing: (0.8em, 0.4em),
+      node-inset: 0.4em,
+      edge-corner-radius: 8pt,
+      node((-1, 1), width: 1.25em, shape: "circle", $0$),
+      node((0, 0), width: 1.25em, shape: "circle", $1$),
+      node((1, -1), width: 1.25em, shape: "circle", $2$),
+      node((2, -2), width: 1.25em, shape: "circle", $3$),
+      node((3, -1), width: 1.25em, shape: "circle", $2$),
+      node((4, 0), width: 1.25em, shape: "circle", $1$),
+      edge((-1, 1), "r,u"),
+      edge((0, 0), "r,u"),
+      edge((1, -1), "r,u"),
+      edge((0, 0), "r,r,r,u"),
+      edge((-1, 1), "r,r,r,r,r,u"),
+    ),
+    [holds as],
+    diagram(
+      node-stroke: 1pt,
+      edge-stroke: 1pt,
+      spacing: (0.8em, 0.4em),
+      node-inset: 0.4em,
+      edge-corner-radius: 8pt,
+      node((0, 0), width: 1.25em, shape: "circle", $1$),
+      node((1, -1), width: 1.25em, shape: "circle", $2$),
+      node((2, -2), width: 1.25em, shape: "circle", $3$),
+      node((3, -1), width: 1.25em, shape: "circle", $2$),
+      edge((0, 0), "r,u"),
+      edge((1, -1), "r,u"),
+      edge((0, 0), "r,r,r,u"),
+    ),
+    $>=$,
+    diagram(
+      node-stroke: 1pt,
+      edge-stroke: 1pt,
+      spacing: (0.8em, 0.4em),
+      node-inset: 0.4em,
+      edge-corner-radius: 8pt,
+      node((1, -1), width: 1.25em, shape: "circle", $1$),
+    ),
+  )
+]
+This property also applies for the root node, for when a sequence has multiple $0$s.
+#proof[
+  Since $(0,1,...,n)$ satisfies this property, we just need to show that expansion preserves this property to show that all $OT_"PrSS"$ sequences satisfy this property.
+
+  1. If a sequence ends with $0$, its fundamental sequence is just the same sequence with the last $0$ chopped off, so the normality property is preserved.
+
+    Let $s in OT_"PrSS"$ be:
+    #figure(
+      diagram(
+        node-stroke: 1pt,
+        edge-stroke: 1pt,
+        spacing: (0.8em, 0.4em),
+        node-inset: 0.4em,
+        edge-corner-radius: 8pt,
+        node((0, 0), width: 1.25em, shape: "circle", $+$),
+        node((1, -1), width: 1.25em, shape: "circle", $s_1$),
+        node((2, -1), width: 1.25em, shape: "circle", $...$),
+        node((3, -1), width: 1.25em, shape: "circle", $s_k$),
+        node((4, -1), width: 1.25em, shape: "circle", $0$),
+        edge((0, 0), "r,u"),
+        edge((0, 0), "r,r,u"),
+        edge((0, 0), "r,r,r,u"),
+        edge((0, 0), "r,r,r,r,u"),
+      ),
+    )
+    then we know $s_1 >= ... >= s_k >= 0$. So $s[n]$ is just chopping of the last $0$:
+    #figure(
+      diagram(
+        node-stroke: 1pt,
+        edge-stroke: 1pt,
+        spacing: (0.8em, 0.4em),
+        node-inset: 0.4em,
+        edge-corner-radius: 8pt,
+        node((0, 0), width: 1.25em, shape: "circle", $+$),
+        node((1, -1), width: 1.25em, shape: "circle", $s_1$),
+        node((2, -1), width: 1.25em, shape: "circle", $...$),
+        node((3, -1), width: 1.25em, shape: "circle", $s_k$),
+        edge((0, 0), "r,u"),
+        edge((0, 0), "r,r,u"),
+        edge((0, 0), "r,r,r,u"),
+      ),
+    )
+    and we still have $s_1 >= ... >= s_k$.
+
+  2. If a sequence ends with a number $>0$, then we proceed with the normal Good Root/Bad Root expansion rules:
+
+    Let $s in OT_"PrSS"$ have its last number be $a_r + 1$, and whose bad root starts with $a_r$:
+    #figure(
+      diagram(
+        edge-stroke: 1pt,
+        spacing: (0.8em, 0.4em),
+        // node-inset: 0.4em,
+        edge-corner-radius: 8pt,
+        node((0, 0), shape: "circle", $+$, stroke: 1pt),
+        node((1, -1), shape: "circle", $...$),
+        node((2, -2), shape: "rect", $a_r$, stroke: 1pt, name: <badroot>, corner-radius: 4pt),
+        node((3, -3), shape: "circle", $...$, name: <badroot2>),
+        node((4, -3), shape: "rect", $a_r+1$, stroke: 1pt, corner-radius: 4pt),
+        edge((0, 0), "r,u"),
+        edge((1, -1), "r,u"),
+        edge((2, -2), "r,u"),
+        edge((2, -2), "r,r,u"),
+        node(
+          align(top + left)[#tealf[Bad Root]],
+          enclose: (<badroot>, <badroot2>),
+          corner-radius: 4pt,
+          stroke: teal,
+          fill: teal.lighten(90%),
+          snap: -1,
+        ),
+        // debug: 3,
+      ),
+    )
+    Zooming out, we see that expansion occurs by copying the bad root subtree onto the rightmost element of value $a_r - 1$ (If $a_r=0$, it instead adds bad roots onto the root node)
+
+    #figure(
+      stack(
+        dir: ttb,
+        spacing: 1em,
+        diagram(
+          edge-stroke: 1pt,
+          spacing: (0.8em, 0.4em),
+          node-inset: 0.4em,
+          edge-corner-radius: 8pt,
+          node((0, 0), width: 1.25em, shape: "circle", $+$, stroke: 1pt),
+          node((1, -1), width: 1.25em, shape: "circle", $...$),
+          node((2, -2), width: auto, shape: "rect", $a_r - 1$, stroke: 1pt, corner-radius: 4pt),
+          node((3, -3), width: 1.25em, shape: "circle", $T_1$, stroke: 1pt),
+          node((4, -3), width: 1.25em, shape: "circle", $...$),
+          node((5, -3), width: 1.25em, shape: "circle", $T_k$, stroke: 1pt),
+          node((6, -3), width: 1.25em, shape: "rect", $a_r$, stroke: 1pt, name: <badroot>, corner-radius: 4pt),
+          node((7, -4), width: 1.25em, shape: "circle", $...$, name: <badroot2>),
+          node((8, -4), width: auto, shape: "rect", $a_r+1$, stroke: 1pt, corner-radius: 4pt),
+          edge((0, 0), "r,u"),
+          edge((1, -1), "r,u"),
+          edge((2, -2), "r,u"),
+          edge((2, -2), "r,r,u"),
+          edge((2, -2), "r,r,r,u"),
+          edge((2, -2), "r,r,r,r,u"),
+          edge((6, -3), "r,u"),
+          edge((6, -3), "r,r,u"),
+          node(
+            align(top + left)[#tealf[Bad Root]],
+            enclose: (<badroot>, <badroot2>),
+            corner-radius: 4pt,
+            stroke: teal,
+            fill: teal.lighten(90%),
+            snap: -1,
+          ),
+        ),
+        $arrow.b$,
+        diagram(
+          edge-stroke: 1pt,
+          spacing: (0.8em, 0.4em),
+          node-inset: 0.4em,
+          edge-corner-radius: 8pt,
+          node((0, 0), width: 1.25em, shape: "circle", $+$, stroke: 1pt),
+          node((1, -1), width: 1.25em, shape: "circle", $...$),
+          node((2, -2), width: auto, shape: "rect", $a_r - 1$, stroke: 1pt, corner-radius: 4pt),
+          node((3, -3), width: 1.25em, shape: "circle", $T_1$, stroke: 1pt),
+          node((4, -3), width: 1.25em, shape: "circle", $...$),
+          node((5, -3), width: 1.25em, shape: "circle", $T_k$, stroke: 1pt),
+          node((6, -3), width: 1.25em, shape: "rect", $a_r$, stroke: 1pt, name: <badroot>, corner-radius: 4pt),
+          node((7, -4), width: 1.25em, shape: "circle", $...$, name: <badroot2>),
+          node((8, -3), width: 1.25em, shape: "rect", $a_r$, stroke: 1pt, name: <badroot3>, corner-radius: 4pt),
+          node((9, -4), width: 1.25em, shape: "circle", $...$, name: <badroot4>),
+          node((10, -3), width: 1.25em, shape: "circle", $...$),
+          edge((0, 0), "r,u"),
+          edge((1, -1), "r,u"),
+          edge((2, -2), "r,u"),
+          edge((2, -2), "r,r,u"),
+          edge((2, -2), "r,r,r,u"),
+          edge((2, -2), "r,r,r,r,u"),
+          edge((2, -2), "r,r,r,r,r,r,u"),
+          edge((2, -2), "r,r,r,r,r,r,r,r,u"),
+          edge((6, -3), "r,u"),
+          edge((8, -3), "r,u"),
+          node(
+            align(top + left)[#tealf[Bad Root]],
+            enclose: (<badroot>, <badroot2>),
+            corner-radius: 4pt,
+            stroke: teal,
+            fill: teal.lighten(90%),
+            snap: -1,
+          ),
+          node(
+            align(top + left)[#tealf[Bad Root]],
+            enclose: (<badroot3>, <badroot4>),
+            corner-radius: 4pt,
+            stroke: teal,
+            fill: teal.lighten(90%),
+            snap: -1,
+          ),
+        ),
+      ),
+    )
+    and since
+    #align(horizon)[
+      #stack(
+        dir: ltr,
+        $T_1 >= ... >= T_k >=$,
+        spacing: 1em,
+        diagram(
+          edge-stroke: 1pt,
+          spacing: (0.8em, 0.4em),
+          edge-corner-radius: 8pt,
+
+          node((6, -3), shape: "rect", $a_r$, stroke: 1pt, corner-radius: 4pt, name: <badroot>),
+          node((7, -4), $...$, name: <badroot2>),
+          node((8, -4), $a_r+1$, stroke: 1pt, corner-radius: 4pt),
+          edge((6, -3), "r,u"),
+          edge((6, -3), "r,r,u"),
+          node(
+            align(top + left)[#tealf[Bad Root]],
+            enclose: (<badroot>, <badroot2>),
+            corner-radius: 4pt,
+            stroke: teal,
+            fill: teal.lighten(90%),
+            snap: -1,
+          ),
+        ),
+        $>=$,
+        diagram(
+          edge-stroke: 1pt,
+          spacing: (0.8em, 0.4em),
+          edge-corner-radius: 8pt,
+
+          node((6, -3), shape: "rect", $a_r$, stroke: 1pt, corner-radius: 4pt, name: <badroot>),
+          node((7, -4), $...$, name: <badroot2>),
+          edge((6, -3), "r,u"),
+          node(
+            align(top + left)[#tealf[Bad Root]],
+            enclose: (<badroot>, <badroot2>),
+            corner-radius: 4pt,
+            stroke: teal,
+            fill: teal.lighten(90%),
+            snap: -1,
+          ),
+        ),
+      )
+    ]
+    our new expanded sequence also satisfies the "normality" property.
+
+  As such all sequences in $OT_"PrSS"$ satisfies this "normality" property.
+]
+Note that this "normality" property corresponds to the restriction that for a standard form term $wpow(alpha_1) plus fira(...) plus wpow(alpha_n)$ in ICNF,
+$alpha_1 >= ... >= alpha_n$.
+#theorem[
+  $s subset.sq t <=> s lex t$ when $s,t in OT_"PrSS"$.
+]
+#proof[
+  Since $s[n] lex s$, $s subset.sq t => s lex t$ is already shown. We just need show that $s lex t => s subset.sq t$.
+
+  Let's define a new function $E(u)$, where $E: OT_"PrSS" -> OT_"PrSS"$.
+
+  If there exists a $k$ such that $u[k] >= s$, then $E(u) = min{u[k] | u[k] >= s}$,
+  (i.e. $E$ returns the smallest element of $u$'s fundamental sequence that is greater than or equal to $s$).
+  Otherwise if no such $k$ exists, $E(u) = u$. Note that this means if $E(u) != u, E(u) subset.sq u$
+
+  Then we create a sequence of sequences $t_0, t_1, t_2,...$ where $t_0 = t$, and $t_(n+1) = E(t_n)$.
+  Since there are no infinite descending sequences that arise from expansion in $OT_"PrSS"$, there exists an $n$ such that
+  $
+    t_0 > ... > t_(n-1) > t_n = t_(n+1) = ...
+  $
+  So $t_n >= S$. If $t_n = s$, then we are done, as $s = t_n subset.sq t_(n-1) subset.sq ... subset.sq t_0 => s subset.sq t$.
+  If $t_n > s$, then this means that for all $k$, $t_n [k] < s$, but yet, $s < t_n$.
+  If we divide $t_n$ into its good root, bad root, and the last element, we realize that $s$ cannot satisfy the "normality" property, a contradiction:
+  $
+    t_n &= \(underbrace(a_1\,..., G), underbrace(a_r\,..., B), a_r+1\)\
+    t_n [k] &= \(underbrace(a_1\,..., G), underbrace(a_r\,..., B), underbrace(a_r\,..., B), underbrace(a_r\,..., B), ... \)\
+    s &= \(underbrace(a_1\,..., G), underbrace(a_r\,..., B), underbrace(a_r\, ???, X) \)\
+  $
+  In this case, $s$ needs to be of the form $(G,B,X)$, and $X$ needs to start with $a_r$ (since $t_n [k] < s$ for all $k$, $X$ cannot start with a number smaller than $a_r$), but it cannot start with $a_r+1$ either (since $s < t_n$).
+
+  $X$ also needs to be greater than $(B, B, B, ...)$, however, this means that among $a_r -1$'s parents, we have $B < X$, which violates "normality".
+  However $s in OT_"PrSS"$, a contradiction.
+
+  As such, we have $t_n = s$, and $s subset.sq t$.
+]
+#let seq = $"Seq"$
+We can then define a map $seq: e0 arrow.r.bar OT_"PrSS"$ to show that $(OT, <)$ is order isomorphic to $(e0, in)$.
+
+For an ordinal $alpha<e0$, $seq(alpha)$ is defined as such:
+1. $seq(0) = ()$
+2. $seq(omega^(alpha_1) + ... + omega^(alpha_n)) = S'(alpha_1)zws^frown ... zws^frown S'(alpha_n)$, where $zws^frown$ represents concatenation and $S'(alpha)$ is defined as:
+  $ S'(alpha) = S'((a_1,a_2,...,a_l)) = (0,a_1+1,a_2+1,...,a_l+1) $
 
 #lemma[
-    For two sequences $s lex t$, if $s$ is a proper prefix of $t$:
-    $
-        s &= (s_1,...,s_m)\
-        t &= (s_1,...,s_m,c_(m+1),...,c_l)
-    $
-    then $s subset.sq t$.
+  #seq is order-preserving, i.e., if $alpha < beta$ then $seq(alpha) < seq(beta)$ (for $alpha<beta<e0$)
 ]
 #proof[
-    Let $s_p(l)$ be the parent of $c_l$. (Note that it doesn't matter whether $s_p(l)$ is within $(s_1,...,s_m)$ or not).
-    $
-        t &= \(underbrace(s_1\,...\,s_(p(l)-1), G), underbrace(s_p(l)\,...\,c_(l-1), B) ,c_l\)\
-        t[1] &= \(underbrace(s_1\,...\,s_(p(l)-1), G), underbrace(s_p(l)\,...\,c_(l-1), B)\) < t\
-    $
-    With this, we can use $t[1]$ to "cut" the last element of each sequence until $t$ becomes $s$.
+  Suppose:
+  $
+    alpha & = omega^(alpha_1) + ... + omega^(alpha_n) \
+     beta & = omega^(beta_1) + ... + omega^(beta_n)
+  $
+  if $alpha < beta$, then when we lexicographically compare the sequences of their $omega$-exponents, $(alpha_1,...,alpha_n)$ and $(beta_1,...,beta_n)$,
+  and we must have $(alpha_1,...,alpha_n) lex (beta_1,...,beta_n)$. Then:
+  $
+    seq(alpha) & = S'(seq(alpha_1))^frown ...^frown S'(seq(alpha_n)) \
+     seq(beta) & = S'(seq(beta_1))^frown ...^frown S'(seq(beta_n))
+  $
+  , and since $(alpha_1,...,alpha_n) lex (beta_1,...,beta_n)$, $seq(alpha) < seq(beta)$
 ]
-// #lemma[
-//     For two sequences $s<t$ such that:
-//     $
-//         s &= (s_1,...,s_m,b_(m+1),...,b_k)\
-//         t &= (s_1,...,s_m,c_(m+1),...,c_l)
-//     $
-//     where $b_(m+1)<c_(m+1)$, if $s subset.sq (s_1,...,s_m,b_(m+1)+1)$, $s subset.sq t$
-// ]
-// #proof[
-//     We are given that $s = (s_1,...,s_m,b_(m+1),...,b_k) subset.sq (s_1,...,s_m,b_(m+1)+1)$.
-//     Let's call $s' = (s_1,...,s_m,b_(m+1)+1)$, so we have $s subset.sq s'$.
+#lemma[
 
-//     Since $b_(m+1)<c_(m+1)$, we have $b_(m+1)+1 <= c_(m+1)$.
-
-//     + If $c_(m+1) = b_(m+1)+1$, we have a case similar to part 1:
-//         $
-//             s' &= (redf(s_1\,...\,s_m\,b_(m+1)+1))\
-//             t &= (redf(s_1\,...\,s_m\,b_(m+1)+1),c_2,...,c_l)\
-//         $
-//         Where we have a common first few terms, and as such we can "cut" the last element from $t$ until we reach $s'$. As such $s subset.sq s' subset.sq t => s subset.sq t$
-//     + If $c_(m+1) > b_(m+1)+1$, we first show that $(s_1,...,s_m,c_(m+1)redf(-1)) subset.sq t$.
-//         From cutting, we already have:
-//         $
-//             (s_1,...,s_m,c_(m+1)) subset.sq (s_1,...,s_m,c_(m+1),...,c_l) = t
-//         $
-//         Then let the parent of $c_(m+1)$ be $s_p(m+1)$. By PrSS rules, the parent must be $1$ less than the element, so $s_p(m+1) = c_(m+1) - 1$. Then:
-//         $
-//             (s_1,...,s_m,c_(m+1))[2] &= \( underbrace(s_1\,...\,s_(p(m+1)-1),G) , underbrace(s_p(m+1)\,...\,s_m, B) ,c_(m+1) \) [2]\
-//             &= \( underbrace(s_1\,...\,s_(p(m+1)-1),G) , underbrace(s_p(m+1)\,...\,s_m, B) , underbrace(s_p(m+1)\,...\,s_m, B) \)\
-//             &supset.sq (redf(s_1\,...\,s_(p(m+1)-1)\,s_p(m+1)\,...\,s_m), greenf(s_p(m+1)) )\
-//             &= (redf(s_1\,...\,s_m), greenf(c_(m+1)-1))
-//         $
-//         We get $(s_1,...,s_m,c_(m+1))[2] supset.sq (s_1,...,s_m,c_(m+1)-1)$, so as such:
-//         $
-//             (s_1,...,s_m,c_(m+1)-1) subset.sq (s_1,...,s_m,c_(m+1))
-//         $
-//         We can use this property to inductively show that $(s_1,...,s_m,b_(m+1)+1) subset.sq t$:
-//         $
-//             (s_1,...,s_m,b_(m+1)+1) subset.sq ... subset.sq (s_1,...,s_m,c_(m+1)-1) subset.sq (s_1,...,s_m,c_(m+1)) subset.sq t
-//         $
-//         And therefore:
-//         $
-//             s &= (s_1,...,s_m,b_(m+1),...,b_k) subset.sq (s_1,...,s_m,b_(m+1)+1) subset.sq t\
-//             => s &subset.sq t
-//         $
-// ]
-// #lemma[
-//     Let $s in OT_"PrSS"$ satisfy $s subset.sq (0,...,n)$. Every element in $s$ must be strictly smaller than $n$.
-// ]
-// #proof[
-//     Well, there's no method in PrSS to make bigger numbers within the sequence, so once the last $n$ is gone, it's gone...
-// ]
-// #lemma[
-//     Let $s in OT_"PrSS"$ satisfy $s subset.sq (0,...,n)$. Then let $n'$ is the minimal such $n$ such that $s subset.sq (0,...,n')$.
-//     In that case, $s$ must start with $(0,1,2,...,n'-1)$.
-// ]
-// #proof[
-//     Every PrSS sequence must start with a consecutively increasing integer sequence, no matter how short.
-//     Even a non-standard PrSS $(0,1,1,2)$ starts with a consecutively increasing integer sequence $(0,1)$.
-//     So the contradiction lies with _which value this consecutively increasing integer sequence stops at_.
-
-//     Suppose $s$ starts with $(0,1,2,...,n-1)$, but $n$ is *not* the minimal $n$ such that $s subset.sq (0,...,n)$.
-//     That means there exists an even smaller $m<n$ such that $s subset.sq (0,...,m)$. However this means every element in $s$ will satisfy $s_i<m<n$.
-//     However there exists no $m$ such that $n-1 < m < n$, a contradiction.
-// ]
-
-#theorem[
-    $s subset.sq t <=> s lex t$ when $s,t in OT_"PrSS"$.
 ]
 #proof[
-    Since $s[n] lex s$, $s subset.sq t => s lex t$ is already shown. We just need show that $s lex t => s subset.sq t$.
 
-    Since $s,t in OT_"PrSS"$, we know $s subset.sq (0,...,n_1)$, and $t subset.sq (0,...,n_2)$, where $n_1,n_2$ are both the minimal $n$ satisfying their conditions.
-
-    Then by the previous lemmas, $s$ and $t$ must start with $(0,...,n_1-1)$ and $(0,...,n_2-1)$ respectively,
-    and every element in $s$ and $t$ must be smaller than $n_1$ and $n_2$ respectively.
-    In order for $s lex t$, $n_1 < n_2$:
-
-    $
-        s &= (0,...,n_1-1,...)\
-        t &= (0,...,n_1-1,n_1,...,n_2-1,...)
-    $
-    We can then show that:
-    $
-        s = &(0,...,n_1-1,...)\
-        subset.sq &(0,...,n_1-1,n_1)\
-        subset.sq &(0,...,n_1-1,n_1,...,n_2-1,...)= t\
-        => s subset.sq &t
-    $
 ]
+#lemma[
 
-We can then define a map $o: OT_"PrSS" arrow.r.bar e0$ to show that $(OT, <)$ is order isomorphic to $(e0, in)$. For a sequence $s in OT_"PrSS"$:
-$
-    o(s) := union.big_(n in NN) (o(s[n])+1)
-$
-For a PrSS sequence corresponding to successor ordinal, it will end with $0$, leading to that last $0$ being chopped off.
-E.g. $s = (0,1,2,0) ~ wpow(wpow(zero)) plus wpow(zero) ~ omega^omega + 1, s[n] = (0,1,2) ~ wpow(wpow(zero)) ~ omega^omega$.
-In general we have:
-$
-    o((s_1,...,s_(m-1),0)) &= union.big_(n in NN) (o((s_1,...,s_(m-1))) + 1)\
-        &= o((s_1,...,s_(m-1))) + 1
-$
-For limit ordinals, since $s[n]$ is an increasing function on sequences corresponding to limit ordinals
-(i.e. if a sequence doesn't end with $0$, if $n_1<n_2, s[n_1] < s[n_2]$).
-
-$
-    o(s) &= union.big_(n in NN) (o(s[n])+1)\
-    &= sup{ o(s[n])+1 | n in NN }\
-    &= sup{ o(s[n]) | n in NN }
-$
-So by transfinite induction, every successor ordinal and every limit ordinal are "hit" by our map $o$. The limit is $s=(0,1,2,...)$,
-which corresponds to an $omega^omega^dots.up$ tower, so PrSS as an order isomorphism with the set of all ordinals $<e0$.
-And of course, an ordinal is the set of all ordinals smaller than itself, so $(OT_"PrSS", lex)$ is order isomorphic to $(e0, in)$.
+]

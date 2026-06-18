@@ -46,8 +46,8 @@
 )
 
 #set page(
-    numbering: "1",
-    // fill: rgb("#f3ead3")
+  numbering: "1",
+  // fill: rgb("#f3ead3")
 )
 
 
