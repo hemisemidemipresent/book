@@ -78,7 +78,7 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
 // and he uses $G_nu (b)$ is somewhat analogous to $C_nu (b)$.
 
 #[
-  #let dom(content) = $fuchsiaf(fira(cof \())content fuchsiaf(fira(\))))$
+  #let dom(content) = $fuchsiaf(fira(cof \())content fuchsiaf(fira(\)))$
 
   Now just like how the fundamental sequence of an ordinal $alpha[n] < alpha$, we can similarly define a fundamental sequence $a[n]$ for each ordinal notation $a$,
   where $a[n] prec a$. This requires defining a computable version of _cofinality_ (denoted $"dom"$ in Buchholz's paper)
@@ -196,7 +196,7 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
         - $c$ #node-attr(rotate: -180deg)
           + #metadata("red")
           - $b$ <red>
-            - $a=0$ <blue>
+            - $0$ <blue>
             + #metadata("red")
             - $...$ <red>
       ],
@@ -227,7 +227,7 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
               + #metadata("red")
               - #zws <red>
                 + #metadata("red")
-                - $a = u+1$ <blue>
+                - $u+1$ <blue>
                 + #metadata("red")
                 - $...$ <red>
               + #metadata("red")
@@ -249,7 +249,7 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
             + #metadata("red")
             - #zws <red>
               + #metadata("red")
-              - $a = u+1$ <blue>
+              - $u+1$ <blue>
               + #metadata("red")
               - $...$ <red>
             + #metadata("red")
@@ -333,7 +333,7 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
                 + #metadata("red")
                 - #zws <red>
                   + #metadata("red")
-                  - $a = u+1$ <blue>
+                  - $u+1$ <blue>
                   + #metadata("red")
                   - $...$ <red>
                 + #metadata("red")

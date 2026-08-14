@@ -183,6 +183,7 @@ We first prove a property about how $psi_nu (alpha+1)$ relates to $psi_nu (alpha
     + Since $alpha in C_nu (alpha)$, and $alpha in C_nu (alpha)$, $psi_nu (alpha) < psi_nu (alpha+1)$.
         // And since $$ $psi_nu (alpha) in P$
         Suppose for contradiction there exists an ordinal $gamma$ such that $psi_nu (alpha) <= gamma < psi_nu (alpha+1)$, and $gamma in P$.
+
 ]
 #lemma[
     + For all ordinals $alpha < e0$, $alpha in C_0(alpha)$ and $psi_0(alpha) = omega^alpha$
@@ -193,7 +194,34 @@ We first prove a property about how $psi_nu (alpha+1)$ relates to $psi_nu (alpha
 ]
 
 #proof[
-    Suppose $alpha in C_0(alpha)$ and $psi_0(alpha) = omega^alpha$. Then $alpha+1 in C_0(alpha+1)$ and $psi_0(alpha+1)$
+  We set:
+  $
+    epsilon(nu) := cases(
+      e0 & thick nu=0,
+      epsilon_(Omega_nu + 1) & thick nu>0
+    )
+  $
+  and
+  $
+    alpha ast nu := cases(
+      alpha & thick nu=0,
+      Omega_nu + alpha & thick nu>0
+    )
+  $
+
+  + Base Case: We have $0 in C_nu (0)$ and we know that $psi_nu (0) = Omega_nu$.
+  + Successor Case: Suppose $alpha in C_0(alpha)$ and $psi_0(alpha) = omega^(alpha ast nu)$. Then $alpha+1 in C_0(alpha+1)$ and $psi_0(alpha+1)$, and $psi_nu (alpha+1) = omega^(alpha ast nu+1)$ from part (a) of the earlier lemma.
+  + Limit Case: Suppose $alpha < epsilon(nu), alpha in Lim$ and that for all ordinals $xi < alpha$, $xi in C_nu (xi)$ and $psi_nu (xi) = omega^(alpha ast nu)$. Then by part (b) of the earlier lemma,
+    $
+      psi_nu (xi) = sup{omega^(xi ast nu) | xi < alpha} = omega^(alpha ast nu)
+    $
+    Now we still have to prove $alpha in C_nu (alpha)$.
+    - For $alpha < Omega_nu$, $alpha$ is trivially included.
+    - If $alpha = Omega_nu$, $alpha = psi_nu (0)$ and $0<alpha$, so $Omega_nu in C_nu (alpha)$.
+    - For $Omega_nu < alpha < epsilon(nu)$, we have $P(alpha) subset.eq alpha$.
+      Then by induction hypothesis we have $xi in C_nu (xi) subset.eq C_nu (alpha)$ for all $xi in P(alpha)$, so $alpha in C_nu (alpha)$
+    [WIP: what about if $P(alpha) = alpha$? its not in Buchholz paper...
+    I suppose you can just say if $alpha in P, alpha = psi_nu (beta)$ for some $beta < alpha$, and by induction hypothesis $beta in C_nu (beta)$ so its fine]
 ]
 
 Using the lemma above, we have:

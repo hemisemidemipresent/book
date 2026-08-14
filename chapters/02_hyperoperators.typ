@@ -99,6 +99,8 @@ We can start to see a pattern here, where each new, more powerful operator is de
 
 == Tetration and Beyond
 
+This is where we start venturing beyond the realm of useful numbers and into the realm of googology:
+
 #definition[
   *Tetration* is defined as repeated exponentiation. This can be expressed recursively:
   $
@@ -110,6 +112,8 @@ We can start to see a pattern here, where each new, more powerful operator is de
   a up up b = underbrace(a^a^a^dots.up, a "is here" b "times") = underbrace(a up a up ... up a, a "is here" b "times")
   $
 ]
+
+
 
 #example[
   Evaluate $2 up up 3$
@@ -125,6 +129,11 @@ We can start to see a pattern here, where each new, more powerful operator is de
   2 up up 3 = underbrace(2 up 2 up 2, 2 "is here" 3 "times") = 2 ^ 2 ^ 2= 2^((2^2)) = 2^4 = 16
   $
 ]
+This might not seem like a lot, but try something like $10 up up 10$:
+
+$
+  10 up up 10 = 10 up 10 up 10 up 10 up 10 up 10 up 10 up 10 up 10 up 10 = 10^10^10^10^10^10^10^10^10^10
+$
 
 We can similarly define *Pentation*:
 
@@ -184,3 +193,5 @@ With up-arrow notation, we can already make enormously big numbers like Graham's
 
   Graham's number is defined as $g_64$
 ]
+
+This seems like quite the huge number, but Graham's number barely scratches the surface of what googology has to offer.

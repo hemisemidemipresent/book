@@ -163,9 +163,11 @@
 #let PT = $P T$ // set of principal terms
 
 // since its buchholz, not extended, we include 0,1,...,omega into the fira math font since these indices are "fixed"
-#let bocf(a, b) = $fira(psi_#a) fira(\() #b fira(\))$
-
-#let ternary(s,t,u) = $#s fira(in) fira(C)_#t fira(\() #u fira(\))$
+#let bocf = (a, b) => {
+  return $fira(psi_#a) fira(\() #b fira(\))$
+}
+// since its buchholz, not extended, we include subscripts into the fira math font since these indices are "fixed"
+#let ternary(s,t,u) = $#s fira(in) fira(C_#t) fira(\() #u fira(\))$
 // #let ternary(s,t,u) = $#s redf(sans(in)) redf(bold(sans(C)))_#t redf(\() #u redf(\))$ // s in C_t(u)
 
 // arrow
