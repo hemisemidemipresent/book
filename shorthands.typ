@@ -125,6 +125,20 @@
 #let grayf(content) = text(content, fill: gray)
 #let blackf(content) = text(content, fill: black)
 #let rainbowf(content) = text(content, fill: gradient.linear(..color.map.rainbow))
+
+// alignment
+#let hbox(..items) = [
+  #set align(center)
+  #box[
+    #set align(horizon)
+    #stack(
+      dir: ltr,
+      spacing: 1em,
+      ..items
+    )
+  ]
+]
+
 // predefined "macros"
 #let up = $scripts(arrow.t)$ // knuth up arrow
 #let cof = $"cof"$ // cofinality
@@ -144,7 +158,6 @@
 #let z0 = $zeta_0$
 #let G0 = $Gamma_0$
 #let SVO = $"SVO"$
-// #let SVO.bocf = $psi_0(Omega^Omega^omega)$
 #let LVO = $"LVO"$
 #let BHO = $psi_0(epsilon_(Omega+1))$
 #let BO = $psi_0(Omega_omega)$
@@ -162,12 +175,11 @@
 // BOCF Ordinal notations
 #let PT = $P T$ // set of principal terms
 
-// since its buchholz, not extended, we include 0,1,...,omega into the fira math font since these indices are "fixed"
+
 #let bocf = (a, b) => {
-  return $fira(psi_#a) fira(\() #b fira(\))$
+  return $fira(psi)_#a fira(\() #b fira(\))$
 }
-// since its buchholz, not extended, we include subscripts into the fira math font since these indices are "fixed"
-#let ternary(s,t,u) = $#s fira(in) fira(C_#t) fira(\() #u fira(\))$
+#let ternary(s,t,u) = $#s fira(in) fira(C)_#t fira(\() #u fira(\))$
 // #let ternary(s,t,u) = $#s redf(sans(in)) redf(bold(sans(C)))_#t redf(\() #u redf(\))$ // s in C_t(u)
 
 // arrow
@@ -224,19 +236,118 @@
       edges.push(edge((parent_index, -height + 1), direction_string))
     }
   }
+  context{
+    diagram(
+      node-stroke: 1pt + text.fill,
+      edge-stroke: 1pt + text.fill,
+      spacing: (0.8em, 0.4em),
+      node-inset: 0.4em,
+      edge-corner-radius: 8pt,
+      ..nodes,
+      ..edges,
+      ..args,
+    )
+  }
 
-  diagram(
-    node-stroke: 1pt,
-    edge-stroke: 1pt,
-    spacing: (0.8em, 0.4em),
-    node-inset: 0.4em,
-    edge-corner-radius: 8pt,
-    ..nodes,
-    ..edges,
-    ..args,
-  )
 }
 
 #let prss = (row, ..args) => {
     pss(row, row, ..args)
+}
+
+
+// yet another tree
+#let tree-from-list(body) = {
+  let NODE_WIDTH = 1.25em
+  let collect-tree(body) = {
+    if not body.has("children") {
+      return (title: body, children: ())
+    }
+
+    // exclude std.table, std.grid, etc.
+    // although they have children, we do not want to unfold them
+    if body.func() in dictionary(std).values() {
+      return (title: body, children: ())
+    }
+
+    let is-list-item(child) = child.func() == std.list.item
+    let is-enum-item(child) = child.func() == std.enum.item
+    let is-term-item(child) = child.func() == std.terms.item
+
+    body
+      .children
+      .fold(([], ()), ((title, children), child) => {
+        if is-list-item(child) {
+          (title, children + (collect-tree(child.body),))
+        } else if is-enum-item(child) {
+          // leave out enum titles since they are for edge labels
+          (title, children)
+        } else if is-term-item(child) {
+          // use description field as node title
+          // and leave out term field for edge label
+          (title, children + (collect-tree(child.description),))
+        } else {
+          (title + child, children)
+        }
+      })
+      .reduce((title, children) => (title: title, children: children))
+  }
+  let tree = collect-tree(body)
+  // return tree
+  let flatten-tree(tree, indices: ()) = {
+    if (indices.len() != 0) {
+      ((title: tree.title, indices: indices),)
+    }
+    tree.children.enumerate().map(
+      ((i, child)) => flatten-tree(child, indices: indices + (i,))
+    ).flatten()
+  }
+  let tree = flatten-tree(tree)
+  // tree
+  let tree = tree.enumerate().map(((i, element)) => {
+    (content: element.title, x: i, y:element.indices.len())
+  })
+  // return tree
+  let nodes = tree.map(element => {
+    node((element.x, -element.y), element.content, width: NODE_WIDTH)
+  })
+  let parent = (tree, height, index) => {
+    let results = ()
+    for element in tree {
+      if (element.y == height - 1 and element.x < index) {
+        results.push(element)
+      }
+    }
+
+    return results.at(results.len() - 1)
+  }
+  let edges = tree.map(element => {
+    if(element.y == 1){
+      let directions = ("r",) * (element.x+1) + ("u",)
+      let direction_string = directions.intersperse(",").join("")
+      return edge((-1, 0), direction_string)
+    }
+    let parent = parent(tree, element.y, element.x)
+    let directions = ("r",) * (element.x - parent.x) + ("u",)
+    let direction_string = directions.intersperse(",").join("")
+    return edge((parent.x, -parent.y),direction_string)
+  })
+  // return nodes
+  context{
+    diagram(
+      // node-stroke: 1pt + text.fill,
+      edge-stroke: 1pt + text.fill,
+      spacing: 0.1em,
+      // root node
+      node(
+        (-1,0),
+        [•],
+        width: 1.2em,
+        height: 1.2em
+      ),
+      nodes,
+      edges,
+      debug: 3
+    )
+  }
 }

@@ -1744,3 +1744,17 @@ The function FS(x,k) is defined as follows:
 5. Otherwise, FS([a,b],k) = [FS(a,k),b].
 Note that n is a term, equivalent to ω.
 ```
+TODO:
+- Explore the hydra a little
+- sgh-mgh relation to the hydra
+- sgh-mgh catching point at BO
+
+=== sgh-mgh catching point
+
+We earlier showed in chapter 6, that $H_e0 (n) approx f_e0 (n)$. We will now related sgh and mgh to the rest of these hierarchies.
+
+// #lemma[
+//   $
+//     g_(psi_0(Omega_(n+1)) approx f_(psi_0(Omega_n))
+//   $
+// ]

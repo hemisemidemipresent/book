@@ -751,7 +751,7 @@ I added a third column for the PrSS "hydra" to show how elements in the sequence
 )
 #set align(left)
 
-We see that each number in the sequence represents the litearl height of the term on this hydra.
+We see that each number in the sequence represents the literal height of the term on this hydra.
 When taking funamental sequences, this "hydra" behaves quite similarly to the Kirby-Paris Hydra we saw earlier:
 
 $(greenf(0\,1),redf(2\,3\,3),bluef(3))[3] = (greenf(0\,1),redf(2\,3\,3),redf(2\,3\,3),redf(2\,3\,3))$
@@ -1285,7 +1285,7 @@ We can then define a map $seq: e0 arrow.r.bar OT_"PrSS"$ to show that $(OT, <)$ 
 
 For an ordinal $alpha<e0$, $seq(alpha)$ is defined as such:
 1. $seq(0) = ()$
-2. $seq(omega^(alpha_1) + ... + omega^(alpha_n)) = S'(alpha_1)zws^frown ... zws^frown S'(alpha_n)$, where $zws^frown$ represents concatenation and $S'(alpha)$ is defined as:
+2. $seq(omega^(alpha_1) + ... + omega^(alpha_n)) = S'(alpha_1) xor ... xor S'(alpha_n)$, where $xor$ represents concatenation and $S'(alpha)$ is defined as:
   $ S'(alpha) = S'((a_1,a_2,...,a_l)) = (0,a_1+1,a_2+1,...,a_l+1) $
 
 #lemma[
@@ -1300,8 +1300,8 @@ For an ordinal $alpha<e0$, $seq(alpha)$ is defined as such:
   if $alpha < beta$, then when we lexicographically compare the sequences of their $omega$-exponents, $(alpha_1,...,alpha_n)$ and $(beta_1,...,beta_n)$,
   and we must have $(alpha_1,...,alpha_n) lex (beta_1,...,beta_n)$. Then:
   $
-    seq(alpha) & = S'(seq(alpha_1))^frown ...^frown S'(seq(alpha_n)) \
-     seq(beta) & = S'(seq(beta_1))^frown ...^frown S'(seq(beta_n))
+    seq(alpha) & = S'(seq(alpha_1)) xor ... xor S'(seq(alpha_n)) \
+     seq(beta) & = S'(seq(beta_1)) xor ... xor S'(seq(beta_n))
   $
   , and since $(alpha_1,...,alpha_n) lex (beta_1,...,beta_n)$, $seq(alpha) < seq(beta)$
 ]

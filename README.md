@@ -15,6 +15,7 @@ Editorial Notes
 - design decision: colored boxes or nah
 - more consistent color scheme
 - find a better, more compact way to draw trees
+- Consider just biting the bullet and not use $psi$ in a different font for ordinal notations (its really ugly), instead using D or p or something else
 
 Potential new topics, though these may be too hard to fit within the general "skill level" of the book.
 - Inaccessible cardinals, Mahlo Cardinals, Weakly Compact Cardinals, Stability, Reflection and whatever OCF can use them

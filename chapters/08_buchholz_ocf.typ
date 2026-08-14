@@ -70,11 +70,11 @@ In fact, we can generalize this and show that:
     + $Omega_0 subset.eq C_0(0)$, so we once again have $0 in C_0(0)$.
     + Adding doesn't do anything
     The difference this time is that we can use $psi_0(0)$:
-    3. For any ordinal $xi in C_0(0)$, as long as $xi < 1$, then $psi_mu(xi) in C_0(0)$ for all $mu<=omega$
+    3. For any ordinal $xi in C_0(0)$, as long as $xi < 1$, then $psi_mu (xi) in C_0(0)$ for all $mu<=omega$
 
-        The only valid values of $xi$ is just $0$, so we have $psi_0(0), psi_1(0), ..., psi_omega(0) in C_0(0)$.
+        The only valid values of $xi$ is just $0$, so we have $psi_0(0), psi_1(0), ..., psi_omega (0) in C_0(0)$.
         $psi_0(0) = 1 in C_0(0)$, so we finally have something new.
-        We haven't gotten to $psi_1(0), psi_2(0), ..., psi_omega(0)$ yet, and we'll ignore them for now.
+        We haven't gotten to $psi_1(0), psi_2(0), ..., psi_omega (0)$ yet, and we'll ignore them for now.
     2. We can now use addition to show that $1 + 1 = 2 in C_0(0), 2 + 1 = 3 in C_0(0)$, and so on to show that all natural numbers $NN subset.eq C_0(0)$.
         In fact, $NN = C_0(0)$.
     4. $psi_0(1)$ is the smallest ordinal not in $C_0(0)$, which is $omega$
