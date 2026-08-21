@@ -1,48 +1,19 @@
-// packages for textbook-like formatting of chapters and sections
-#import "@preview/beautitled:0.1.0": *
-#beautitled-setup(
-  style: "modern",
-  chapter-prefix: "Chapter",
-  chapter-pagebreak: true,
-  section-below: 1em,
+
+#import "scholia/lib.typ": *
+
+#let theme = "dark"
+#show: scholia.with(
+  theme: theme,   // light (default) | dark (slate)
+  // prose: "book",   // notes (default) | book (first-line indent, tight)
 )
-#show: beautitled-init
 
-// package for textbook-like formatting of defintions, theorems, lemmas, examples etc
-#import "@preview/beautiframe:0.1.0": *
-#let spacing = 0em
-#beautiframe-setup(
-  style: "colorful",
-  theorem-variant: "accent",
-  definition-variant: "accent",
-  proposition-variant: "accent",
-  corollary-variant: "accent",
-  lemma-variant: "accent",
-
-  definition-above: spacing,
-  definition-below: spacing,
-  example-above: spacing,
-  example-below: spacing,
-  proposition-above: spacing,
-  proposition-below: spacing,
-  // proof-above: spacing,
-  // proof-below: spacing,
-  remark-above: spacing,
-  remark-below: spacing,
-  corollary-above: spacing,
-  corollary-below: spacing,
-  lemma-above: spacing,
-  lemma-below: spacing,
-  theorem-above: spacing,
-  theorem-below: spacing,
-
-  // we change remark to warning
-  remark-variant: "accent",
-  remark-color: rgb("#f35667"),
-  remark-label: "WARNING",
-
-  // we change corollary to proof, there is a proof in beautiframe but its not customizable
-  corollary-label: [_Proof_],
+#cover(
+  "Ordinal Googology",
+  subtitle: "The mathematics behind the strength of googological systems",
+  author: "hemidemisemipresent",
+  // date: datetime.today().display("[month repr:long] [day], [year]"),
+  date: "2026"
+  // kicker: "Optimization · Notebook 4",
 )
 
 #set page(
@@ -50,15 +21,9 @@
   // fill: rgb("#f3ead3")
 )
 
-
-// actual layout starts here
-#align(center)[
-  // #text(size:4em)[Title goes here]
-]
-#beautitled-toc(title: "Contents")
-#pagebreak()
-
+#outline()
 // link styling only after contents so it doesnt get affected
+
 #show link: set text(fill: blue)
 #show link: underline
 
@@ -71,5 +36,5 @@
 #include "chapters/07_veblen.typ"
 #include "chapters/08_buchholz_ocf.typ"
 #include "chapters/09_buchholz_on.typ"
-// #include "chapters/10_extended_buchholz.typ"
+#include "chapters/10_extended_buchholz.typ"
 // #include "chapters/11_intro_to_bms.typ"

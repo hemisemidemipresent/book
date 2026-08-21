@@ -159,7 +159,9 @@ and an ordinal is the set of all ordinals smaller than it.
     Therefore for any ordinal $alpha in union.big_i alpha_i$, for all $beta< alpha$, $beta in union.big_i alpha_i$, and as such $union.big_i alpha_i$ is an ordinal.
 ]
 
-#proposition[If $(X,ltx)$ and $(Y,lty)$ are order isomorphic and $(X,ltx)$ is a well-ordered set, $(Y,lty)$ is also a well-ordered set.] #label("order isomorphic transfers well-order")
+#proposition[Order isomorphism transfers well-order][
+  If $(X,ltx)$ and $(Y,lty)$ are order isomorphic and $(X,ltx)$ is a well-ordered set, $(Y,lty)$ is also a well-ordered set.
+] <prop:order-isomorphism-transfers-well-order>
 
 #proof[
   Let $f$ be an order isomorphism between $X$ and $Y$. Suppose$(X,ltx)$ is a well-ordered set but $(Y,lty)$ isn't. Then there is an infinite descending sequence $y_1 gty y_2 gty ...$. Because  $f$ is onto, for each $i$ there exists there is an $x_i in X$ such that $f(x_i)=y_i$. Since $y_i gty y_(i+1), f(x_i) gty f(x_(i+1))$ and by the order-preserving property, $x_i gtx x_(i+1)$. But then $x_1 gtx x_2 gtx ...$ is an infinite descending sequence in $X$, a contradiction.
@@ -175,7 +177,7 @@ and an ordinal is the set of all ordinals smaller than it.
   3. For every $n in E, n = 2 dot m "where" m in N$. $m$ satisfies $f(m) = n$
   4. If $x < y, 2x < 2y$ and vice versa
 
-  And in fact, since $omega = NN$ is an ordinal, it is well-ordered. Therefore #link(label("order isomorphic transfers well-order"))[by this proposition], $E$ which has an order isomorphism to $omega$ is also well-ordered.
+  And in fact, since $omega = NN$ is an ordinal, it is well-ordered. Therefore by @prop:order-isomorphism-transfers-well-order, $E$ which has an order isomorphism to $omega$ is also well-ordered.
 
 ]
 In the above example, we show that these two well-ordered sets are order isomorphic have the same *order type*. Since the set of all natural numbers is $omega$, we can generalize this to say that any set that has order isomorphism to $omega = NN$ has order type $omega$. In general, *any set that has order isomorphism to an ordinal $alpha$ has order type $alpha$*.
@@ -206,7 +208,7 @@ In the above example, we show that these two well-ordered sets are order isomorp
     $
     f(alpha) = cases(1/(alpha+1) &"if" alpha < omega, 0 &"if" alpha = omega)
     $
-  + Since $omega+1$ is a well-ordered set, and there exists an order isomorphism from $omega+1$ to $X$, #link(label("order isomorphic transfers well-order"))[by this proposition] $X$ is a well-ordered set.
+  + Since $omega+1$ is a well-ordered set, and there exists an order isomorphism from $omega+1$ to $X$, by @prop:order-isomorphism-transfers-well-order $X$ is a well-ordered set.
 ]
 
 This is the crux of the difference between ordinals and cardinals. *Cardinality* is about comparing sizes via *bijections* between *unordered sets*, and assigning a *cardinal number*. *Order Types* is about comparing sizes via *order isomorphisms* between *(well-)ordered sets*, and assigning an *ordinal number*.
@@ -385,13 +387,13 @@ However, if we only consider *decreasing sequences*, #lex is a well-order (Note 
 ]
 
 Note that there is nothing special about $NN$ here, we can replace $NN$ with any well-ordered set:
-#proposition[
+#proposition[Decreasing sequences of a well-ordered set are well-ordered][
 
     Let $(X, <)$ be a well-ordered set.
     Let $X^*_>$ be the set of all decreasing sequences $(x_1, x_2, ..., x_k)$ where $x_1 > x_2 > ... > x_k$ and $x_i in X$.
 
     $(X^*_>, lex)$ is a well-ordered set.
-] #label("decreasing sequences of a well-ordered is well-ordered")
+] <prop:decreasing-seq-well-ordered>
 
 In fact, the set of all *non-increasing* sequences of elements of a well-ordered set $X$ is also a well-ordered by #lex.
 A non-increasing sequence of elements in $X$ is a sequence $(x_1, x_2, ..., x_k)$ where $x_i >= x_(i+1)$ (rather than strictly decreasing $x_i > x_(i+1)$).
@@ -416,15 +418,15 @@ To show this, we can split non-increasing sequences into a sequence of constant 
   The least element (lexicographically) would be the _shortest_ constant sequence of $x$.
 ]
 
-#proposition[
+#proposition[Non-increasing sequences well-ordered][
   If $(X,<)$ is a well-ordered set, the set of non-increasing sequences of elements $(X_(>=)^*, lex)$ is a well-ordered set.
-] #label("non-increasing sequences well-ordered")
+] <prop:nonincreasing-well-ordered>
 
 #proof[
 
-    Since the set of constant sequences $X_=^*$ is well-ordered, #link(label("decreasing sequences of a well-ordered is well-ordered"))[by this proposition],
+    Since the set of constant sequences $X_=^*$ is well-ordered, by @prop:decreasing-seq-well-ordered,
     the set of decreasing sequences of constant sequences $(X^*_=)^*_lexgt$ is also well-ordered.
-    Now, #link(label("order isomorphic transfers well-order"))[by this proposition] all we need to do is construct an order ismorphism from $(X^*_=)^*_lexgt$ to $X^*_>=$ to prove that $X^*_>=$ is a well-ordered set.
+    Now, by @prop:order-isomorphism-transfers-well-order all we need to do is construct an order ismorphism from $(X^*_=)^*_lexgt$ to $X^*_>=$ to prove that $X^*_>=$ is a well-ordered set.
 
     Let $y_i$ denote constant sequences in $X^*_=$. We can construct an isomorphism $f: (X^*_=)^*_lexgt arrow.r.bar X^*_>=$:
 

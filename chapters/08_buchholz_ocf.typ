@@ -17,7 +17,7 @@ $
 $
 
 
-#definition(name: [*_Buchholz's $psi$ function_*])[
+#definition[Buchholz's $psi$ function][
   Let $Omega_nu$ be defined as such:
   $
       Omega_nu := cases(
@@ -83,10 +83,10 @@ In fact, we can generalize this and show that:
 == Properties
 
 Before we continue further, let's look at some properties about this function.
-Let's first introduce the concept of an *additively principal* ordinal:
+Let's first introduce the concept of an #keyword[additively principal] ordinal:
 
 #definition[
-    An *additively principal* ordinal $alpha$ is any non-zero ordinal such that for any $beta, gamma < alpha$, $beta + gamma < alpha$.
+    An #keyword[additively principal] ordinal $alpha$ is any non-zero ordinal such that for any $beta, gamma < alpha$, $beta + gamma < alpha$.
 
     We denote the _class_ of all additively principal numbers as $P$. $P$ is precisely all ordinals of the form $omega^xi$, where $xi$ is some ordinal.
 
@@ -529,9 +529,9 @@ because $Omega^2 = 1 + Omega^2 = psi_1(Omega) in C_0(Omega^2)$
         So $psi_0(psi_1(psi_2(Omega_3))) = psi_0(psi_1(Omega_3))$ are both not normal form.
 ]
 
-Before we go into the fundamental sequences of $psi$, we first introduce a concept known as *cofinality*:
+Before we go into the fundamental sequences of $psi$, we first introduce a concept known as #keyword[cofinality]:
 #definition[
-  The *cofinality* of an ordinal $alpha$, denoted $cof alpha$, is the *least cardinal number* $kappa$ such that there exists a subset $S subset.eq alpha$ of cardinality $kappa$ where $alpha$ is smallest ordinal strictly greater than every element in $S$.
+  The #keyword[cofinality] of an ordinal $alpha$, denoted $cof alpha$, is the *least cardinal number* $kappa$ such that there exists a subset $S subset.eq alpha$ of cardinality $kappa$ where $alpha$ is smallest ordinal strictly greater than every element in $S$.
 ]
 
 #example[
@@ -559,7 +559,7 @@ Now onto fundamental sequences. A fundamental sequence for an ordinal number $al
 $(alpha[0], alpha[1], ...)$ with length $beta$ and limit $alpha$ (i.e. $alpha = sup{alpha[eta] | eta < beta}$)
 
 
-#definition(name: [_*System of fundamental sequences for $psi$*_])[
+#definition[System of fundamental sequences for $psi$][
     For ordinals $alpha<=TFBO$ (expressed in normal form), the $eta^"th"$ term of the fundamental sequence of $alpha$, $alpha[eta]$ is defined as such:
     + If $alpha = psi_k_1 (alpha_1) + ... + psi_k_n (alpha_n)$, then $cof(alpha) = cof(psi_k_n (alpha_n))$, and
         $alpha[eta] = psi_k_1 (alpha_1) + ... + (psi_k_n (alpha_n)[eta])$

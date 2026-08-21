@@ -1,11 +1,11 @@
-#import "@preview/beautiframe:0.1.0": *
+#import "scholia/lib.typ": *
 #let warning(content) = remark(content)
-#let proof(name: none, content) = corollary(content, number: "", name: name)
+// #let proof(name: none, content) = corollary(content, number: "", name: name)
 
 
 // trees
 #import "@preview/cetz:0.4.2"
-#import "@preview/mannot:0.3.2": mark, annot, annot-cetz
+#import "@preview/mannot:0.3.2": annot, annot-cetz, mark
 #import "@preview/fletcher:0.5.8": diagram, edge, node
 #import "@preview/tdtr:0.5.5": *
 #import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-point-from
@@ -22,14 +22,14 @@
         red: (fill: red),
         blue: (fill: blue),
       ),
-      default: (fill: black),
+      default: (fill: white),
     ),
     tidy-tree-draws.label-match-draw-node.with(
       matches: (
         red: (fill: red),
         blue: (fill: blue),
       ),
-      default: (fill: black),
+      default: (fill: white),
     ),
     ((label,)) => (label: text(color.white)[#label], stroke: none),
   ),
@@ -38,7 +38,7 @@
       matches: (
         red: (stroke: red + 0.6pt),
       ),
-      default: (stroke: black + 0.6pt)
+      default: (stroke: white + 0.6pt),
     ),
     // tidy-tree-draws.label-match-draw-edge.with(
     //   matches: (
@@ -52,21 +52,23 @@
 )
 // tree with text
 #let text-tree-graph = tidy-tree-graph.with(
-    draw-node: (
-        tidy-tree-draws.label-match-draw-node.with(
-          matches: (
-            red: (fill: red),
-            blue: (fill: blue),
-            black: (fill: black),
-          ),
+  draw-node: (
+    tidy-tree-draws.label-match-draw-node.with(
+      matches: (
+        red: (fill: red),
+        blue: (fill: blue),
+        black: (fill: white),
       ),
     ),
-    draw-edge: (
-        (.., edge-label) => if edge-label != none { (label: text(green)[#edge-label]) },
-        (marks: "-", stroke: .5pt),
-    ),
-    spacing: (1pt, 25pt),
-    node-inset: 6pt,
+  ),
+  draw-edge: (
+    (.., edge-label) => if edge-label != none {
+      (label: text(green)[#edge-label])
+    },
+    (marks: "-", stroke: .5pt),
+  ),
+  spacing: (1pt, 25pt),
+  node-inset: 6pt,
 )
 
 
@@ -104,7 +106,7 @@
 // #let red = color.rgb("#f85552")
 // #let orange = color.rgb("#f78205")
 // #let green = color.rgb("#00B600")
-#let lightblue = color.rgb("#90D5FF")
+// #let lightblue = color.rgb("#90D5FF")
 // #let blue = color.rgb("#0000ff")
 // #let purple = color.rgb("#a854c1")
 #let lilac = color.rgb("#d69dff")
@@ -124,17 +126,30 @@
 #let lilacf(content) = text(content, fill: lilac)
 #let grayf(content) = text(content, fill: gray)
 #let blackf(content) = text(content, fill: black)
-#let rainbowf(content) = text(content, fill: gradient.linear(..color.map.rainbow))
+#let rainbowf(content) = text(content, fill: gradient.linear(
+  ..color.map.rainbow,
+))
 
 // alignment
-#let hbox(..items) = [
-  #set align(center)
+#let hbox(..items, alignment: center) = [
+  #set align(alignment)
   #box[
     #set align(horizon)
     #stack(
       dir: ltr,
       spacing: 1em,
-      ..items
+      ..items,
+    )
+  ]
+]
+#let vbox(..items, alignment: center) = [
+  #set align(alignment)
+  #box[
+    #set align(horizon)
+    #stack(
+      dir: ttb,
+      spacing: 1em,
+      ..items,
     )
   ]
 ]
@@ -171,15 +186,20 @@
 #let zero = $fira(0)$
 #let plus = $fira(+)$
 #let wpow(content) = $fira(omega)^#content$
-#let OT = "OT" // set of all ordinal terms
+#let OT = $O T$ // set of all ordinal terms
 // BOCF Ordinal notations
 #let PT = $P T$ // set of principal terms
 
 
 #let bocf = (a, b) => {
-  return $fira(psi)_#a fira(\() #b fira(\))$
+  // return $fira(psi)_#a fira(\() #b fira(\))$
+  return $D_#a (#b)$
 }
-#let ternary(s,t,u) = $#s fira(in) fira(C)_#t fira(\() #u fira(\))$
+
+#let ternary = (s, t, u) => {
+  // return  $#s fira(in) fira(C)_#t fira(\() #u fira(\))$
+  return  $#s in cal(C)_#t (#u)$
+}
 // #let ternary(s,t,u) = $#s redf(sans(in)) redf(bold(sans(C)))_#t redf(\() #u redf(\))$ // s in C_t(u)
 
 // arrow
@@ -236,7 +256,7 @@
       edges.push(edge((parent_index, -height + 1), direction_string))
     }
   }
-  context{
+  context {
     diagram(
       node-stroke: 1pt + text.fill,
       edge-stroke: 1pt + text.fill,
@@ -248,16 +268,15 @@
       ..args,
     )
   }
-
 }
 
 #let prss = (row, ..args) => {
-    pss(row, row, ..args)
+  pss(row, row, ..args)
 }
 
 
-// yet another tree
-#let tree-from-list(body) = {
+// yet another tree, ripped from the insides of tidy-tree
+#let tree-from-list(body, root: true, spacing: 0.1em, ..args) = {
   let NODE_WIDTH = 1.25em
   let collect-tree(body) = {
     if not body.has("children") {
@@ -298,19 +317,36 @@
     if (indices.len() != 0) {
       ((title: tree.title, indices: indices),)
     }
-    tree.children.enumerate().map(
-      ((i, child)) => flatten-tree(child, indices: indices + (i,))
-    ).flatten()
+    tree
+      .children
+      .enumerate()
+      .map(
+        ((i, child)) => flatten-tree(child, indices: indices + (i,)),
+      )
+      .flatten()
   }
   let tree = flatten-tree(tree)
   // tree
-  let tree = tree.enumerate().map(((i, element)) => {
-    (content: element.title, x: i, y:element.indices.len())
-  })
+  let tree = tree
+    .enumerate()
+    .map(((i, element)) => {
+      (content: element.title, x: i, y: element.indices.len())
+    })
   // return tree
   let nodes = tree.map(element => {
-    node((element.x, -element.y), element.content, width: NODE_WIDTH)
+    node((element.x, -element.y), element.content)
   })
+  if (root) {
+    nodes.push(
+      node(
+        (-1, 0),
+        align(center)[•],
+        width: 1.2em,
+        height: 1.2em,
+        // node-stroke: 1pt,
+      ),
+    )
+  }
   let parent = (tree, height, index) => {
     let results = ()
     for element in tree {
@@ -322,32 +358,44 @@
     return results.at(results.len() - 1)
   }
   let edges = tree.map(element => {
-    if(element.y == 1){
-      let directions = ("r",) * (element.x+1) + ("u",)
+    if (element.y == 1) {
+      if (not root) { return }
+      let directions = ("r",) * (element.x + 1) + ("u",)
       let direction_string = directions.intersperse(",").join("")
       return edge((-1, 0), direction_string)
+    } else {
+      let parent = parent(tree, element.y, element.x)
+      let directions = ("r",) * (element.x - parent.x) + ("u",)
+      let direction_string = directions.intersperse(",").join("")
+      return edge((parent.x, -parent.y), direction_string)
     }
-    let parent = parent(tree, element.y, element.x)
-    let directions = ("r",) * (element.x - parent.x) + ("u",)
-    let direction_string = directions.intersperse(",").join("")
-    return edge((parent.x, -parent.y),direction_string)
   })
   // return nodes
-  context{
+  context {
     diagram(
       // node-stroke: 1pt + text.fill,
       edge-stroke: 1pt + text.fill,
-      spacing: 0.1em,
-      // root node
-      node(
-        (-1,0),
-        [•],
-        width: 1.2em,
-        height: 1.2em
-      ),
+      spacing: spacing,
+      node-inset: 0.4em,
       nodes,
       edges,
-      debug: 3
+      // debug: 3,
+      ..args
     )
   }
+}
+
+// node that encloses other nodes in fletcher
+#let enclosing-node = (enclose, color, content: "", ..args) => {
+  return node(
+    align(top+ left)[#text(content, fill: color)],
+    enclose: enclose,
+    corner-radius: 4pt,
+    inset: 0.2em,
+    stroke: color,
+    fill: color.transparentize(90%),
+    snap: -1,
+    layer: 1,
+    ..args
+  )
 }

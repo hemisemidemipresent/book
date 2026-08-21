@@ -107,7 +107,7 @@ In the warning earlier, it specified that we need to specify a system of fundame
 
 Before we define that, let's first have a standard way to express ordinals $<=e0$:
 
-#theorem(name: [*_Cantor Normal Form_*])[
+#theorem[Cantor Normal Form][
   For every ordinal $alpha$ there is a unique sequence of ordinals $alpha_0 >= alpha_1 >= ... >= alpha_n$ such that
   $
   alpha = omega^(alpha_0) + omega^(alpha_1) + ... + omega^(alpha_n)

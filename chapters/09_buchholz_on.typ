@@ -64,7 +64,7 @@ $OT$ here reprsents all ordinal notations that recursively satisfy the normal fo
 
 
 From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showed that:
-#theorem(name: [_*Correspondence of Ordinal Notation with Buchholz's OCF*_])[
+#theorem[Correspondence of Ordinal Notation with Buchholz's OCF][
   The set ${a in OT | a prec bocf(1, zero) }$ under $prec$ is :
   - order isomorphic to $(C_0(#E),in)$
   - a well-ordered set
@@ -72,17 +72,18 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
 
   Additionally, for every ordinal notation $a prec bocf(1, zero)$, the ordinal $o(a)$ is the order type of the set ${x in OT | x prec a}$ under $prec$.
 ]
-[WIP: His proofs is not that long, maybe we can break it down here? Maybe move it to an appendix or something]
+#proof[WIP: His proofs is not that long, maybe we can break it down here? Maybe move it to an appendix or something]
 
 // Note that Buchholz used $D_nu a$ instead of our red $bocf(nu, a)$, $\#$ instead of our #plus,
 // and he uses $G_nu (b)$ is somewhat analogous to $C_nu (b)$.
 
 #[
-  #let dom(content) = $fuchsiaf(fira(cof \())content fuchsiaf(fira(\)))$
+  // #let dom(content) = $fuchsiaf(fira(cof \())content fuchsiaf(fira(\)))$
+  #let dom(content) = $fuchsiaf("dom"\() content fuchsiaf(\))$
 
   Now just like how the fundamental sequence of an ordinal $alpha[n] < alpha$, we can similarly define a fundamental sequence $a[n]$ for each ordinal notation $a$,
   where $a[n] prec a$. This requires defining a computable version of _cofinality_ (denoted $"dom"$ in Buchholz's paper)
-  #definition[
+  #definition[Computable Cofinality and Fundamental Sequences][
     We will define "cofinality" $dom(zws)$ of each ordinal notation term, and the fundamental sequence of an ordinal notation term $t[z]$.
     This is essentially a 1-to-1 copy of the fundamental sequence rules, except that since we are dealing with finite strings, they are recursive and computable.
 
@@ -188,132 +189,86 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
   + If $a$ has label 0, we proceed as in Kirby-Paris' game. Call the node's parent $b$, and its grandparent $c$ (if it exists).
     First we delete $a$. If $c$ exists (i.e. $b$ is not the root), we make $n$ copies of $b$ and all its children and attach them to $c$:
 
-
-    #align(center + horizon)[#stack(
-      dir: ltr,
-      spacing: 1em,
-      buchholz-hydra[
-        - $c$ #node-attr(rotate: -180deg)
-          + #metadata("red")
-          - $b$ <red>
-            - $0$ <blue>
-            + #metadata("red")
-            - $...$ <red>
+    #hbox(
+      tree-from-list(root: false)[
+        - $c$
+          - $b$
+            - $...$
+            - $0$
       ],
       $xarrow(#h(3em) n=3 #h(3em))$,
-      buchholz-hydra[
-        - $c$ #node-attr(rotate: -180deg)
-          + #metadata("red")
-          - $b$ <red>
-            + #metadata("red")
-            - $...$ <red>
-          + #metadata("red")
-          - $b$ <red>
-            + #metadata("red")
-            - $...$ <red>
-          + #metadata("red")
-          - $b$ <red>
-            + #metadata("red")
-            - $...$ <red>
+      tree-from-list(root: false)[
+        - $c$
+          - $b$
+            - $...$
+          - $b$
+            - $...$
+          - $b$
+            - $...$
       ],
-    )]
+    )
+
   + If $a$ has label $u+1$, we go down the tree looking for a node $b$ whose label is $v <= u$:
 
-    #figure(
-      buchholz-hydra[
-        - $+$ #node-attr(rotate: -180deg)
-          - #zws
-            - $b = v <= u$ <red>
-              + #metadata("red")
-              - #zws <red>
-                + #metadata("red")
-                - $u+1$ <blue>
-                + #metadata("red")
-                - $...$ <red>
-              + #metadata("red")
-              - $...$ <red>
-            - $...$
-          - $...$
+    #hbox(
+      tree-from-list[
+        - $...$
+        - #redf[$v<=u$]
+          - #redf[$...$]
+          - #redf[$...$]
+            - $u+1$
       ],
     )
     Let the subtree rooted in $b$ be called $S$. The nodes highlighted in red (and node $a$ highlighted in blue) make up $S$.
 
     Let's make a copy of $S$ called $S'$, and re-label the $b$ inside $S'$ to $u$.
 
-    #figure(
-      align(center + horizon)[#stack(
-        dir: ltr,
-        // spacing: 1em,
-        buchholz-hydra[
-          - $b = v <= u$ #node-attr(rotate: -180deg) <red>
-            + #metadata("red")
-            - #zws <red>
-              + #metadata("red")
-              - $u+1$ <blue>
-              + #metadata("red")
-              - $...$ <red>
-            + #metadata("red")
-            - $...$ <red>
-        ],
-        $xarrow(#h(4em)) #h(2em)$,
-        buchholz-hydra[
-          - $b' = u$ #node-attr(rotate: -180deg) <orange>
-            + #metadata("orange")
-            - #zws <orange>
-              + #metadata("orange")
-              - $a'$ <blue>
-              + #metadata("orange")
-              - $...$ <orange>
-            + #metadata("orange")
-            - $...$ <orange>
-        ],
-      )],
+    #hbox(
+      tree-from-list(root: false)[
+        - #redf[$v <= u$]
+          - #redf[$...$]
+          - #redf[$...$]
+            - $u+1$
+      ],
+      xarrow(h(3em)),
+      tree-from-list(root: false)[
+        - #orangef[$u$]
+          - #orangef[$...$]
+          - #orangef[$...$]
+            - $a'$
+      ],
     )
     Now let's define the function $S(T)$ that takes in a tree $T$, and replaces $a'$ with $T$
 
-    #box(align(horizon)[
-      #stack(
-        dir: ltr,
-        [For example, if $T$ is ],
-        buchholz-hydra[
-          - 0 #node-attr(rotate: 180deg)
-            - 0
-            - 0
-        ],
-        [then $S(T)$ is ],
-        buchholz-hydra[
-          - $b' = u$ #node-attr(rotate: -180deg) <orange>
-            + #metadata("orange")
-            - #zws <orange>
-              + #metadata("orange")
+    #hbox(
+      alignment: left,
+      [For example, if $T$ is],
+      tree-from-list(root: false)[
+        - $0$
+          - $0$
+          - $0$
+      ],
+      [then $S(T)$ is ],
+      tree-from-list(root: false)[
+        - #orangef[$u$]
+          - #orangef[$...$]
+          - #orangef[$...$]
+            - $0$
               - $0$
-                - $0$
-                - $0$
-              + #metadata("orange")
-              - $...$ <orange>
-            + #metadata("orange")
-            - $...$ <orange>
-        ],
-        [.],
-      )
-    ])
-    #box(align(horizon)[
-      #stack(
-        dir: ltr,
-        [Similarly, if $T$ is the empty tree then $S(T)$ just becomes],
-        buchholz-hydra[
-          - $b' = u$ #node-attr(rotate: -180deg) <orange>
-            + #metadata("orange")
-            - #zws <orange>
-              + #metadata("orange")
-              - $...$ <orange>
-            + #metadata("orange")
-            - $...$ <orange>
-        ],
-        [.],
-      )
-    ])
+              - $0$
+      ],
+    )
 
+
+    #hbox(
+      alignment: left,
+      [Similarly, if $T$ is the empty tree then $S(T)$ just becomes],
+      tree-from-list(root: false)[
+        - #orangef[$u$]
+          - #orangef[$...$]
+          - #orangef[$...$]
+      ],
+    )
 
     When we cut off a head of label $u+1$, we replace it with
     $S^n ("empty tree")$ where $S^n$ denotes function iteration.
@@ -321,77 +276,50 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
 
     An illustration of the whole process with $n=2$ is as such:
 
-    #figure(align(center + horizon)[
-      #set text(size: 8pt)
-      #stack(
-        dir: ltr,
-        // spacing: 1em,
-        buchholz-hydra[
-          - $+$ #node-attr(rotate: -180deg)
-            - #zws
-              - $b = v <= u$ <red>
-                + #metadata("red")
-                - #zws <red>
-                  + #metadata("red")
-                  - $u+1$ <blue>
-                  + #metadata("red")
-                  - $...$ <red>
-                + #metadata("red")
-                - $...$ <red>
-              - $...$
-            - $...$
-        ],
-        $xarrow(#h(4em))$,
-        buchholz-hydra[
-          - $+$ #node-attr(rotate: -180deg)
-            - #zws
-              - $b$ <red>
-                + #metadata("red")
-                - #zws <red>
-                  + #metadata("red")
-                  - $S^2 ("empty tree")$ <blue>
-                  + #metadata("red")
-                  - $...$ <red>
-                + #metadata("red")
-                - $...$ <red>
-              - $...$
-            - $...$
-        ],
-      )])
-
-    Which becomes
-    #figure(
-      buchholz-hydra[
-        - $+$ #node-attr(rotate: -180deg)
-          - #zws
-            - $b = v <= u$ <red>
-              + #metadata("red")
-              - #zws <red>
-                + #metadata("red")
-                - $u$ <blue>
-                  + #metadata("orange")
-                  - #zws <orange>
-                    + #metadata("orange")
-                    - $u$ <blue>
-                      + #metadata("orange")
-                      - #zws <orange>
-                        + #metadata("orange")
-                        - $...$ <orange>
-                      + #metadata("orange")
-                      - $...$ <orange>
-                    + #metadata("orange")
-                    - $...$ <orange>
-                  + #metadata("orange")
-                  - $...$ <orange>
-                + #metadata("red")
-                - $...$ <red>
-              + #metadata("red")
-              - $...$ <red>
-            - $...$
+    #hbox(
+      tree-from-list(
+        [
           - $...$
-      ],
+            - #redf[$v <= u$]
+              - #redf[$...$]
+              - #redf[$...$]
+                - $u+1$
+        ],
+        enclosing-node(((1, -2), (3, -3)), red),
+      ),
+      xarrow(h(3em)),
+      tree-from-list(
+        [
+          - $...$
+            - #redf[$v <= u$]
+              - #redf[$...$]
+              - #redf[$...$]
+                - $S^2("empty tree")$
+        ],
+        enclosing-node(((1, -2), (3, -3)), red),
+      ),
     )
 
+    #hbox(
+      tree-from-list(
+        [
+          - $...$
+            - #redf[$v <= u$]
+              - #redf[$...$]
+              - #redf[$...$]
+                - $u$
+                  - #orangef[$...$]
+                  - #orangef[$...$]
+                    - $u$
+                      - #orangef[$...$]
+                      - #orangef[$...$]
+        ],
+        enclosing-node(((1, -2), (3, -3)), red),
+        enclosing-node(((4, -4), (6, -5)), orange),
+        enclosing-node(((7, -6), (9, -7)), orange)
+        // debug: 3
+      ),
+    )
 
   + If $a$ has label $omega$, replace the label $omega$ with $n+1$
 
@@ -399,12 +327,34 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
 
 Similarly to the Kirby-Paris Hydra, we can associate each hydra with an ordinal notation term $T$ by the following rules:
 
-+ For each leaf node with a label $u$, we replace it with the ordinal notation $bocf(u, 0)$
++ For each leaf node with a label $u$, we replace it with the ordinal notation $bocf(u, zero)$
+  $
+    o(
+      #box(baseline: 50% - 2.5pt, tree-from-list(root: true)[
+        - $u$
+      ])
+    )
+    --> bocf(u, zero)
+  $
 + For a node with label $u$ with children of ordinal notations $a_0, ..., a_k$, we replace it with the ordinal notation $bocf(u, a_0 plus ... plus a_k)$
+  $
+    o(
+      #box(baseline: 50% - 2.5pt, tree-from-list(root: true)[
+      - $u$
+        - $a_0$
+        - $a_1$
+        - $...$
+        - $a_k$
+      ])
+    ) --> bocf(u, o(a_0) + o(a_1) + ... + o(a_k))
+  $
 + At the root node, the resulting ordinal expressions of each of the root's children $a_0, ..., a_k$ are summed up: $a_0 plus ... plus a_k$
 
 Note that case 2 in the definition above is different from the original definiton that Buchholz gave.
 This difference basically corresponds to the differences in the system of fundamental sequence (Specifically "Rule 6(b)").
+
+
+
 
 Here are some examples of Buchholz's hydra and the associated ordinal notations and ordinals. The hydras have been rotated to save space.
 
@@ -419,141 +369,125 @@ Here are some examples of Buchholz's hydra and the associated ordinal notations 
       [*Associated Ordinal Notation*],
       [*Associated Ordinal*],
     ),
-    buchholz-hydra[
-      - \+
+    tree-from-list[
     ],
     zero,
     $0$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
+    tree-from-list[
+      - 0
     ],
     $bocf(0, zero)$,
     $1$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
-        - 0
+    tree-from-list[
+      - 0
+      - 0
     ],
     $bocf(0, zero) plus bocf(0, zero)$,
     $2$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
-          - 0
+    tree-from-list[
+      - 0
+      - 0
     ],
     $bocf(0, bocf(0, zero))$,
     $omega$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
+    tree-from-list[
+      - 0
         - 0
-        - 0
-          - 0
+      - 0
     ],
     $bocf(0, bocf(0, zero)) plus bocf(0, zero)$,
     $omega+1$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
+    tree-from-list[
+      - 0
         - 0
-          - 0
+      - 0
         - 0
-          - 0
     ],
     $bocf(0, bocf(0, zero)) plus bocf(0, bocf(0, zero))$,
     $omega 2$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
+    tree-from-list[
+      - 0
         - 0
-          - 0
-          - 0
+        - 0
     ],
     $bocf(0, bocf(0, zero) plus bocf(0, zero))$,
     $omega^2$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
+    tree-from-list[
+      - 0
         - 0
           - 0
-            - 0
     ],
     $bocf(0, bocf(0, bocf(0, zero)))$,
     $omega^omega$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
+    tree-from-list[
+      - 0
         - 0
           - 0
             - 0
-              - 0
     ],
     $bocf(0, bocf(0, bocf(0, bocf(0, zero))))$,
     $omega^omega^omega$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
-          - 1
+    tree-from-list[
+      - 0
+        - 1
     ],
     $bocf(0, bocf(1, zero))$,
     $psi_0(Omega) = e0$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
-          - 1
-          - 1
+    tree-from-list[
+      - 0
+        - 1
+        - 1
     ],
     $bocf(0, bocf(1, zero) + bocf(1, zero))$,
     $psi_0(Omega 2) = epsilon_1$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
+    tree-from-list[
+      - 0
+        - 1
           - 1
-            - 1
     ],
     $bocf(0, bocf(1, bocf(1, zero)))$,
     $psi_0(Omega^2) = z0$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
+    tree-from-list[
+      - 0
+        - 1
           - 1
             - 1
-              - 1
     ],
     $bocf(0, bocf(1, bocf(1, bocf(1, zero))))$,
     $psi_0(Omega^Omega) = G0$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
+    tree-from-list[
+      - 0
+        - 1
           - 1
             - 1
               - 1
-                - 1
     ],
     $bocf(0, bocf(1, bocf(1, bocf(1, bocf(1, zero)))))$,
     $psi_0(Omega^Omega^Omega) = LVO$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
-          - 2
+    tree-from-list[
+      - 0
+        - 2
     ],
     $bocf(0, bocf(2, zero))$,
     $psi_0(Omega_2) = "BHO"$,
 
-    buchholz-hydra[
-      - \+ #node-attr(rotate: angle)
-        - 0
-          - $omega$
+    tree-from-list[
+      - 0
+        - $omega$
     ],
     $bocf(0, bocf(omega, zero))$,
     $BO = "BO"$,
@@ -562,9 +496,16 @@ Here are some examples of Buchholz's hydra and the associated ordinal notations 
 
 By restricting Buchholz Hydra to only those corresponding to $OT$ (rather than all of $T$), we can prove the termination of Buchholz Hydras.
 
+=== Standardness
+
+$OT$ is defined as all $bocf(v,a)$ such that $ternary(a,v,a)$ (and $v <= omega$),
+
 === Termination
 
-It is obvious how case 1 would cause termiantion is just Kirby-Paris hydra all over again. The main complication comes from case 2:
+Again, we show that "expansion" of the hydra always decreases the associated ordinal notation.
+
+
+It is obvious how case 1 would cause termination is just Kirby-Paris hydra all over again. The main complication comes from case 2:
 
 #figure[
   #set align(horizon)
@@ -911,17 +852,14 @@ We can prove that $(OT_"HPrSS", lex)$ is order isomorphic to $(BO, in)$ in a sim
 #[
   As we saw earlier in PrSS, $(0,1,2,3,...)$ is equivalent to $omega^omega^dots.up = e0$. Since we now have $(0,2)[n]$ which expands to $(0,1,2,3,...)$,
   we have $(0,2)$ corresponding to $e0$. In fact, we can expand upon this and define larger and larger ordinals:
-  #let one = $fira(redf(Omega)_0)$
-  #let W = $fira(redf(Omega)_1)$
-  #let W_2 = $fira(redf(Omega)_2)$
-  #let W_3 = $fira(redf(Omega)_3)$
-  We denote $fira(redf(Omega)_v)$ as $bocf(v, zero)$ for brevity.
+
+  We denote $W_v$ as $bocf(v, zero)$ for brevity.
 
   #table(
     columns: (auto, auto, auto),
     table.header([*HPrSS*], [*Ordinal Notation*], [*Ordinal*]),
     $()$, $zero$, $0$,
-    $(0)$, $bocf(0, zero) = one$, $1$,
+    $(0)$, $bocf(0, zero) = W_0$, $1$,
     $(0,0)$, $bocf(0, zero) plus bocf(0, zero)$, $2$,
     $(0,1)$, $bocf(0, bocf(0, zero))$, $omega$,
     $(0,1,2)$, $bocf(0, bocf(0, bocf(0, zero)))$, $omega^omega$,
@@ -929,38 +867,56 @@ We can prove that $(OT_"HPrSS", lex)$ is order isomorphic to $(BO, in)$ in a sim
     $bocf(0, bocf(0, bocf(0, bocf(0, zero))))$,
     $omega^omega^omega$,
 
-    $(0,2)$, $bocf(0, #W)$, $e0$,
-    $(0,2,1)$, $bocf(0, #W plus bocf(0, zero))$, $e0 dot omega$,
+    $(0,2)$, $bocf(0, W_1)$, $e0$,
+    $(0,2,1)$, $bocf(0, W_1 plus bocf(0, zero))$, $e0 dot omega$,
     $(0,2,1,2)$,
-    $bocf(0, #W plus bocf(0, bocf(0, zero)))$,
+    $bocf(0, W_1 plus bocf(0, bocf(0, zero)))$,
     $e0 dot omega^omega$,
 
     $(0,2,1,2,3)$,
-    $bocf(0, #W plus bocf(0, bocf(0, bocf(0, zero))))$,
+    $bocf(0, W_1 plus bocf(0, bocf(0, bocf(0, zero))))$,
     $e0 dot omega^omega^omega$,
 
-    $(0,2,1,3)$, $bocf(0, #W plus bocf(0, #W))$, $e0^2$,
-    $(0,2,1,3,2,4)$, $bocf(0, #W plus bocf(0, #W plus bocf(0, #W)))$, $e0^e0$,
-    $(0,2,2)$, $bocf(0, #W plus #W)$, $epsilon_1$,
+    $(0,2,1,3)$, $bocf(0, W_1 plus bocf(0, W_1))$, $e0^2$,
+    $(0,2,1,3,2,4)$, $bocf(0, W_1 plus bocf(0, W_1 plus bocf(0, W_1)))$, $e0^e0$,
+    $(0,2,2)$, $bocf(0, W_1 plus W_1)$, $epsilon_1$,
 
-    $(0,2,2,2)$, $bocf(0, #W plus #W plus #W)$, $epsilon_2$,
-    $(0,2,3)$, $bocf(0, bocf(1, one))$, $psi_0(Omega dot omega) = epsilon_omega$,
-    $(0,2,3,5)$, $bocf(0, bocf(1, bocf(0, #W)))$, $psi_0(Omega dot psi_0(Omega)) = epsilon_e0$,
-    $(0,2,4)$, $bocf(0, bocf(1, #W))$,$psi_0(Omega^2) = z0$,
-    $(0,2,4,4)$, $bocf(0,bocf(1, #W + #W))$, $psi_0(Omega^3) = eta_0 = phi(3,0)$,
-    $(0,2,4,5)$, $bocf(0,bocf(1,bocf(1,one)))$, $psi_0(Omega^omega) = phi(omega,0)$,
-    $(0,2,4,5,7)$, $bocf(0,bocf(1,bocf(1,bocf(0,#W))))$, $psi_0(Omega^(psi_0(Omega))) = psi_0(Omega^e0) = phi(e0,0)$,
-    $(0,2,4,6)$, $bocf(0,bocf(1,bocf(1,#W)))$, $psi_0(Omega^Omega) = G0$,
-    $(0,2,4,6,8)$, $bocf(0,bocf(1,bocf(1,bocf(1,#W))))$, $psi_0(Omega^Omega^Omega) = LVO$,
-    $(0,3)$, $bocf(0, #W_2)$, $psi_0(Omega_2) = BHO = "BHO"$,
-    $(0,3,1)$, $bocf(0, #W_2 plus one)$, $psi_0(Omega_2 + 1) = BHO dot omega$,
-    $(0,3,2)$, $bocf(0, #W_2 plus #W)$, $psi_0(Omega_2 + Omega)$,
-    $(0,3,3)$, $bocf(0, #W_2 plus #W_2)$, $psi_0(Omega_2 dot 2)$,
-    $(0,3,4)$, $bocf(0, bocf(2, one))$, $psi_0(Omega_2 dot omega)$,
-    $(0,3,5)$, $bocf(0, bocf(2, #W))$, $psi_0(Omega_2 dot Omega)$,
-    $(0,3,6)$, $bocf(0, bocf(2, #W_2))$, $psi_0(Omega_2^2)$,
-    $(0,4)$, $bocf(0, #W_3)$, $psi_0(Omega_3)$,
-    $(0,n+1)$, $bocf(0, fira(redf(Omega)_n))$, $psi_0(Omega_n)$
+    $(0,2,2,2)$, $bocf(0, W_1 plus W_1 plus W_1)$, $epsilon_2$,
+    $(0,2,3)$,
+    $bocf(0, bocf(1, W_0))$,
+    $psi_0(Omega dot omega) = epsilon_omega$,
+
+    $(0,2,3,5)$,
+    $bocf(0, bocf(1, bocf(0, W_1)))$,
+    $psi_0(Omega dot psi_0(Omega)) = epsilon_e0$,
+
+    $(0,2,4)$, $bocf(0, bocf(1, W_1))$, $psi_0(Omega^2) = z0$,
+    $(0,2,4,4)$,
+    $bocf(0, bocf(1, W_1 plus W_1))$,
+    $psi_0(Omega^3) = eta_0 = phi(3, 0)$,
+
+    $(0,2,4,5)$,
+    $bocf(0, bocf(1, bocf(1, W_0)))$,
+    $psi_0(Omega^omega) = phi(omega, 0)$,
+
+    $(0,2,4,5,7)$,
+    $bocf(0, bocf(1, bocf(1, bocf(0, W_1))))$,
+    $psi_0(Omega^(psi_0(Omega))) = psi_0(Omega^e0) = phi(e0, 0)$,
+
+    $(0,2,4,6)$, $bocf(0, bocf(1, bocf(1, W_1)))$, $psi_0(Omega^Omega) = G0$,
+    $(0,2,4,6,8)$,
+    $bocf(0, bocf(1, bocf(1, bocf(1, W_1))))$,
+    $psi_0(Omega^Omega^Omega) = LVO$,
+
+    $(0,3)$, $bocf(0, W_2)$, $psi_0(Omega_2) = BHO = "BHO"$,
+    $(0,3,1)$, $bocf(0, W_2 plus W_0)$, $psi_0(Omega_2 + 1) = BHO dot omega$,
+    $(0,3,2)$, $bocf(0, W_2 plus W_1)$, $psi_0(Omega_2 + Omega)$,
+    $(0,3,3)$, $bocf(0, W_2 plus W_2)$, $psi_0(Omega_2 dot 2)$,
+    $(0,3,4)$, $bocf(0, bocf(2, W_0))$, $psi_0(Omega_2 dot omega)$,
+    $(0,3,5)$, $bocf(0, bocf(2, W))$, $psi_0(Omega_2 dot Omega)$,
+    $(0,3,6)$, $bocf(0, bocf(2, W_2))$, $psi_0(Omega_2^2)$,
+    $(0,4)$, $bocf(0, W_3)$, $psi_0(Omega_3)$,
+    $(0,n+1)$, $bocf(0, W_n)$, $psi_0(Omega_n)$,
   )
 ]
 === Growth rate
@@ -1357,18 +1313,18 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
       dir: ltr,
       spacing: 2em,
       $
-        mat(0,1,2,3,2;0,1,1,1,0)
+        mat(0, 1, 2, 3, 2; 0, 1, 1, 1, 0)
       $,
       $arrow.r.long$,
       [
         #set text(size: 8pt)
-        #pss((0,1,2,3,2),(0,1,1,1,0))
-      ]
+        #pss((0, 1, 2, 3, 2), (0, 1, 1, 1, 0))
+      ],
     )
   ]
-  Now if we were to interpret it as a Buchholz Hydra, we get $bocf(0,bocf(1,bocf(1,bocf(1,zero)) plus bocf(0,zero)))$,
+  Now if we were to interpret it as a Buchholz Hydra, we get $bocf(0, bocf(1, bocf(1, bocf(1, zero)) plus bocf(0, zero)))$,
   which suggests it corresponds to the ordinal $psi_0(Omega^Omega dot omega) = Gamma_omega$.
-  This method will produce standard-form ordinal notation for notations less than $bocf(0,bocf(2,zero)) ~ "BHO"$
+  This method will produce standard-form ordinal notation for notations less than $bocf(0, bocf(2, zero)) ~ "BHO"$
 
   #let smoltext(content) = [
     #set text(size: 8pt)
@@ -1389,136 +1345,166 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
       $
         mat(0, 1; 0, 1)
       $,
-      smoltext(pss((0,1),(0,1))),$bocf(0,bocf(1,zero))$,$psi_0(Omega) = e0$,
+      smoltext(pss((0, 1), (0, 1))),
+      $bocf(0, bocf(1, zero))$,
+      $psi_0(Omega) = e0$,
+
       $
         mat(0, 1, 0, 1; 0, 1, 0, 1)
       $,
-      smoltext(pss((0,1,0,1),(0,1,0,1))),$bocf(0,bocf(1,zero)) plus bocf(0,bocf(1,zero))$,$psi_0(Omega) dot 2 = e0 dot 2$,
-      $
-        mat(0,1,1; 0,1,0)
-      $,
-      smoltext(pss((0,1,1),(0,1,0))),$bocf(0,bocf(1,zero) plus bocf(0,zero))$,$psi_0(Omega+1) = e0 dot omega$,
-
+      smoltext(pss((0, 1, 0, 1), (0, 1, 0, 1))),
+      $bocf(0, bocf(1, zero)) plus bocf(0, bocf(1, zero))$,
+      $psi_0(Omega) dot 2 = e0 dot 2$,
 
       $
-        mat(0,1,1,2; 0,1,0,1)
+        mat(0, 1, 1; 0, 1, 0)
       $,
-      smoltext(pss((0,1,1,2),(0,1,0,1))),$bocf(0,bocf(1,zero) plus bocf(0,bocf(1,zero)))$,$psi_0(Omega + psi_0(Omega)) = e0^2$,
+      smoltext(pss((0, 1, 1), (0, 1, 0))),
+      $bocf(0, bocf(1, zero) plus bocf(0, zero))$,
+      $psi_0(Omega+1) = e0 dot omega$,
 
       $
-        mat(0,1,1,2,2,3; 0,1,0,1,0,1)
+        mat(0, 1, 1, 2; 0, 1, 0, 1)
       $,
-      smoltext(pss((0,1,1,2,2,3),(0,1,0,1,0,1))),$bocf(0,bocf(1,zero) plus bocf(0,bocf(1,zero)))$,$psi_0(Omega + psi_0(Omega)) = e0^e0$,
+      smoltext(pss((0, 1, 1, 2), (0, 1, 0, 1))),
+      $bocf(0, bocf(1, zero) plus bocf(0, bocf(1, zero)))$,
+      $psi_0(Omega + psi_0(Omega)) = e0^2$,
 
       $
-        mat(0,1,1;0,1,1)
+        mat(0, 1, 1, 2, 2, 3; 0, 1, 0, 1, 0, 1)
       $,
-      smoltext(pss((0,1,1),(0,1,1))),$bocf(0,bocf(1,zero) plus bocf(1,zero))$,$psi_0(Omega 2) = epsilon_1$,
+      smoltext(pss((0, 1, 1, 2, 2, 3), (0, 1, 0, 1, 0, 1))),
+      $bocf(0, bocf(1, zero) plus bocf(0, bocf(1, zero)))$,
+      $psi_0(Omega + psi_0(Omega)) = e0^e0$,
 
       $
-        mat(0,1,1,1;0,1,1,1)
+        mat(0, 1, 1; 0, 1, 1)
       $,
-      smoltext(pss((0,1,1,1),(0,1,1,1))),$bocf(0,bocf(1,zero) dot 3)$,$psi_0(Omega 3) = epsilon_2$,
+      smoltext(pss((0, 1, 1), (0, 1, 1))),
+      $bocf(0, bocf(1, zero) plus bocf(1, zero))$,
+      $psi_0(Omega 2) = epsilon_1$,
 
       $
-        mat(0,1,2;0,1,0)
+        mat(0, 1, 1, 1; 0, 1, 1, 1)
       $,
-      smoltext(pss((0,1,2),(0,1,0))),$bocf(0,bocf(1,bocf(0,zero)))$,$psi_0(Omega dot omega) = epsilon_omega$,
+      smoltext(pss((0, 1, 1, 1), (0, 1, 1, 1))),
+      $bocf(0, bocf(1, zero) dot 3)$,
+      $psi_0(Omega 3) = epsilon_2$,
 
       $
-        mat(0,1,2,3;0,1,0,1)
+        mat(0, 1, 2; 0, 1, 0)
       $,
-      smoltext(pss((0,1,2,3),(0,1,0,1))),$bocf(0,bocf(1,bocf(0,bocf(1,zero))))$,$psi_0(Omega dot psi_0(Omega)) = epsilon_e0$,
+      smoltext(pss((0, 1, 2), (0, 1, 0))),
+      $bocf(0, bocf(1, bocf(0, zero)))$,
+      $psi_0(Omega dot omega) = epsilon_omega$,
 
       $
-        mat(0,1,2,3,4,5;0,1,0,1,0,1)
+        mat(0, 1, 2, 3; 0, 1, 0, 1)
       $,
-      smoltext(pss((0,1,2,3,4,5),(0,1,0,1,0,1))),
-      smoltext($bocf(0,bocf(1,bocf(0,bocf(1,bocf(0,bocf(1,zero))))))$),
-      smoltext($psi_0(Omega dot psi_0(Omega dot psi_0(Omega))) = epsilon_epsilon_e0$),
+      smoltext(pss((0, 1, 2, 3), (0, 1, 0, 1))),
+      $bocf(0, bocf(1, bocf(0, bocf(1, zero))))$,
+      $psi_0(Omega dot psi_0(Omega)) = epsilon_e0$,
 
       $
-        mat(0,1,2;0,1,1)
+        mat(0, 1, 2, 3, 4, 5; 0, 1, 0, 1, 0, 1)
       $,
-      smoltext(pss((0,1,2),(0,1,1))), $bocf(0,bocf(1,bocf(1,zero)))$, $psi_0(Omega^2) = z0$,
+      smoltext(pss((0, 1, 2, 3, 4, 5), (0, 1, 0, 1, 0, 1))),
+      smoltext($bocf(0, bocf(1, bocf(0, bocf(1, bocf(0, bocf(1, zero))))))$),
+      smoltext(
+        $psi_0(Omega dot psi_0(Omega dot psi_0(Omega))) = epsilon_epsilon_e0$,
+      ),
 
       $
-        mat(0,1,2,1;0,1,1,1)
+        mat(0, 1, 2; 0, 1, 1)
       $,
-      smoltext(pss((0,1,2,1),(0,1,1,1))), $bocf(0,bocf(1,bocf(1,zero)) plus bocf(1,zero))$, $psi_0(Omega^2 + Omega) = epsilon_(z0+1)$,
+      smoltext(pss((0, 1, 2), (0, 1, 1))),
+      $bocf(0, bocf(1, bocf(1, zero)))$,
+      $psi_0(Omega^2) = z0$,
 
       $
-        mat(0,1,2,1,2;0,1,1,1,1)
+        mat(0, 1, 2, 1; 0, 1, 1, 1)
       $,
-      smoltext(pss((0,1,2,1,2),(0,1,1,1,1))), $bocf(0,bocf(1,bocf(1,zero)) dot 2)$, $psi_0(Omega^2 dot 2) = zeta_1$,
+      smoltext(pss((0, 1, 2, 1), (0, 1, 1, 1))),
+      $bocf(0, bocf(1, bocf(1, zero)) plus bocf(1, zero))$,
+      $psi_0(Omega^2 + Omega) = epsilon_(z0+1)$,
 
       $
-        mat(0,1,2,2,3,4;0,1,1,0,1,1)
+        mat(0, 1, 2, 1, 2; 0, 1, 1, 1, 1)
       $,
-      smoltext(pss((0,1,2,2,3,4),(0,1,1,0,1,1))),
-      smoltext($bocf(0,bocf(1,bocf(1,zero) plus bocf(0,bocf(1,bocf(1,zero)))))$),
+      smoltext(pss((0, 1, 2, 1, 2), (0, 1, 1, 1, 1))),
+      $bocf(0, bocf(1, bocf(1, zero)) dot 2)$,
+      $psi_0(Omega^2 dot 2) = zeta_1$,
+
+      $
+        mat(0, 1, 2, 2, 3, 4; 0, 1, 1, 0, 1, 1)
+      $,
+      smoltext(pss((0, 1, 2, 2, 3, 4), (0, 1, 1, 0, 1, 1))),
+      smoltext(
+        $bocf(0, bocf(1, bocf(1, zero) plus bocf(0, bocf(1, bocf(1, zero)))))$,
+      ),
       smoltext($psi_0(Omega^2 dot psi_0(Omega^2)) = zeta_z0$),
 
       $
-        mat(0,1,2,2;0,1,1,1)
+        mat(0, 1, 2, 2; 0, 1, 1, 1)
       $,
-      smoltext(pss((0,1,2,2),(0,1,1,1))),
-      smoltext($bocf(0,bocf(1,bocf(1,zero)+bocf(1,zero)))$),
+      smoltext(pss((0, 1, 2, 2), (0, 1, 1, 1))),
+      smoltext($bocf(0, bocf(1, bocf(1, zero)+bocf(1, zero)))$),
       $
-        psi_0(Omega^3)  &= phi(3,0) \ &= eta_0
+        psi_0(Omega^3) & = phi(3, 0) \
+                       & = eta_0
       $,
 
       $
-        mat(0,1,2,2,2;0,1,1,1,1)
+        mat(0, 1, 2, 2, 2; 0, 1, 1, 1, 1)
       $,
-      smoltext(pss((0,1,2,2,2),(0,1,1,1,1))),
-      $bocf(0,bocf(1,bocf(1,zero) dot 3))$,
-      $psi_0(Omega^4) = phi(4,0)$,
+      smoltext(pss((0, 1, 2, 2, 2), (0, 1, 1, 1, 1))),
+      $bocf(0, bocf(1, bocf(1, zero) dot 3))$,
+      $psi_0(Omega^4) = phi(4, 0)$,
 
       $
-        mat(0,1,2,3;0,1,1,0)
+        mat(0, 1, 2, 3; 0, 1, 1, 0)
       $,
-      smoltext(pss((0,1,2,3),(0,1,1,0))),
-      $bocf(0,bocf(1,bocf(1,bocf(0,zero))))$,
-      $psi_0(Omega^omega) = phi(omega,0)$,
+      smoltext(pss((0, 1, 2, 3), (0, 1, 1, 0))),
+      $bocf(0, bocf(1, bocf(1, bocf(0, zero))))$,
+      $psi_0(Omega^omega) = phi(omega, 0)$,
 
       $
-        mat(0,1,2,3,4;0,1,1,0,1)
+        mat(0, 1, 2, 3, 4; 0, 1, 1, 0, 1)
       $,
-      smoltext(pss((0,1,2,3,4),(0,1,1,0,1))),
-      $bocf(0,bocf(1,bocf(1,bocf(0,bocf(1,zero)))))$,
+      smoltext(pss((0, 1, 2, 3, 4), (0, 1, 1, 0, 1))),
+      $bocf(0, bocf(1, bocf(1, bocf(0, bocf(1, zero)))))$,
       $
-        psi_0(Omega^(psi_0(Omega)))\ = phi(e0,0)
-      $,
-
-      $
-        mat(0,1,2,3,4,5;0,1,1,0,1,1)
-      $,
-      smoltext(pss((0,1,2,3,4,5),(0,1,1,0,1,1))),
-      smoltext($bocf(0,bocf(1,bocf(1,bocf(0,bocf(1,bocf(1,zero))))))$),
-      $
-        psi_0(Omega^(psi_0(Omega^2)))\ = phi(z0,0)
+        psi_0(Omega^(psi_0(Omega)))\ = phi(e0, 0)
       $,
 
       $
-        mat(0,1,2,3;0,1,1,1)
+        mat(0, 1, 2, 3, 4, 5; 0, 1, 1, 0, 1, 1)
       $,
-      smoltext(pss((0,1,2,3),(0,1,1,1))),
-      $bocf(0,bocf(1,bocf(1,bocf(1,zero))))$,
+      smoltext(pss((0, 1, 2, 3, 4, 5), (0, 1, 1, 0, 1, 1))),
+      smoltext($bocf(0, bocf(1, bocf(1, bocf(0, bocf(1, bocf(1, zero))))))$),
+      $
+        psi_0(Omega^(psi_0(Omega^2)))\ = phi(z0, 0)
+      $,
+
+      $
+        mat(0, 1, 2, 3; 0, 1, 1, 1)
+      $,
+      smoltext(pss((0, 1, 2, 3), (0, 1, 1, 1))),
+      $bocf(0, bocf(1, bocf(1, bocf(1, zero))))$,
       $psi_0(Omega^Omega) = G0$,
 
       $
-        mat(0,1,2,3,4;0,1,1,1,0)
+        mat(0, 1, 2, 3, 4; 0, 1, 1, 1, 0)
       $,
-      smoltext(pss((0,1,2,3,4),(0,1,1,1,0))),
-      smoltext($bocf(0,bocf(1,bocf(1,bocf(1,bocf(0,zero)))))$),
+      smoltext(pss((0, 1, 2, 3, 4), (0, 1, 1, 1, 0))),
+      smoltext($bocf(0, bocf(1, bocf(1, bocf(1, bocf(0, zero)))))$),
       $psi_0(Omega^Omega^omega) = "SVO"$,
 
       $
-        mat(0,1,2,3,4;0,1,1,1,1)
+        mat(0, 1, 2, 3, 4; 0, 1, 1, 1, 1)
       $,
-      smoltext(pss((0,1,2,3,4),(0,1,1,1,1))),
-      smoltext($bocf(0,bocf(1,bocf(1,bocf(1,bocf(1,zero)))))$),
+      smoltext(pss((0, 1, 2, 3, 4), (0, 1, 1, 1, 1))),
+      smoltext($bocf(0, bocf(1, bocf(1, bocf(1, bocf(1, zero)))))$),
       $psi_0(Omega^Omega^Omega) = "LVO"$,
     )
   ]
@@ -1526,61 +1512,61 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
   === Standardization
   But the problem begins at the Bachmann-Howard Ordinal. If you think of it as $psi_0(Omega^Omega^dots.up)$, in PSS that translates to:
   $
-    psi_0(Omega) &~ mat(0,1;0,1)\
-    psi_0(Omega^2) &~ mat(0,1,2;0,1,1)\
-    psi_0(Omega^Omega) &~ mat(0,1,2,3;0,1,1,1)\
-    psi_0(Omega^Omega^Omega) &~ mat(0,1,2,3,4;0,1,1,1,1)\
-    psi_0(Omega^Omega^dots.up) &~ mat(0,1,2,3,4,...;0,1,1,1,1,...)
+                  psi_0(Omega) & ~ mat(0, 1; 0, 1) \
+                psi_0(Omega^2) & ~ mat(0, 1, 2; 0, 1, 1) \
+            psi_0(Omega^Omega) & ~ mat(0, 1, 2, 3; 0, 1, 1, 1) \
+      psi_0(Omega^Omega^Omega) & ~ mat(0, 1, 2, 3, 4; 0, 1, 1, 1, 1) \
+    psi_0(Omega^Omega^dots.up) & ~ mat(0, 1, 2, 3, 4, ...; 0, 1, 1, 1, 1, ...)
   $
-  So we need a matrix with good root $G=mat(0;0)$, base bad root $B=mat(1;0)$, ascension $Delta=mat(1;0)$, which leads us to:
+  So we need a matrix with good root $G=mat(0; 0)$, base bad root $B=mat(1; 0)$, ascension $Delta=mat(1; 0)$, which leads us to:
   $
-    "BHO" ~ mat(0,1,2;0,1,2) ~ psi_0(psi_1(psi_2(0)))
+    "BHO" ~ mat(0, 1, 2; 0, 1, 2) ~ psi_0(psi_1(psi_2(0)))
   $
   which as we have already seen is non-standard.
 
   The standardization algorithm is as such:
-  - Find the innermost non-standard term $fira(bocf(v,bocf(v+1,a_0+...+a_k)))$, such that $fira(bocf(v+1,a_0+...+a_k) in.not C_v (bocf(v+1,a_0 plus ... plus a_k)))$
-  - Collect all terms $fira(a_0\,...\,a_i >= Omega_(v+2))$ (There will be such terms because otherwise it would be standard form)
-    - If all terms $fira(a_0\,...\,a_k >= Omega_(v+2))$, then replace
+  - Find the innermost non-standard term $bocf(v, bocf(v+1, a_0+...+a_k))$, such that $bocf(v+1, a_0+...+a_k) in.not cal(C)_v (bocf(v+1, a_0 plus ... plus a_k))$
+  - Collect all terms $a_0\,...\,a_i >= W_(v+2)$ (There will be such terms because otherwise it would be standard form)
+    - If all terms $a_0\,...\,a_k >= W_(v+2)$, then replace
       $
-        fira(bocf(v,bocf(v+1,a_0+...+a_k)) -> bocf(v,a_0+...+a_k))
+        bocf(v, bocf(v+1, a_0+...+a_k)) -> bocf(v, a_0+...+a_k)
       $
-    - If only some terms $fira(a_0\,...\,a_i >= Omega_(v+2))$, then replace
+    - If only some terms $a_0\,...\,a_i >= W_(v+2)$, then replace
       $
-        fira(bocf(v,bocf(v+1,a_0+...+a_k)) -> bocf(v,a_0+...+a_i+bocf(v+1,a_0+...+a_k)))
+        bocf(v, bocf(v+1, a_0+...+a_k)) -> bocf(v, a_0+...+a_i+bocf(v+1, a_0+...+a_k))
       $
   #example[
     Standardize the following:
-    + $fira(bocf(0,bocf(1,Omega_2+Omega_1)))$
+    + $bocf(0, bocf(1, W_2+W_1))$
 
-      $fira(bocf(1,Omega_2+Omega_1))$ is standard form since $fira(Omega_2 + Omega_1 in C_1 (Omega_2 + Omega_1))$\
-      $fira(bocf(0,bocf(1,Omega_2+Omega_1)))$ is *not* standard form since $fira( Omega_2+Omega_1 in.not C_0(bocf(1,Omega_2+Omega_1)) )$
-      as $fira(Omega_2 > bocf(1,x))$, so $fira(bocf(1,Omega_2+Omega_1) in.not C_0(bocf(1,Omega_2+Omega_1)))$.
+      $bocf(1, W_2+W_1)$ is standard form since $W_2 + W_1 in C_1 (W_2 + W_1)$\
+      $bocf(0, bocf(1, W_2+W_1))$ is *not* standard form since $W_2+W_1 in.not C_0(bocf(1, W_2+W_1))$
+      as $W_2 > bocf(1, x)$, so $bocf(1, W_2+W_1) in.not C_0(bocf(1, W_2+W_1))$.
 
-      So we have $fira(Omega_2 >= Omega_2)$, while $fira(Omega_1 < Omega_2)$
+      So we have $W_2 >= W_2$, while $W_1 < W_2$
 
-      We convert our term to $fira(bocf(0,Omega_2+bocf(1,Omega_2 + Omega_1)))$
+      We convert our term to $bocf(0, W_2+bocf(1, W_2 + W_1))$
 
-    + $fira(bocf(0,bocf(1,bocf(2,bocf(3,bocf(4,Omega_5) + Omega_4) + bocf(3,bocf(4, Omega_5) + Omega_3) + Omega_2))))$
+    + $bocf(0, bocf(1, bocf(2, bocf(3, bocf(4, W_5) + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))$
 
       Terms highlighted represent the $a$'s that get modified
       $
-        fira(
-          &bocf(0,bocf(1,bocf(2,bocf(3,fuchsiaf(bocf(4,Omega_5)) + Omega_4) + bocf(3,bocf(4, Omega_5) + Omega_3) + Omega_2)))\
-          &bocf(0,bocf(1,bocf(2,bocf(3,fuchsiaf(Omega_5) + Omega_4) + bocf(3,bocf(4, Omega_5) + Omega_3) + Omega_2)))\
-          &bocf(0,bocf(1,bocf(2,tealf(bocf(3,Omega_5 + Omega_4)) + bocf(3,bocf(4, Omega_5) + Omega_3) + Omega_2)))\
-          &bocf(0,bocf(1,bocf(2,tealf(Omega_5 + Omega_4) + bocf(3,bocf(4, Omega_5) + Omega_3) + Omega_2)))\
-          &bocf(0,bocf(1,bocf(2,Omega_5 + Omega_4 + bocf(3,fuchsiaf(bocf(4, Omega_5)) + Omega_3) + Omega_2)))\
-          &bocf(0,bocf(1,bocf(2,Omega_5 + Omega_4 + bocf(3,fuchsiaf(Omega_5) + Omega_3) + Omega_2)))\
-          &bocf(0,bocf(1,tealf(bocf(2,Omega_5 + Omega_4 + bocf(3,Omega_5 + Omega_3) + Omega_2))))\
-          &bocf(0,bocf(1,tealf(Omega_5 + Omega_4 + bocf(3,Omega_5 + Omega_3) + bocf(2,Omega_5 + Omega_4 + bocf(3,Omega_5 + Omega_3) + Omega_2))))\
-          &bocf(0,fuchsiaf(bocf(1,Omega_5 + Omega_4 + bocf(3,Omega_5 + Omega_3) + bocf(2,Omega_5 + Omega_4 + bocf(3,Omega_5 + Omega_3) + Omega_2))))\
-          &bocf(0,fuchsiaf(Omega_5 + Omega_4 + bocf(3,Omega_5 + Omega_3) + bocf(2,Omega_5 + Omega_4 + bocf(3,Omega_5 + Omega_3) + Omega_2)))\
-        )
+
+          &bocf(0, bocf(1, bocf(2, bocf(3, fuchsiaf(bocf(4, W_5)) + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
+          &bocf(0, bocf(1, bocf(2, bocf(3, fuchsiaf(W_5) + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
+          &bocf(0, bocf(1, bocf(2, tealf(bocf(3, W_5 + W_4)) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
+          &bocf(0, bocf(1, bocf(2, tealf(W_5 + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
+          &bocf(0, bocf(1, bocf(2, W_5 + W_4 + bocf(3, fuchsiaf(bocf(4, W_5)) + W_3) + W_2)))\
+          &bocf(0, bocf(1, bocf(2, W_5 + W_4 + bocf(3, fuchsiaf(W_5) + W_3) + W_2)))\
+          &bocf(0, bocf(1, tealf(bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2))))\
+          &bocf(0, bocf(1, tealf(W_5 + W_4 + bocf(3, W_5 + W_3) + bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2))))\
+          &bocf(0, fuchsiaf(bocf(1, W_5 + W_4 + bocf(3, W_5 + W_3) + bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2))))\
+          &bocf(0, fuchsiaf(W_5 + W_4 + bocf(3, W_5 + W_3) + bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2)))\
+
       $
   ]
 
-  This "raw" form (i.e. $bocf(0,bocf(1,bocf(2,zero)))$ instead of $bocf(0,bocf(2,zero))$) is also known as PSS Hydra
+  This "raw" form (i.e. $bocf(0, bocf(1, bocf(2, zero)))$ instead of $bocf(0, bocf(2, zero))$) is also known as PSS Hydra
   since its basically another way to write the hydra diagram.
 
   For post-BHO expressions we will include both the "raw" PSS hydra form and the standardized form, with PSS Hydra on top and standardized below.
@@ -1592,32 +1578,34 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
       inset: 0.75em,
       table.header([*PSS*], [*Hydra*], [*Ordinal Notation*], [*Ordinal*]),
       $
-        mat(0,1,2; 0,1,2)
+        mat(0, 1, 2; 0, 1, 2)
       $,
-      smoltext(pss((0,1,2),(0,1,2))),
+      smoltext(pss((0, 1, 2), (0, 1, 2))),
       [
-        $fira(bocf(0,bocf(1,Omega_2)))$\
-        $fira(bocf(0,Omega_2))$\
+        $bocf(0, bocf(1, W_2))$\
+        $bocf(0, W_2)$\
       ],
       $psi_0(Omega_2) = "BHO"$,
 
       $
-        mat(0,1,2,1,2; 0,1,2,1,2)
+        mat(0, 1, 2, 1, 2; 0, 1, 2, 1, 2)
       $,
-      smoltext(pss((0,1,2,1,2),(0,1,2,1,2))),
+      smoltext(pss((0, 1, 2, 1, 2), (0, 1, 2, 1, 2))),
       [
-        $fira(bocf(0,bocf(1,Omega_2) plus bocf(1,Omega_2)))$\
-        $fira(bocf(0,Omega_2 plus bocf(1,Omega_2)))$\
+        $bocf(0, bocf(1, W_2) plus bocf(1, W_2))$\
+        $bocf(0, W_2 plus bocf(1, W_2))$\
       ],
       $psi_0(Omega_2 + psi_1(Omega_2))$,
 
       $
-        mat(0,1,2,2,3; 0,1,2,1,2)
+        mat(0, 1, 2, 2, 3; 0, 1, 2, 1, 2)
       $,
-      smoltext(pss((0,1,2,2,3),(0,1,2,1,2))),
+      smoltext(pss((0, 1, 2, 2, 3), (0, 1, 2, 1, 2))),
       [
-        $fira(bocf(0,bocf(1,Omega_2 plus bocf(1,Omega_2))))$\
-        #smoltext($fira(bocf(0,Omega_2 plus bocf(1,Omega_2 plus bocf(1,Omega_2))))$)\
+        $bocf(0, bocf(1, W_2 plus bocf(1, W_2)))$\
+        #smoltext(
+          $bocf(0, W_2 plus bocf(1, W_2 plus bocf(1, W_2)))$,
+        )\
       ],
       smoltext[
         $
@@ -1626,93 +1614,100 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
       ],
 
       smoltext[$
-        mat(0,1,2,2,3,3,4; 0,1,2,1,2,1,2)
+        mat(0, 1, 2, 2, 3, 3, 4; 0, 1, 2, 1, 2, 1, 2)
       $],
-      smoltext(pss((0,1,2,2,3,3,4),(0,1,2,1,2,1,2))),
+      smoltext(pss((0, 1, 2, 2, 3, 3, 4), (0, 1, 2, 1, 2, 1, 2))),
       [
-        #smoltext($fira(bocf(0,bocf(1,Omega_2 + bocf(1,Omega_2+bocf(1,Omega_2)))))$)\
-        #supersmoltext($fira(bocf(0,Omega_2+bocf(1,Omega_2+bocf(1,Omega_2+bocf(1,Omega_2)))))$)\
+        #supersmoltext(
+          $bocf(0, bocf(1, W_2 + bocf(1, W_2+bocf(1, W_2))))$,
+        )\
+        #supersmoltext(
+          $bocf(0, W_2+bocf(1, W_2+bocf(1, W_2+bocf(1, W_2))))$,
+        )\
       ],
       [
-        #supersmoltext($psi_0(Omega_2 + psi_1(Omega_2 + psi_1(Omega_2 + psi_1(Omega_2))))$)\
+        #supersmoltext(
+          $psi_0(Omega_2 + psi_1(Omega_2 + psi_1(Omega_2 + psi_1(Omega_2))))$,
+        )\
         #smoltext($= psi_0(Omega_2 + psi_1(Omega_2)^(psi_1(Omega_2)))$)\
       ],
 
       $
-        mat(0,1,2,2; 0,1,2,2)
+        mat(0, 1, 2, 2; 0, 1, 2, 2)
       $,
-      smoltext(pss((0,1,2,2),(0,1,2,2))),
+      smoltext(pss((0, 1, 2, 2), (0, 1, 2, 2))),
       [
-        $fira(bocf(0,bocf(1,Omega_2 + Omega_2)))$\
-        $fira(bocf(0,Omega_2+Omega_2))$\
+        $bocf(0, bocf(1, W_2 + W_2))$\
+        $bocf(0, W_2+W_2)$\
       ],
       $psi_0(Omega_2 dot 2)$,
 
       $
-        mat(0,1,2,3; 0,1,2,0)
+        mat(0, 1, 2, 3; 0, 1, 2, 0)
       $,
-      smoltext(pss((0,1,2,3),(0,1,2,0))),
+      smoltext(pss((0, 1, 2, 3), (0, 1, 2, 0))),
       [
-        $fira(bocf(0,bocf(1,bocf(2,Omega_0))))$\
-        $fira(bocf(0,bocf(2,Omega_0)))$\
+        $bocf(0, bocf(1, bocf(2, W_0)))$\
+        $bocf(0, bocf(2, W_0))$\
       ],
       $psi_0(Omega_2 dot omega)$,
 
       $
-        mat(0,1,2,3; 0,1,2,1)
+        mat(0, 1, 2, 3; 0, 1, 2, 1)
       $,
-      smoltext(pss((0,1,2,3),(0,1,2,1))),
+      smoltext(pss((0, 1, 2, 3), (0, 1, 2, 1))),
       [
-        $fira(bocf(0,bocf(1,bocf(2,Omega_1))))$\
-        $fira(bocf(0,bocf(2,Omega_1)))$\
+        $bocf(0, bocf(1, bocf(2, W_1)))$\
+        $bocf(0, bocf(2, W_1))$\
       ],
       $psi_0(Omega_2 dot Omega)$,
 
       $
-        mat(0,1,2,3,4; 0,1,2,2,2)
+        mat(0, 1, 2, 3, 4; 0, 1, 2, 2, 2)
       $,
-      smoltext(pss((0,1,2,3,4),(0,1,2,2,2))),
+      smoltext(pss((0, 1, 2, 3, 4), (0, 1, 2, 2, 2))),
       [
-        $fira(bocf(0,bocf(1,bocf(2,bocf(2,Omega_2)))))$\
-        $fira(bocf(0,bocf(2,bocf(2,Omega_2))))$\
+        $bocf(0, bocf(1, bocf(2, bocf(2, W_2))))$\
+        $bocf(0, bocf(2, bocf(2, W_2)))$\
       ],
       $psi_0(Omega_2^Omega_2)$,
 
       $
-        mat(0,1,2,3; 0,1,2,3)
+        mat(0, 1, 2, 3; 0, 1, 2, 3)
       $,
-      smoltext(pss((0,1,2,3),(0,1,2,3))),
+      smoltext(pss((0, 1, 2, 3), (0, 1, 2, 3))),
       [
-        $fira(bocf(0,bocf(1,bocf(2,Omega_3))))$\
-        $fira(bocf(0,Omega_3))$\
+        $bocf(0, bocf(1, bocf(2, W_3)))$\
+        $bocf(0, W_3)$\
       ],
       $psi_0(Omega_3)$,
 
       $
-        mat(0,1,...,n;0,1,...,n)
+        mat(0, 1, ..., n; 0, 1, ..., n)
       $,
       smoltext(
         pss(
-          (0,1),(0,1),
+          (0, 1),
+          (0, 1),
           node(
-            (2,-2),
+            (2, -2),
             $...$,
-            stroke: none
+            stroke: none,
           ),
           node(
-            (3,-3),
+            (3, -3),
             $n$,
             // stroke: none
           ),
-          edge((1,-1),"r,u"),
-          edge((2,-2),"r,u"),
-        )
+          edge((1, -1), "r,u"),
+          edge((2, -2), "r,u"),
+        ),
       ),
       [
-        $fira(bocf(0,bocf(1,... bocf(n-1,Omega_n) ... )))$\
-        $fira(bocf(0, Omega_n))$
+        $bocf(0, bocf(1, ... bocf(n-1, W_n) ...))$\
+        $bocf(0, W_n)$
       ],
-      $psi_0(Omega_n)$
+      $psi_0(Omega_n)$,
     )
   ]
 
@@ -1723,7 +1718,7 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
 
 
 
-== Patcail's Hydra/Mini-Nuclear Array Notation
+== Patcail's Hydra/Mini-Nuclear Array Notation [WIP]
 
 ```
 # FSes FOR PATCAIL NOTATION
@@ -1744,7 +1739,7 @@ The function FS(x,k) is defined as follows:
 5. Otherwise, FS([a,b],k) = [FS(a,k),b].
 Note that n is a term, equivalent to ω.
 ```
-TODO:
+WIP:
 - Explore the hydra a little
 - sgh-mgh relation to the hydra
 - sgh-mgh catching point at BO

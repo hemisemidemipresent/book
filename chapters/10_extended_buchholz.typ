@@ -1,13 +1,13 @@
 #import "../shorthands.typ": *
-= Extended Buchholz's OCF
+= Extended Buchholz's OCF [WIP]
 
 Why do we have to stop at $Omega_omega$? What about $Omega_(omega+1)$? We can extend Buchholz's function as such to allow for even larger ordinals:
 
-#definition(name: [*_Extended Buchholz's function_*])[
+#definition[Extended Buchholz's function][
   Using the same definition of $Omega_nu$, we define the *Extended Buchholz's function* $psi$ and the set $C_nu (alpha)$ as such:
   + $Omega_nu subset.eq C_nu (alpha)$
   + For any two ordinals $xi, eta in C_nu (alpha)$, their sum $xi+eta in C_nu (alpha)$
-  + For any ordinal $xi in C_nu (alpha)$, as long as $xi < alpha$, then $ psi_mu (xi) in C_nu (alpha)$ for all #redf($mu in C_nu (alpha)$)
+  + For any ordinal $xi in C_nu (alpha)$, as long as $xi < alpha$, then $ psi_mu (xi) in C_nu (alpha)$ for all #fuchsiaf($mu in C_nu (alpha)$)
   + $psi_nu (alpha) = min{gamma in Ord | gamma in.not C_nu (alpha)}$, i.e., the smallest ordinal not inside $C_nu (alpha)$
 ]
 It has the same properties as the original, just that instead of being restricted to $psi_mu$ with $mu <= omega$, we now have $mu in C_nu (alpha)$ as highlighted in red.
@@ -38,7 +38,7 @@ The normal form of EBOCF is very similar to that of BOCF:
 
 The fundamental sequence rules are also very similar, the only change being Rule 4, highlighted in #fuchsiaf[fuchsia].
 
-#definition(name: [_*System of fundamental sequences for $psi$*_])[
+#definition[System of fundamental sequences for $psi$][
     For ordinals $alpha<=TFBO$ (expressed in normal form), the $eta^"th"$ term of the fundamental sequence of $alpha$, $alpha[eta]$ is defined as such:
     + If $alpha = psi_k_1 (alpha_1) + ... + psi_k_n (alpha_n)$, then $cof(alpha) = cof(psi_k_n (alpha_n))$, and
         $alpha[eta] = psi_k_1 (alpha_1) + ... + (psi_k_n (alpha_n)[eta])$
@@ -146,23 +146,34 @@ The final wrinkle is to define a fundamental sequence of $alpha = EBO = psi_0(La
       psi_0(Omega_e0)[3] &= psi_0(Omega_e0[3]) = psi_0(Omega_(omega^omega^omega))\
       &dots.v
     $
-  + $psi_0(Omega_Omega)$ - This time $cof(Omega) = Omega$
+  + $psi_0(Omega_Omega)$ - This time $cof(Omega_Omega) = Omega > omega$.
+    So by rule 4, $Omega_Omega [eta] = psi_Omega (0)[eta] = psi_Omega[eta] (0) = psi_eta (0)$
+    Then by rule 6b, $mu = 0$ since $Omega = Omega_(0+1)$, then $cof(psi_0(Omega_Omega)) = omega$, and:
 
-  ```
-  α = ψ(Ω_Ω)
-  cof(α) = ω
-  ===============
-  α[0] = ω
-  α[1] = ψ(Ω_ω)
-  α[2] = ψ(Ω_ψ(Ω_ω))
-  α[3] = ψ(Ω_ψ(Ω_ψ(Ω_ω)))
-  α[4] = ψ(Ω_ψ(Ω_ψ(Ω_ψ(Ω_ω))))
-  α[5] = ψ(Ω_ψ(Ω_ψ(Ω_ψ(Ω_ψ(Ω_ω)))))
-  ...
-  ```
+    $
+      psi_0(Omega_Omega)[eta] = psi_0(Omega_Omega [gamma[eta]]) = psi_0(Omega_gamma[eta])
+    $
+
+    , and since $mu = nu$:
+    $
+      psi_0(Omega_Omega)[0] &= psi_0(Omega_gamma[0]) = psi_0(Omega_0) = omega\
+      psi_0(Omega_Omega)[eta+1] &= psi_0(Omega_gamma[0]) = psi_0(Omega_bluef(psi_0(Omega_Omega)[eta]))\
+    $
+    So we get:
+    $
+      psi_0(Omega_Omega)[0] &= psi_0(Omega_0) = omega\
+      psi_0(Omega_Omega)[1] &= psi_0(Omega_omega)\
+      psi_0(Omega_Omega)[2] &= psi_0(Omega_(psi_0(Omega_omega)))\
+      psi_0(Omega_Omega)[3] &= psi_0(Omega_(psi_0(Omega_(psi_0(Omega_omega)))))\
+      &dots.v
+    $
+
+
 ]
 
 == Ordinal notation associated with EBOCF
+
+Once again, very similar to normal Buchholz Ordinal Notation:
 
 #definition[
     #let s = purplef[*$s$*]
@@ -192,7 +203,7 @@ The final wrinkle is to define a fundamental sequence of $alpha = EBO = psi_0(La
             - If $a != c$ then $#s prec #t$ if and only if $a prec c$
             - If $a = c$ then $#s prec #t$ if and only if $b prec d$
 
-    #let ternary(s,t,u) = $#s redf(in) redf(bold(C))_#t redf(\() #u redf(\))$
+    // #let ternary(s,t,u) = $#s redf(in) redf(bold(C))_#t redf(\() #u redf(\))$
     For terms $#s, #t, #u$, we define the ternary relation $ternary(#s,#t,#u)$ if and only if:
 
     - $#s prec bocf(#t,zero)$
@@ -210,6 +221,114 @@ The final wrinkle is to define a fundamental sequence of $alpha = EBO = psi_0(La
 ]
 
 == Extended Weak Buchholz/Nothing OCF
+This is identical to the definition of EBOCF, except you #keyword[can't use addition].
+The interesting about this function is that despite this apparent limitation, it can still reach the Extended Buchholz Ordinal.
+
+Like most other OCFs, this is usually denoted with $psi$, but when comparing with regular Buchholz it gets very confusing very quickly, so I'll denote it with $p$ instead:
+#definition[Extended Weak Buchholz function][
+  Using the same definition of $Omega_nu$, we define the #keyword[Weak] Extended Buchholz's function $p$ and the set $c_nu (alpha)$ as such:
+  + $Omega_nu subset.eq c_nu (alpha)$
+  + For any ordinal $xi in c_nu (alpha)$, as long as $xi < alpha$, then $ p_mu (xi) in c_nu (alpha)$ for all $mu in c_nu (alpha)$
+  + $p_nu (alpha) = min{gamma in Ord | gamma in.not c_nu (alpha)}$, i.e., the smallest ordinal not inside $c_nu (alpha)$
+]
+
+We start with $p_0(0) = 1$, $p_0(1) = 2$, and in general, for $n in NN$, $p_0(n) = n+1$. However, we can't even reach $omega$, as $p_0(p_0(p_0(...))) = 1 + 1 + ...$ will always be a finite number.
+
+Similarly to how $psi_0$ gets "stuck" at #e0, our weak $p_0$ gets "stuck" at $omega$,
+and the way to get "unstuck" is to find the smallest ordinal $alpha$ that is greater than all natural numbers and satisfies $alpha in c_0(alpha)$,
+which in this case is also $p_1(0) = Omega$. So $p_0(Omega) = omega$.
+
+But before we continue, lets iron out some properties about this new function
+=== Properties
+#note[I cooked all of this up myself so it might be jank]
+
+#proposition[
+  + $p_nu (0) = Omega_nu$
+  + $Omega_nu <= p_nu (alpha) < Omega_(nu+1)$
+] <def:smooth>
+#proof[
+  + Follows from the definition
+  + $Omega_nu subset.eq c_nu (alpha) => Omega_nu <= p_nu (alpha)$, and the cardinality of $Omega_(nu+1)$ is greater than that of $c_nu (alpha)$.
+    Hence there exists a $gamma < Omega_(nu+1)$ such that $gamma in.not c_nu (alpha)$, and therefore $psi_nu (alpha) < Omega_(nu+1)$.
+]
+#proposition[
+  If $alpha < beta$ and $alpha in c_nu (beta)$, then $p_nu (alpha) < p_nu (beta)$.
+]
+#proof[
+  We first note that if $alpha <= beta$, we trivially have $c_nu (alpha) subset.eq c_nu (beta)$ and $p_nu (alpha) <= p_nu (beta)$.
+  Since $alpha in c_nu (alpha) subset.eq c_nu (beta)$, $p_nu (alpha) in c_nu (beta)$ and $p_nu (alpha) < p_nu (beta)$.
+]
+#proposition[Uniqueness of ordinal representation in $p$][
+  If $gamma = p_nu_1 (xi_1) = p_nu_2 (xi_2)$, then $nu_1 = nu_2$ and $xi_1 = xi_2$
+]
+#proof[
+  Follows from @def:smooth
+]
+#proposition[
+  If $alpha < omega^(Omega_nu+1)$ then $alpha in c_nu (alpha)$ and $p_nu (alpha) = Omega_nu + alpha$.
+]
+#proof[
+  By induction:
+  + Base case: $p_nu (0) = Omega_nu$
+  + Successor case: Suppose $alpha in c_nu (alpha)$ and $p_nu (alpha) = Omega_nu + alpha$ (and obviously since $alpha < omega^(Omega_nu+1) => alpha + 1 < omega^(Omega_nu+1)$)
+
+    If $alpha in c_nu (alpha)$, then since $alpha < alpha+1$, we have $p_nu (alpha) in c_nu (alpha+1)$.
+
+    Nothing else new can be produced (yes we can have $p_(nu+1)(alpha) in c_nu (alpha+1)$ but there exists smaller ordinals not contained within $c_nu (alpha)$)
+
+    $p_nu (alpha+1)$ is the smallest ordinal not in $c_nu (alpha+1)$, which is $psi_nu (alpha) + 1 = Omega_nu + alpha + 1$ from the induction hypothesis.
+
+    Now we show that: $alpha+1 in c_nu (alpha+1)$
+
+    Since $alpha > 0$ (otherwise refer to the base case), $alpha = p_mu (xi)$ for some $mu, xi in c_nu (alpha)$.
+    Since $xi < alpha$, we have $alpha = p_mu (xi) = Omega_mu + xi$ and $xi + 1 in c_nu (xi+1)$ from the induction hypothesis,
+    and $alpha + 1 = Omega_mu + xi + 1 = p_mu (xi+1) in c_nu (alpha)$.
+
+  + Limit case: for some limit ordinal $alpha < omega^(Omega_nu+1)$, suppose $beta in c_nu (beta)$ and $p_nu (beta) = Omega_nu + beta$ for all $beta < alpha$.
+
+    - If $alpha < Omega_nu$, $alpha in Omega_nu subset.eq c_nu (alpha)$
+    - If $alpha = Omega_nu > 0$, $p_nu (0) in c_nu (alpha)$ since $0 < alpha$
+    - If $Omega_nu < alpha < omega^(Omega_nu + 1)$:
+
+      For all $beta in c_nu (beta) subset.eq c_nu (alpha)$, and as such for all $beta < alpha$ we have $p_nu (beta) = Omega_nu + beta in c_nu (alpha)$.
+
+    Then
+    $
+      p_nu (alpha) &= sup{p_nu (beta) | beta < alpha "and" beta in c_nu (beta) subset.eq c_nu (alpha)}\
+      &= sup{Omega_nu + beta | beta < alpha "and" beta in c_nu (beta) subset.eq c_nu (alpha)}\
+      &= Omega_nu + alpha
+    $
+
+]
+
+#conjecture[
+  $p_0(Omega_xi) = psi_0(xi)$
+]
+
+=== Analysis
+#table(
+  columns: (auto, auto),
+  inset: 0.75em,
+  align: horizon,
+  table.header([*Weak Buchholz*], [*Regular Buchholz*]),
+  $p_0(0)$, $1 = psi_0(0)$,
+  $p_0(1) = p_0(p_0(0))$, $2 = psi_0(0) + psi_0(0)$,
+  $p_0(2) = p_0(p_0(p_0(0)))$, $3 = psi_0(0) + psi_0(0) + psi_0(0)$,
+  $p_0(Omega) = p_0(p_1(0))$, $omega = psi_0(1)$,
+  $p_0(Omega+1) = p_0(p_1(p_0(0))$, $omega + 1 = psi_0(1) + psi_0(0)$,
+  $p_0(Omega 2) = p_0(p_1(p_1(0))$, $omega 2 = psi_0(1) + psi_1(0)$,
+  $p_0(Omega 3) = p_0(p_1(p_1(p_1(0)))$, $omega 3 = psi_0(1) + psi_1(0) + psi_1(0)$,
+  $p_0(Omega_2) = p_0(p_2(0))$, $omega^2 = psi_0(2)$,
+  $p_0(Omega_omega) = p_0(p_(p_0(Omega)) (0)) = p_0(p_(p_0(p_1(0)))(0))$, $omega^omega = psi_0(omega) = psi_0(psi_0(1))$,
+  $p_0(Omega_(omega + 1)) = p_0(p_(p_0(Omega + 1)) (0)) = p_0(p_(p_0(p_1(p_0(0))))(0))$, $omega^(omega+1) = psi_0(omega+1)$,
+  $p_0(Omega_(omega 2)) = p_0(p_(p_0(Omega 2)) (0)) = p_0(p_(p_0(p_1(p_1(0))))(0))$, $omega^(omega 2) = psi_0(omega 2)$,
+  $p_0(Omega_(omega^2)) = p_0(p_(p_0(Omega_2)) (0)) = p_0(p_(p_0(p_2(0)))(0))$, $omega^omega^2 = psi_0(omega^2)$,
+  $p_0(Omega_(omega^omega)) = p_0(Omega_(p_0(Omega_(omega)))) = p_0(Omega_(p_0(Omega_(p_0(Omega)))))$, $omega^omega^omega = psi_0(omega^omega)$,
+  $p_0(Omega_(omega^omega^omega)) = p_0(Omega_(p_0(Omega_(omega^omega)))) = p_0(Omega_(p_0(Omega_(p_0(Omega_(p_0(Omega)))))))$, $omega^omega^omega^omega = psi_0(omega^omega^omega)$,
+  $p_0(Omega_Omega) = p_0(Omega_(p_1(0)))$, $e0 = psi_0(Omega)$,
+  $p_0(Omega_(Omega+1)) = p_0(Omega_(p_1(0)))$, $e0 = psi_0(Omega)$,
+
+)
 
 == Address Notation
 

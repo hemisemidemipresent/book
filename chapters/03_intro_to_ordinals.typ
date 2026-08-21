@@ -1,5 +1,4 @@
 #import "../shorthands.typ": *
-
 = Introduction to Ordinals
 
 == Informal definition

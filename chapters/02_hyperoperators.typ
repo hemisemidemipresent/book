@@ -1,5 +1,4 @@
 #import "../shorthands.typ": *
-
 = Hyperoperators
 
 == Addition, Multiplication, and Exponentiation

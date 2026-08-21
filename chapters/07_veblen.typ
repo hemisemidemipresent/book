@@ -103,7 +103,7 @@ We have seen that $omega^alpha = alpha$ has a fixed point, and we can convince o
 We can similarly convince ourselves that the fixed point $epsilon_alpha = alpha$ also exists by saying $epsilon_z0 = epsilon_((epsilon_epsilon_dots.down)) = epsilon_epsilon_epsilon_dots.down =z0$.
 But does a fixed point exist for every function? The answer is yes, if the function meets certain criteria:
 
-#theorem(name: [*_Veblen’s Fixed Point Theorem_*])[
+#theorem[Veblen’s Fixed Point Theorem][
     #definition[
         A *normal function* is a function $f: Ord arrow.r.bar Ord$ such that:
         + $f$ is *strictly increasing*: $f(alpha) < f(beta)$ whenever $alpha <beta$
@@ -316,7 +316,7 @@ This is the largest ordinal we can reach with the two-argument veblen function.
 
 Much like how all ordinals $<e0$ can be expressed in Cantor Normal Form, all ordinals $<G0$ can be expressed in:
 
-#theorem(name: [*_Veblen Normal Form_*])[
+#theorem[Veblen Normal Form][
   Every ordinal $alpha < G0$, can be uniquely written in the following form:
   $
   phi(beta_1, gamma_1) + phi(beta_2, gamma_2) + ... + phi(beta_k, gamma_k)
@@ -582,7 +582,7 @@ We do have to first show that $phi([1@alpha])$ is normal before we know that suc
         [WIP]
 ]
 
-#theorem(name: [*_Tranfinitary Veblen Normal Form_*])[
+#theorem[Tranfinitary Veblen Normal Form][
     All ordinals $alpha < LVO$ can be expressed as
 ]
 #definition[

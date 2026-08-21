@@ -1,10 +1,12 @@
 #import "../shorthands.typ": *
-= Introduction to Bashicu matrix system
-[WIP] This shit is too powerful maybe just do an introductory chapter
+= [WIP] Introduction to Bashicu matrix system
+This shit is too powerful; just do an introductory chapter first
 
 == Definition
 
 == Wrangling with upgrading
+
+- What is an upgrader
 
 == ascension
 
@@ -18,6 +20,8 @@
 // which expands very similarly to (0,0,0)(1,1,1)(2,1,0)(1,1,1)
 // it expands into (0,0,0)(1,1,1)(2,1,0)(1,1,0)(2,2,1)(3,1,0)(2,2,0)(3,3,1)(4,2,0)(3,3,0)(4,4,1)(5,3,0)...
 // which is the same thing as (0,0,0)(1,1,1)(2,1,0)(1,1,1) except the m in (n,n,1)(n,m,0) gets decreased by 1
+
+
 
 // it wouldnt terminate
 

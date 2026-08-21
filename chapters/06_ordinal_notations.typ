@@ -114,7 +114,7 @@ We still have to prove that ordering $prec$ on the set OT is a well-ordering. We
   It should be apparent that the expression in the left hand side $wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n)) in OT_(<=k+1)$, and $al(1) succ.eq al(2) succ.eq ... succ.eq al(n)$, and thus the right hand side is an non-increasing sequence of expressions $al(i) in OT_(<=k)$ of variable length.
 
   Since $OT_(<=k+1)$ is order isomorphic to the set of all non-increasing sequence of elements from $OT_(<=k)$, and $OT_(<=k)$ is well-ordered,
-  #link(label("non-increasing sequences well-ordered"))[by this proposition], $(OT_(<=k+1), prec)$ must therefore be well-ordered too.
+  by @prop:nonincreasing-well-ordered, $(OT_(<=k+1), prec)$ must therefore be well-ordered too.
 ]
 
 #proposition[
@@ -322,7 +322,7 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
   ],
 )
 
-#theorem(name: [*_Kirby-Paris Hydra_*])[
+#theorem[Kirby-Paris Hydra][
   If you keep cutting off heads (in any manner), the Hydra eventually dies.
 ]
 
@@ -353,7 +353,8 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
 
     ],
     align(horizon)[#sym.arrow.r],
-    text-tree-graph[
+    text-tree-graph(node-stroke: 0.5pt + white,
+    edge-stroke: 0.5pt + white)[
       - $wpow(wpow(wpow(zero)3) plus wpow(zero)2) plus wpow(zero)2$ #node-attr(
           rotate: -180deg,
         )
@@ -375,20 +376,24 @@ Here's is an example: if we cut the blue leaf node, the part in red gets duplica
   #stack(
     dir: ttb,
     spacing: 1em,
-    text-tree-graph[
+    text-tree-graph(
+      node-stroke: 0.5pt + white,
+      edge-stroke: 0.5pt + white
+    )[
       - $wpow(alphag plus wpow(zero)) plus wpow(betag)$ #node-attr(
           rotate: -180deg,
         )
         - #betag
         - $wpow(al(1)) plus ... plus wpow(al(n)) plus wpow(zero)\ =alphag plus wpow(zero)$
-          - #zero <black>
+          - #zero <red>
           - $al(n)$
           - $...$
           - $al(1)$
     ],
     align(horizon)[#sym.arrow.b],
 
-    text-tree-graph[
+    text-tree-graph(node-stroke: 0.5pt + white,
+    edge-stroke: 0.5pt + white)[
       - $wpow(alphag) dot 3 plus wpow(betag)$ #node-attr(rotate: -180deg)
         - #betag
         - #alphag
@@ -509,7 +514,7 @@ The goodstein sequence seems to grow forever, but this sequence eventually termi
 // This is a system invented by Japanese Googologist Bashicu #link("https://googology.fandom.com/ja/wiki/ユーザーブログ:BashicuHyudora/BASIC言語による巨大数のまとめ#原始数列数(Primitive_sequence_number)")[in 2015],
 // which is very similar to how the Kirby-Paris Hydra works. It can be thought of as a way to encode the hydra in a linear array.
 
-#definition(name: [*_Primitive Sequence System (PrSS)_*])[
+#definition[Primitive Sequence System (PrSS)][
   Let the set $T_"PrSS"$ be the set of sequences $s = (s_1, s_2, ..., s_l)$ such that:
 
   + $s$ is either empty $()$ or starts with $0$: $(0,...)$.
@@ -952,95 +957,43 @@ If $s in OT_"PrSS"$, then $s_1 lexgteq s_2 lexgteq ...$. For example, for the se
 #figure(prss((0, 1, 2, 3, 2, 1)))
 
 We see that for each of the nodes with multiple children, this property holds:
-
-#align(horizon)[
-  #stack(
-    dir: ltr,
-    spacing: 1em,
-    diagram(
-      node-stroke: 1pt,
-      edge-stroke: 1pt,
-      spacing: (0.8em, 0.4em),
-      node-inset: 0.4em,
-      edge-corner-radius: 8pt,
-      node((0, 0), width: 1.25em, shape: "circle", $1$),
-      node((1, -1), width: 1.25em, shape: "circle", $2$),
-      node((2, -2), width: 1.25em, shape: "circle", $3$),
-      node((3, -1), width: 1.25em, shape: "circle", $2$),
-      edge((0, 0), "r,u"),
-      edge((1, -1), "r,u"),
-      edge((0, 0), "r,r,r,u"),
-    ),
-    [holds as],
-    diagram(
-      node-stroke: 1pt,
-      edge-stroke: 1pt,
-      spacing: (0.8em, 0.4em),
-      node-inset: 0.4em,
-      edge-corner-radius: 8pt,
-      node((1, -1), width: 1.25em, shape: "circle", $2$),
-      node((2, -2), width: 1.25em, shape: "circle", $3$),
-      edge((1, -1), "r,u"),
-    ),
-    $>=$,
-    diagram(
-      node-stroke: 1pt,
-      edge-stroke: 1pt,
-      spacing: (0.8em, 0.4em),
-      node-inset: 0.4em,
-      edge-corner-radius: 8pt,
-      node((1, -1), width: 1.25em, shape: "circle", $2$),
-    ),
-  )
-]
-#align(horizon)[
-  #stack(
-    dir: ltr,
-    spacing: 1em,
-    diagram(
-      node-stroke: 1pt,
-      edge-stroke: 1pt,
-      spacing: (0.8em, 0.4em),
-      node-inset: 0.4em,
-      edge-corner-radius: 8pt,
-      node((-1, 1), width: 1.25em, shape: "circle", $0$),
-      node((0, 0), width: 1.25em, shape: "circle", $1$),
-      node((1, -1), width: 1.25em, shape: "circle", $2$),
-      node((2, -2), width: 1.25em, shape: "circle", $3$),
-      node((3, -1), width: 1.25em, shape: "circle", $2$),
-      node((4, 0), width: 1.25em, shape: "circle", $1$),
-      edge((-1, 1), "r,u"),
-      edge((0, 0), "r,u"),
-      edge((1, -1), "r,u"),
-      edge((0, 0), "r,r,r,u"),
-      edge((-1, 1), "r,r,r,r,r,u"),
-    ),
-    [holds as],
-    diagram(
-      node-stroke: 1pt,
-      edge-stroke: 1pt,
-      spacing: (0.8em, 0.4em),
-      node-inset: 0.4em,
-      edge-corner-radius: 8pt,
-      node((0, 0), width: 1.25em, shape: "circle", $1$),
-      node((1, -1), width: 1.25em, shape: "circle", $2$),
-      node((2, -2), width: 1.25em, shape: "circle", $3$),
-      node((3, -1), width: 1.25em, shape: "circle", $2$),
-      edge((0, 0), "r,u"),
-      edge((1, -1), "r,u"),
-      edge((0, 0), "r,r,r,u"),
-    ),
-    $>=$,
-    diagram(
-      node-stroke: 1pt,
-      edge-stroke: 1pt,
-      spacing: (0.8em, 0.4em),
-      node-inset: 0.4em,
-      edge-corner-radius: 8pt,
-      node((1, -1), width: 1.25em, shape: "circle", $1$),
-    ),
-  )
-]
+#hbox(
+  tree-from-list(root: false)[
+    - 1
+      - 2
+        - 3
+      - 2
+  ],
+  [holds as],
+  tree-from-list(root: false)[
+    - 2
+      - 3
+  ],
+  $>=$,
+  tree-from-list(root: false)[
+    - 2
+  ]
+)
+#hbox(
+  tree-from-list(root: false)[
+    - 0
+      - 1
+        - 2
+          - 3
+        - 2
+  ],
+  [holds as],
+  tree-from-list(root: false)[
+    - 1
+      - 2
+        - 3
+      - 2
+  ],
+  $>=$,
+  tree-from-list(root: false)[
+    - 1
+  ]
+)
 This property also applies for the root node, for when a sequence has multiple $0$s.
 #proof[
   Since $(0,1,...,n)$ satisfies this property, we just need to show that expansion preserves this property to show that all $OT_"PrSS"$ sequences satisfy this property.
@@ -1049,39 +1002,20 @@ This property also applies for the root node, for when a sequence has multiple $
 
     Let $s in OT_"PrSS"$ be:
     #figure(
-      diagram(
-        node-stroke: 1pt,
-        edge-stroke: 1pt,
-        spacing: (0.8em, 0.4em),
-        node-inset: 0.4em,
-        edge-corner-radius: 8pt,
-        node((0, 0), width: 1.25em, shape: "circle", $+$),
-        node((1, -1), width: 1.25em, shape: "circle", $s_1$),
-        node((2, -1), width: 1.25em, shape: "circle", $...$),
-        node((3, -1), width: 1.25em, shape: "circle", $s_k$),
-        node((4, -1), width: 1.25em, shape: "circle", $0$),
-        edge((0, 0), "r,u"),
-        edge((0, 0), "r,r,u"),
-        edge((0, 0), "r,r,r,u"),
-        edge((0, 0), "r,r,r,r,u"),
-      ),
+      tree-from-list[
+        - $s_1$
+        - $...$
+        - $s_k$
+        - $0$
+      ]
     )
     then we know $s_1 >= ... >= s_k >= 0$. So $s[n]$ is just chopping of the last $0$:
     #figure(
-      diagram(
-        node-stroke: 1pt,
-        edge-stroke: 1pt,
-        spacing: (0.8em, 0.4em),
-        node-inset: 0.4em,
-        edge-corner-radius: 8pt,
-        node((0, 0), width: 1.25em, shape: "circle", $+$),
-        node((1, -1), width: 1.25em, shape: "circle", $s_1$),
-        node((2, -1), width: 1.25em, shape: "circle", $...$),
-        node((3, -1), width: 1.25em, shape: "circle", $s_k$),
-        edge((0, 0), "r,u"),
-        edge((0, 0), "r,r,u"),
-        edge((0, 0), "r,r,r,u"),
-      ),
+      tree-from-list[
+        - $s_1$
+        - $...$
+        - $s_k$
+      ]
     )
     and we still have $s_1 >= ... >= s_k$.
 
@@ -1089,159 +1023,84 @@ This property also applies for the root node, for when a sequence has multiple $
 
     Let $s in OT_"PrSS"$ have its last number be $a_r + 1$, and whose bad root starts with $a_r$:
     #figure(
-      diagram(
-        edge-stroke: 1pt,
-        spacing: (0.8em, 0.4em),
-        // node-inset: 0.4em,
-        edge-corner-radius: 8pt,
-        node((0, 0), shape: "circle", $+$, stroke: 1pt),
-        node((1, -1), shape: "circle", $...$),
-        node((2, -2), shape: "rect", $a_r$, stroke: 1pt, name: <badroot>, corner-radius: 4pt),
-        node((3, -3), shape: "circle", $...$, name: <badroot2>),
-        node((4, -3), shape: "rect", $a_r+1$, stroke: 1pt, corner-radius: 4pt),
-        edge((0, 0), "r,u"),
-        edge((1, -1), "r,u"),
-        edge((2, -2), "r,u"),
-        edge((2, -2), "r,r,u"),
-        node(
-          align(top + left)[#tealf[Bad Root]],
-          enclose: (<badroot>, <badroot2>),
-          corner-radius: 4pt,
-          stroke: teal,
-          fill: teal.lighten(90%),
-          snap: -1,
-        ),
-        // debug: 3,
+      tree-from-list(
+        [
+          - $...$
+            - $a_r$
+              - $...$
+              - $a_r + 1$
+        ],
+        enclosing-node(
+          ((1,-2),(2,-3)),
+          color.teal,
+          // align(top+ left)[#tealf[$B$]],
+          content: $B$,
+        )
       ),
+
     )
+
     Zooming out, we see that expansion occurs by copying the bad root subtree onto the rightmost element of value $a_r - 1$ (If $a_r=0$, it instead adds bad roots onto the root node)
-
-    #figure(
-      stack(
-        dir: ttb,
-        spacing: 1em,
-        diagram(
-          edge-stroke: 1pt,
-          spacing: (0.8em, 0.4em),
-          node-inset: 0.4em,
-          edge-corner-radius: 8pt,
-          node((0, 0), width: 1.25em, shape: "circle", $+$, stroke: 1pt),
-          node((1, -1), width: 1.25em, shape: "circle", $...$),
-          node((2, -2), width: auto, shape: "rect", $a_r - 1$, stroke: 1pt, corner-radius: 4pt),
-          node((3, -3), width: 1.25em, shape: "circle", $T_1$, stroke: 1pt),
-          node((4, -3), width: 1.25em, shape: "circle", $...$),
-          node((5, -3), width: 1.25em, shape: "circle", $T_k$, stroke: 1pt),
-          node((6, -3), width: 1.25em, shape: "rect", $a_r$, stroke: 1pt, name: <badroot>, corner-radius: 4pt),
-          node((7, -4), width: 1.25em, shape: "circle", $...$, name: <badroot2>),
-          node((8, -4), width: auto, shape: "rect", $a_r+1$, stroke: 1pt, corner-radius: 4pt),
-          edge((0, 0), "r,u"),
-          edge((1, -1), "r,u"),
-          edge((2, -2), "r,u"),
-          edge((2, -2), "r,r,u"),
-          edge((2, -2), "r,r,r,u"),
-          edge((2, -2), "r,r,r,r,u"),
-          edge((6, -3), "r,u"),
-          edge((6, -3), "r,r,u"),
-          node(
-            align(top + left)[#tealf[Bad Root]],
-            enclose: (<badroot>, <badroot2>),
-            corner-radius: 4pt,
-            stroke: teal,
-            fill: teal.lighten(90%),
-            snap: -1,
-          ),
+    #vbox(
+      tree-from-list(
+        [
+          - $...$
+            - $a_r - 1$
+              - $T_1$
+              - $...$
+              - $T_k$
+              - $a_r$
+                - $...$
+                - $a_r + 1$
+        ],
+        enclosing-node(
+          ((5,-3),(6,-4)),
+          color.teal,
+          content: $B$,
+        )
+      ),
+      $arrow.b$,
+      tree-from-list(
+        [
+          - $...$
+            - $a_r - 1$
+              - $T_1$
+              - $...$
+              - $T_k$
+              - $a_r$
+                - $...$
+              - $a_r$
+                - $...$
+              - $...$
+        ],
+        spacing: 0.5em,
+        enclosing-node(
+          ((5,-3),(6,-4)),
+          color.teal,
+          content: $B$,
         ),
-        $arrow.b$,
-        diagram(
-          edge-stroke: 1pt,
-          spacing: (0.8em, 0.4em),
-          node-inset: 0.4em,
-          edge-corner-radius: 8pt,
-          node((0, 0), width: 1.25em, shape: "circle", $+$, stroke: 1pt),
-          node((1, -1), width: 1.25em, shape: "circle", $...$),
-          node((2, -2), width: auto, shape: "rect", $a_r - 1$, stroke: 1pt, corner-radius: 4pt),
-          node((3, -3), width: 1.25em, shape: "circle", $T_1$, stroke: 1pt),
-          node((4, -3), width: 1.25em, shape: "circle", $...$),
-          node((5, -3), width: 1.25em, shape: "circle", $T_k$, stroke: 1pt),
-          node((6, -3), width: 1.25em, shape: "rect", $a_r$, stroke: 1pt, name: <badroot>, corner-radius: 4pt),
-          node((7, -4), width: 1.25em, shape: "circle", $...$, name: <badroot2>),
-          node((8, -3), width: 1.25em, shape: "rect", $a_r$, stroke: 1pt, name: <badroot3>, corner-radius: 4pt),
-          node((9, -4), width: 1.25em, shape: "circle", $...$, name: <badroot4>),
-          node((10, -3), width: 1.25em, shape: "circle", $...$),
-          edge((0, 0), "r,u"),
-          edge((1, -1), "r,u"),
-          edge((2, -2), "r,u"),
-          edge((2, -2), "r,r,u"),
-          edge((2, -2), "r,r,r,u"),
-          edge((2, -2), "r,r,r,r,u"),
-          edge((2, -2), "r,r,r,r,r,r,u"),
-          edge((2, -2), "r,r,r,r,r,r,r,r,u"),
-          edge((6, -3), "r,u"),
-          edge((8, -3), "r,u"),
-          node(
-            align(top + left)[#tealf[Bad Root]],
-            enclose: (<badroot>, <badroot2>),
-            corner-radius: 4pt,
-            stroke: teal,
-            fill: teal.lighten(90%),
-            snap: -1,
-          ),
-          node(
-            align(top + left)[#tealf[Bad Root]],
-            enclose: (<badroot3>, <badroot4>),
-            corner-radius: 4pt,
-            stroke: teal,
-            fill: teal.lighten(90%),
-            snap: -1,
-          ),
-        ),
+        enclosing-node(
+          ((7,-3),(8,-4)),
+          color.teal,
+          content: $B$,
+        )
       ),
     )
-    and since
-    #align(horizon)[
-      #stack(
-        dir: ltr,
-        $T_1 >= ... >= T_k >=$,
-        spacing: 1em,
-        diagram(
-          edge-stroke: 1pt,
-          spacing: (0.8em, 0.4em),
-          edge-corner-radius: 8pt,
 
-          node((6, -3), shape: "rect", $a_r$, stroke: 1pt, corner-radius: 4pt, name: <badroot>),
-          node((7, -4), $...$, name: <badroot2>),
-          node((8, -4), $a_r+1$, stroke: 1pt, corner-radius: 4pt),
-          edge((6, -3), "r,u"),
-          edge((6, -3), "r,r,u"),
-          node(
-            align(top + left)[#tealf[Bad Root]],
-            enclose: (<badroot>, <badroot2>),
-            corner-radius: 4pt,
-            stroke: teal,
-            fill: teal.lighten(90%),
-            snap: -1,
-          ),
-        ),
-        $>=$,
-        diagram(
-          edge-stroke: 1pt,
-          spacing: (0.8em, 0.4em),
-          edge-corner-radius: 8pt,
-
-          node((6, -3), shape: "rect", $a_r$, stroke: 1pt, corner-radius: 4pt, name: <badroot>),
-          node((7, -4), $...$, name: <badroot2>),
-          edge((6, -3), "r,u"),
-          node(
-            align(top + left)[#tealf[Bad Root]],
-            enclose: (<badroot>, <badroot2>),
-            corner-radius: 4pt,
-            stroke: teal,
-            fill: teal.lighten(90%),
-            snap: -1,
-          ),
-        ),
-      )
-    ]
+    #hbox(
+      alignment: left,
+      [and since $T_1 >= ... >= T_k >=$],
+      tree-from-list(root: false)[
+        - $a_r$
+          - $...$
+          - $a_r + 1$
+      ],
+      $>=$,
+      tree-from-list(root: false)[
+        - $a_r$
+          - $...$
+      ]
+    )
     our new expanded sequence also satisfies the "normality" property.
 
   As such all sequences in $OT_"PrSS"$ satisfies this "normality" property.
