@@ -14,7 +14,7 @@
   theorem, lemma, proposition, corollary,
   definition, axiom, assumption, notation,
   example, remark,
-  conjecture, claim,
+  conjecture, claim, sus,
 ) = frame-it.frames(
   base-color: palettes.light.thm,
   theorem:     ("Theorem",     palettes.light.thm),
@@ -29,17 +29,20 @@
   notation:    ("Notation",    palettes.light.def),
   example:     ("Example",     palettes.light.eg),
   remark:      ("Remark",      palettes.light.def),
+  sus:         ("Suspicious Segment", palettes.light.sus)
 )
 
 // Colour dispatch: def-family = teal, eg-family = amber, everything else = blue.
 #let _def-family = ("Definition", "Axiom", "Assumption", "Notation")
 #let _eg-family  = ("Example",)
+#let _sus-family  = ("Suspicious Segment",)
 
 // the frame-it style factory: (title, tags, body, supplement, number, accent)
 #let knot-style(title, tags, body, supplement, number, _accent) = context {
   let p = active.get()
   let a = if supplement in _def-family { p.def }
           else if supplement in _eg-family  { p.eg  }
+          else if supplement in _sus-family  { p.sus  }
           else { p.thm }
   set align(left) // frame-it frames live in a figure caption, which centres by default
 

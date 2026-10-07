@@ -18,6 +18,7 @@
     rule: rgb("#2F5EA8"),
     tag: rgb("#0F766E"),
     keyword: rgb("#0F766E"),
+    sus: rgb("#90505e"),
   ),
   dark: (
     dark: true,
@@ -31,6 +32,7 @@
     rule: rgb("#74A6FF"),
     tag: rgb("#54C8B6"),
     keyword: rgb("#54C8B6"),
+    sus: rgb("#eb94ad"),
   ),
 )
 

@@ -3,12 +3,13 @@
 // #let proof(name: none, content) = corollary(content, number: "", name: name)
 
 
-// trees
+
 #import "@preview/cetz:0.4.2"
 #import "@preview/mannot:0.3.2": annot, annot-cetz, mark
 #import "@preview/fletcher:0.5.8": diagram, edge, node
 #import "@preview/tdtr:0.5.5": *
 #import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-point-from
+#import "@preview/xarrow:0.4.0": *
 
 // tree with circles
 #let custom-tree-graph = tidy-tree-graph.with(
@@ -202,8 +203,7 @@
 }
 // #let ternary(s,t,u) = $#s redf(sans(in)) redf(bold(sans(C)))_#t redf(\() #u redf(\))$ // s in C_t(u)
 
-// arrow
-#import "@preview/xarrow:0.4.0": *
+
 
 // bms-type trees
 #let parent = (row, value, index) => {
@@ -258,11 +258,11 @@
   }
   context {
     diagram(
-      node-stroke: 1pt + text.fill,
+      // node-stroke: 1pt + text.fill,
       edge-stroke: 1pt + text.fill,
-      spacing: (0.8em, 0.4em),
+      spacing: (0.5em, 0.4em),
       node-inset: 0.4em,
-      edge-corner-radius: 8pt,
+      edge-corner-radius: 4pt,
       ..nodes,
       ..edges,
       ..args,

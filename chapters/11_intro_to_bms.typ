@@ -1,12 +1,11 @@
 #import "../shorthands.typ": *
 = [WIP] Introduction to Bashicu matrix system
-This shit is too powerful; just do an introductory chapter first
+// This shit is too powerful; just do an introductory chapter first
 
 == Definition
 
-== Wrangling with upgrading
-
-- What is an upgrader
+So far we have considered both the Primitive Sequence System (PrSS) and the Pair Sequence System (PSS).
+We can generalize this to any number of rows as part of the *Bashicu Matrix System*.
 
 == ascension
 
@@ -29,3 +28,13 @@ This shit is too powerful; just do an introductory chapter first
 // so
 // the ascension matrix makes some things not increase when expanding
 // so that (0,0,0)(1,1,1)(2,1,0)(1,1,0)(2,2,1)(3,1,0)(2,2,1) would actually expand into (0,0,0)(1,1,1)(2,1,0)(1,1,0)(2,2,1)(3,1,0)(2,2,0)(3,3,1)(4,**1**,0)(3,3,0)(4,4,1)(5,**1**,0)...
+
+== Wrangling with upgrading
+
+#note[
+  Note that correspondences between BMS and ordinals are conjectural past $psi_0(Omega_omega)$.
+]
+
+We initially have $(0,0,0)(1,1,1)$ being $psi_0(Omega_omega)$, so we may (naively) conjecture that an $(x,1,1)$ functions the same way ass PSS,
+with an $omega$ at height $x$. So $(0,0,0)(1,1,1)(1,1,1)$ corresponds to $psi_0(Omega_omega 2)$
+

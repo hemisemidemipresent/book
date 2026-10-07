@@ -301,35 +301,87 @@ But before we continue, lets iron out some properties about this new function
 
 ]
 
-#conjecture[
-  $p_0(Omega_xi) = psi_0(xi)$
-]
+
+
 
 === Analysis
+
+For brevity, since addition is not used to define standard forms, we can only nest $p_nu$ functions inside other $p_mu$ functions.
+We condense the subscripts into a sequence, so for example $p_0(p_1(p_1(p_0(p_1(p_1(0)))))$ becomes $(0,1,1,0,1,1)$
+
 #table(
   columns: (auto, auto),
   inset: 0.75em,
   align: horizon,
-  table.header([*Weak Buchholz*], [*Regular Buchholz*]),
-  $p_0(0)$, $1 = psi_0(0)$,
-  $p_0(1) = p_0(p_0(0))$, $2 = psi_0(0) + psi_0(0)$,
-  $p_0(2) = p_0(p_0(p_0(0)))$, $3 = psi_0(0) + psi_0(0) + psi_0(0)$,
-  $p_0(Omega) = p_0(p_1(0))$, $omega = psi_0(1)$,
-  $p_0(Omega+1) = p_0(p_1(p_0(0))$, $omega + 1 = psi_0(1) + psi_0(0)$,
-  $p_0(Omega 2) = p_0(p_1(p_1(0))$, $omega 2 = psi_0(1) + psi_1(0)$,
-  $p_0(Omega 3) = p_0(p_1(p_1(p_1(0)))$, $omega 3 = psi_0(1) + psi_1(0) + psi_1(0)$,
-  $p_0(Omega_2) = p_0(p_2(0))$, $omega^2 = psi_0(2)$,
-  $p_0(Omega_omega) = p_0(p_(p_0(Omega)) (0)) = p_0(p_(p_0(p_1(0)))(0))$, $omega^omega = psi_0(omega) = psi_0(psi_0(1))$,
-  $p_0(Omega_(omega + 1)) = p_0(p_(p_0(Omega + 1)) (0)) = p_0(p_(p_0(p_1(p_0(0))))(0))$, $omega^(omega+1) = psi_0(omega+1)$,
-  $p_0(Omega_(omega 2)) = p_0(p_(p_0(Omega 2)) (0)) = p_0(p_(p_0(p_1(p_1(0))))(0))$, $omega^(omega 2) = psi_0(omega 2)$,
-  $p_0(Omega_(omega^2)) = p_0(p_(p_0(Omega_2)) (0)) = p_0(p_(p_0(p_2(0)))(0))$, $omega^omega^2 = psi_0(omega^2)$,
-  $p_0(Omega_(omega^omega)) = p_0(Omega_(p_0(Omega_(omega)))) = p_0(Omega_(p_0(Omega_(p_0(Omega)))))$, $omega^omega^omega = psi_0(omega^omega)$,
-  $p_0(Omega_(omega^omega^omega)) = p_0(Omega_(p_0(Omega_(omega^omega)))) = p_0(Omega_(p_0(Omega_(p_0(Omega_(p_0(Omega)))))))$, $omega^omega^omega^omega = psi_0(omega^omega^omega)$,
-  $p_0(Omega_Omega) = p_0(Omega_(p_1(0)))$, $e0 = psi_0(Omega)$,
-  $p_0(Omega_(Omega+1)) = p_0(Omega_(p_1(0)))$, $e0 = psi_0(Omega)$,
+  table.header([*Weak Buchholz (sequence)*], [*Regular Buchholz*]),
+  $(0)$, $1$,
+  $(0,0)$, $2$,
+  $(0,0,0)$, $3$,
+  $(0,1)$, $omega$,
+  $(0,1,0)$, $omega+1$,
+  $(0,1,0,0)$, $omega+2$,
+  $(0,1,0,1)$, $omega 2$,
+  $(0,1,0,1,0,1)$, $omega 3$,
+  $(0,1,1)$, $omega^2$,
+  $(0,1,1,1)$, $omega^3$,
+  $(0,2)$, $omega^omega$,
+  $(0,2,0)$, $omega^omega+1$,
+  $(0,2,0,1)$, $omega^omega+omega$,
+  $(0,2,0,2)$, $omega^omega 2$,
+  $(0,2,1)$, $omega^(omega+1)$,
+  $(0,2,1,1)$, $omega^(omega+2)$,
+  $(0,2,1,2)$, $omega^(omega 2)$,
+  $(0,2,1,2,1,2)$, $omega^(omega 3)$,
+  $(0,2,2)$, $omega^(omega^2)$,
+  $(0,2,2,1,2,2)$, $omega^(omega^2 2)$,
+  $(0,2,2,2)$, $omega^(omega^3)$,
+  $(0,3)$, $omega^omega^omega$,
+  $(0,4)$, $omega^omega^omega^omega$,
+  $(0,omega)$,$e0$,
 
 )
+#conjecture[
+  $p_0(Omega_n dot m) = psi_0^n (m)$ for $n in NN$, where $psi^n$ refers to iteration of Buchholz's $psi$.
+]
+// #proof[
+//   Base case: $p_0(Omega_1) = omega = psi_0^1(1)$
 
+//   Successor case: If $p_0(Omega_n m) = psi_0^n (m)$, then $c_0(Omega m) = C_0(psi_0^n (m))$
+
+//   $c_0(Omega_n dot (m+1)) = c_0(Omega_n m) union {p_nu (xi) | nu <= n "and" xi in c_0(Omega_n m)}$
+
+//   $C_0(psi_0^n (m+1)) = C_0()$
+// ]
+
+#table(
+  columns: (auto, auto),
+  inset: 0.75em,
+  align: horizon,
+  table.header([*Weak Buchholz (sequence)*], [*Regular Buchholz*]),
+  $(0,omega)$,$e0$,
+  $(0,omega,0,omega)$,$e0 2$,
+  $(0,omega,1)$,$e0 omega = omega^(e0+1)$,
+  $(0,omega,1,0,omega,1)$,$e0 omega 2$,
+  $(0,omega,1,1)$,$e0 omega^2$,
+  $(0,omega,1,2)$,$e0 omega^omega$,
+  $(0,omega,1,3)$,$e0 omega^omega^omega$,
+  $(0,omega,1,omega)$,$e0^2$,
+  $(0,omega,1,omega,1,omega)$,$e0^3$,
+  $(0,omega,2)$,$e0^omega$,
+  $(0,omega,3)$,$e0^e0^omega$,
+  $(0,omega,omega)$,$epsilon_1$,
+  $(0,omega,omega,omega)$,$epsilon_2$,
+  $(0,omega+1)$,$epsilon_omega$,
+  $(0,omega+1,omega)$,$epsilon_(omega+1)$,
+  $(0,omega+1,omega,omega+1)$,$epsilon_(omega 2)$,
+  $(0,omega+1,omega+1)$,$epsilon_(omega^2)$,
+  $(0,omega+2)$,$epsilon_(omega^omega)$,
+  $(0,omega+3)$,$epsilon_(omega^omega^omega)$,
+  $(0,omega 2)$,$epsilon_(e0)$,
+  $(0,omega 3)$,$epsilon_(epsilon_e0)$,
+  $(0,omega^2)$,$z0$,
+)
 == Address Notation
-
+[WIP]
 == Sudden Sequence System
+[WIP]

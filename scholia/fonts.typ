@@ -8,10 +8,11 @@
   body: ("Libertinus Serif",),
   math: ("New Computer Modern Math",),
   heading: ("Libertinus Serif",),
-  sans: ("Optima",), // the informal "intuition voice"
-  // sans: ("Libertinus Serif",), // the informal "intuition voice"
-  mono: ("Menlo", "DejaVu Sans Mono"),
-  cjk: ("Songti SC",), // appended after body/sans for 中文 glyph fallback
+  // sans: ("Optima",), // the informal "intuition voice"
+  // sans: ("BC Sklonar",), // the informal "intuition voice"
+  sans: ("Libertinus Serif",), // the informal "intuition voice"
+  mono: ("DejaVu Sans Mono",),
+  cjk: (), // appended after body/sans for 中文 glyph fallback
 )
 
 // shallow-merge user overrides over the defaults
