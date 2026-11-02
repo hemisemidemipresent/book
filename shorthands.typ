@@ -1,15 +1,16 @@
 #import "scholia/lib.typ": *
-#let warning(content) = remark(content)
+// #let warning(content) = remark(content)
 // #let proof(name: none, content) = corollary(content, number: "", name: name)
 
 
 
-#import "@preview/cetz:0.4.2"
-#import "@preview/mannot:0.3.2": annot, annot-cetz, mark
-#import "@preview/fletcher:0.5.8": diagram, edge, node
+#import "@preview/cetz:0.5.3"
 #import "@preview/tdtr:0.5.5": *
-#import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-point-from
+#import "@preview/fletcher:0.5.8": diagram, edge, node
+#import "@preview/fletcher:0.5.8" // for the raw `fletcher` value used in pinit
+#import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-point-from, pinit-place, pinit-fletcher-edge
 #import "@preview/xarrow:0.4.0": *
+#import "@preview/mannot:0.3.2": annot, annot-cetz, mark
 
 // tree with circles
 #let custom-tree-graph = tidy-tree-graph.with(
@@ -98,7 +99,7 @@
   dx: -0.125em,
   dy: -1em,
   extended-width: 0.25em,
-  fill: color.lighten(90%),
+  fill: color.transparentize(90%),
   stroke: color + 0.075em,
 )
 
@@ -125,17 +126,17 @@
 #let fuchsiaf(content) = text(content, fill: fuchsia)
 #let pinkf(content) = text(content, fill: pink)
 #let lilacf(content) = text(content, fill: lilac)
-#let grayf(content) = text(content, fill: gray)
+#let grayf(content) = text(content, fill: color.rgb("#777777"))
 #let blackf(content) = text(content, fill: black)
 #let rainbowf(content) = text(content, fill: gradient.linear(
   ..color.map.rainbow,
 ))
 
 // alignment
-#let hbox(..items, alignment: center) = [
-  #set align(alignment)
+#let hbox(..items, alignment: horizon) = [
+  #set align(center)
   #box[
-    #set align(horizon)
+    #set align(alignment)
     #stack(
       dir: ltr,
       spacing: 1em,
@@ -143,10 +144,9 @@
     )
   ]
 ]
-#let vbox(..items, alignment: center) = [
+#let vbox(..items, alignment: horizon + center) = [
   #set align(alignment)
   #box[
-    #set align(horizon)
     #stack(
       dir: ttb,
       spacing: 1em,
@@ -184,9 +184,9 @@
 #let Lim = $"Lim"$ // proper class of all limit ordinals
 
 // Ordinal Notations
-#let zero = $fira(0)$
-#let plus = $fira(+)$
-#let wpow(content) = $fira(omega)^#content$
+#let zero = $overline(0)$
+#let plus = $tiny$
+#let wpow(content) = $overline(omega)^#content$
 #let OT = $O T$ // set of all ordinal terms
 // BOCF Ordinal notations
 #let PT = $P T$ // set of principal terms
@@ -391,7 +391,7 @@
     align(top+ left)[#text(content, fill: color)],
     enclose: enclose,
     corner-radius: 4pt,
-    inset: 0.2em,
+    inset: 0.05em,
     stroke: color,
     fill: color.transparentize(90%),
     snap: -1,

@@ -439,79 +439,23 @@ However, I'm going to skip straight to the veblen function with _transfinitely_ 
 
 == Transfinitary Veblen function
 
-=== Finitely Supported functions
-#let fsarrow = $scripts(arrow.bar.r)_0$ // arrow for finitely supported functions, basically only used in this section
+
+// prove that all these (veblen) functions are normal
+
+=== Definition
 #definition[
-    A function $f:X arrow.bar.r Y$ if a *finitely supported* if there are only _finitely many_ values of $x in X$ such that $f(x) != 0$ (assuming $0 in Y$).
+    The multivariate Veblen function is the function $phi: (Ord -> Ord) arrow.r.bar Ord$ defined as follows.
 
-    We call the set of values $x in X$ such that $f(x)!=0$ the _support_ of the function.\
-    ${x|x in X "and" f(x)!=0}$)
-
-    If  $f:X arrow.bar.r Y$ is finitely supported, we write it as $f:X fsarrow Y$.
-]
-
-#example[
-    $
-        f(beta) = cases(
-            2 "if" beta = 0,
-            3 "if" beta = 1,
-            0 "else"
-        )
-    $
-    is an example of a finitely supported function from $Ord fsarrow Ord$
-]
-
-We use finitely supported functions for this as our veblen function will now _take in_ a finitely supported function $f: Ord fsarrow Ord$,
-so our veblen function can be thought of as $phi: (Ord fsarrow Ord) arrow.r.bar Ord$.
-
-#example[
-    In our previous example, we defined an $f$ where $f(0)=2, f(1)=3, f("anything else") = 0$. Then
-    $
-        phi(f) = phi(f(1),f(0)) = phi(3,2)
-    $and in general, the arguments are arranged "right to left":
-    $
-        phi(f) = phi(...,f(2),f(1), f(0))
-    $
-]
-
-The easiest way to create a new finitely supported function from another is to "update" one of their values:
-
-#definition[
-    For a finitely supported function $f$, $f[alpha@beta]$ is defined as such:
+    Let $f: Ord -> Ord$. For ordinals $alpha, beta$, define the *update* $f[alpha@beta]$ as:
     $
         f[alpha@beta](xi) := cases(
             f(xi) &"if" xi!=beta,
             alpha &"if" xi=beta
         )
     $
+    and the *degree* $deg(f)$ as the smallest $d in Ord$ with $f(d) != 0$ (when such a $d$ exists).
 
-    You can think of $f[alpha@beta]$ as "$f$ with $alpha$ at $beta$".
-
-    As shorthands:
-    + If $f(xi) = 0$ for all $xi$, i.e., $f$ is the "zero function", then $f[alpha@beta]$ can be written as just $[alpha@beta]$
-    + $f[alpha_1@beta_1][alpha_2@beta_2]...[alpha_n@beta_n]$ can be written as $f[alpha_1@beta_1,alpha_2@beta_2,...,alpha_n@beta_n]$
-]
-
-#proposition[
-    The set of all finitely supported functions $Ord fsarrow Ord$ is well-ordered as such:
-
-    For two finitely supported functions $f,g : Ord fsarrow Ord$, $f < g$ if for some ordinal $alpha$:
-    + $f(beta) = g(beta)$ for all $beta < alpha$, and
-    + $f(alpha) < g(alpha)$
-]
-This should be fairly easy to show, it is quite similar to how $NN^2$ is well-ordered.
-
-#definition[
-    The *degree* $deg(f)$ of a finitely supported function $f: X fsarrow Y$ is the smallest $d in X$ such that $f(d) != 0 $
-    (i.e. the smallest element of $X$ that is in the support of $f$)
-]
-// prove that all these (veblen) functions are normal
-
-=== Definition
-#definition[
-    The multivariate Veblen function is the function $phi: (Ord fsarrow Ord) arrow.r.bar Ord$ defined as follows:
-
-    Let $f:Ord fsarrow Ord$, and let $g = f[0@0]$. If $g$ is the zero function, we set $phi(f) = omega^f(0)$.
+    Let $g = f[0@0]$. If $g$ is the zero function, we set $phi(f) = omega^f(0)$.
 
     Otherwise, let $d = deg(g)$. We define $phi(f)$ as the $(1+f(0))^"th"$ common fixed point of the functions
     $phi(g[alpha@d, #o@d']) = #o$ for all $alpha < f(d)$ and $d' < d$.
@@ -550,7 +494,7 @@ This should be fairly easy to show, it is quite similar to how $NN^2$ is well-or
 
 But how do we even know that these fixed points exist? We need to first show that the multivariate veblen are all normal functions.
 #proposition[
-    If $f : Ord fsarrow Ord$, and $deg(f) >= d$, then $g(alpha) = phi(f[alpha@d])$ is a non-negative normal function.
+    If $f : Ord -> Ord$, and $deg(f) >= d$, then $g(alpha) = phi(f[alpha@d])$ is a non-negative normal function.
 
 ]
 
@@ -591,7 +535,7 @@ We do have to first show that $phi([1@alpha])$ is normal before we know that suc
 ]
 === Schütte's Klammersymbolen
 
-This is another way to write the veblen function with transfinitely many arguments. If we have a finitely covered function $f$ like so:
+This is another way to write the veblen function with transfinitely many arguments. If we have a function $f$ like so:
 
 $
     f(xi) = cases(

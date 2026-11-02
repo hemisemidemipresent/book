@@ -4,18 +4,6 @@
 Buchholz's *Ordinal Collapsing Function* (BOCF) is a way for us to create even larger (countable) ordinals.
 Ironically, to make these larger ordinals, we will be using even larger _uncountable_ ordinals to get there.
 
-But first, how exactly are ordinals of higher cardinality ($omega_1$, $omega_2, ...$) defined?
-Let's first define the _successor cardinal_ of $aleph_0$, $aleph_1$, and its assigned ordinal $omega_1$ as *the set of all ordinals whose cardinality $<=aleph_0$*:
-$
-    aleph_1 = omega_1 = {alpha in Ord : |alpha| <= aleph_0}
-$
-where $|alpha|$ represents the cardinality of an ordinal $alpha$.
-Similarly, we have the cardinal $aleph_2$ and its assigned ordinal $omega_2$ to be the set of all ordinals whose cardinality is $<=aleph_1$.
-We can repeat this to make $aleph_3, aleph_4, ...$. For a limit ordinal $lambda$, we define $aleph_lambda$ as such:
-$
-    aleph_lambda = union.big_(beta<lambda) aleph_beta
-$
-
 
 #definition[Buchholz's $psi$ function][
   Let $Omega_nu$ be defined as such:
@@ -361,12 +349,15 @@ In general, we can relate Buchholz's function to the Veblen function as such:
     psi_0(Omega^alpha dot (1+beta)) = phi(alpha,beta)
 $]
 #proof[
-    [WIP] probably shift to some appendix cause its quite long I think.
+    [WIP]
 ]
 We can generalize this to the extended veblen function as such:
 #proposition[$
     psi_0(Omega^((Omega^n alpha_n + ... + Omega alpha_1 + alpha_0)) (1+beta)) = phi(alpha_n, ..., alpha_1, alpha_0 ,beta)
 $]
+#proof[
+    [WIP]
+]
 You can verify that these expressions containing $Omega$ satisfies $alpha in C_0(alpha)$ by expressing them in terms of $psi_1$:
 $
     psi_1(0) &= Omega\
@@ -529,31 +520,7 @@ because $Omega^2 = 1 + Omega^2 = psi_1(Omega) in C_0(Omega^2)$
         So $psi_0(psi_1(psi_2(Omega_3))) = psi_0(psi_1(Omega_3))$ are both not normal form.
 ]
 
-Before we go into the fundamental sequences of $psi$, we first introduce a concept known as #keyword[cofinality]:
-#definition[
-  The #keyword[cofinality] of an ordinal $alpha$, denoted $cof alpha$, is the *least cardinal number* $kappa$ such that there exists a subset $S subset.eq alpha$ of cardinality $kappa$ where $alpha$ is smallest ordinal strictly greater than every element in $S$.
-]
 
-#example[
-  Find the cofinality of
-  + $omega 2$
-  + $omega 2 + 3$
-  + $omega_1 = Omega$
-
-  Answers:
-  + Let $S = {omega + n | n in NN} subset omega 2$. $S$ has a cardinality of $omega$.
-
-    However, we still need to rule out the possibility that there might be a subset $S$ of finite cardinality (i.e. cardinality $<omega$) that still satisfies the criteria that $omega 2$ is the smallest ordinal greater than every element in $S$
-
-    In a subset $S$ which has a nonzero finite cardinality, there is a largest element $beta$, and its successor $beta + 1$
-    is the smallest ordinal greater than all elements of the subset $S$ while being less than $omega 2$. Therefore $S$ can't have nonzero finite cardinality.
-
-    If $S$ has a cardinality of $0$ (i.e. $S = emptyset = {}$), then $0$ is the smallest ordinal greater than all elements in $S$. Therefore $S$ can't have a cardinality of $0$.
-
-    Therefore the smallest cardinality of $S$ where $omega 2$ is the least ordinal greater than all elements in $S$ is $omega$.
-  + $S = {omega 2 + 2} subset omega 2 + 3$, and $S$ has a cardinality of $1$. $S$ can't have a cardinality of $0$ since the smallest ordinal larger than nothing is $0$.
-  + $omega_1$ (and its associated cardinal $aleph_1$) is defined as the set of all ordinals whose cardinality is $<=aleph_0$. So the smallest subset where $omega_1$ is the
-]
 
 Now onto fundamental sequences. A fundamental sequence for an ordinal number $alpha$ with cofinality $cof(alpha) = beta$ is a strictly increasing sequence
 $(alpha[0], alpha[1], ...)$ with length $beta$ and limit $alpha$ (i.e. $alpha = sup{alpha[eta] | eta < beta}$)

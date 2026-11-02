@@ -15,13 +15,12 @@ Editorial Notes
 - yap more for a more conversational style
 - more consistent color scheme
 - phase out tidy trees when not necessary as they take up a lot of compile time
-- Consider just biting the bullet and not use $psi$ in a different font for ordinal notations (its really ugly), instead using D or p or something else
 
 Potential new topics, though these may be too hard to fit within the general "skill level" of the book.
 - Inaccessible cardinals, Mahlo Cardinals, Weakly Compact Cardinals, Reflection, Stability and whatever higher OCFs can use them
-- deeper dive into BMS
+- BMS termination proof
+- Y sequence (very annoying though)
 - Laver tables (too cutting edge)
-- y sequence (little mathematical analysis)
 - Proof Theoretic Ordinals (though ordinal analysis might be way too technical to be summarized in a chapter and require prior reading of several textbooks)
 
 Potential ideas:

@@ -116,14 +116,17 @@ Before we define that, let's first have a standard way to express ordinals $<=e0
 
 The basic rules of CNF is that you can only use addition and the "$omega$ power" function $omega^circle.filled (alpha) = omega^alpha$.
 
-Note that what exactly the $alpha_n$ in $omega^(alpha_n)$ is written as is not enforced, so $omega^(1+omega)$ is technically a valid way to write $omega^omega$ in CNF. Another way to illustrate it is that everything in #redf[*red*] is enforced, while those in *black* are not:
+Note that what exactly the $alpha_n$ in $omega^(alpha_n)$ is written as is not enforced, so $omega^(1+omega)$ is technically a valid way to write $omega^omega$ in CNF. Another way to illustrate it is that everything in #redf[*red*] is enforced, while everything else isn't:
 
-
-$
-omega^omega + omega^2 dot 2 + omega dot 3
-&= redf(omega^blackf(omega)+omega^blackf(2)+omega^blackf(2)+omega^blackf(1)+omega^blackf(1)+omega^blackf(1))\
-&= redf(omega^blackf(1+omega)+omega^blackf(1+1)+omega^blackf(omega^0 + omega^0) + omega^blackf(omega^0) + omega^blackf(S(0)) + omega^blackf("the smallest ordinal greater than 0"))
-$
+#[
+  #let w = $redf(omega)$
+  #let plus = $redf(+)$
+  $
+  omega^omega + omega^2 dot 2 + omega dot 3
+  &= #w^omega plus #w^2 plus #w^2 plus #w^1 plus #w^1 plus #w^1\
+  &= #w^(1+omega) plus #w^(1+1) plus #w^(omega^0 + omega^0) plus #w^(omega^0) plus #w^(S(0)) plus #w^"the smallest ordinal greater than 0"\
+  $
+]
 
 
 Now that we have a standardized way to uniquely write each ordinal, we can finally go into specifying fundamental sequences. The usual way to define these fundamental sequences based on Cantor Normal Form is the *Wainer Hierarchy*.
@@ -204,19 +207,19 @@ Aside from the fast-growing hierarchy, we have other slower hierarchies, though 
   *Slow-growing hierarchy* (SGH):
   + $g_0(n):=0$
   + $g_(alpha+1)(n):=g_alpha (n) +1$
-  + $g_alpha (n) = g_alpha[n]$ when $alpha$ is a limit ordinal
+  + $g_alpha (n) = g_alpha[n] (n)$ when $alpha$ is a limit ordinal
 ]
 
 #definition[
   *Middle-growing hierarchy* (MGH):
   + $m_0(n):=n+1$
   + $m_(alpha+1)(n):= m_alpha^2(n) = m_alpha (m_alpha (n))$
-  + $m_alpha (n) := m_alpha[n]$ when $alpha$ is a limit ordinal
+  + $m_alpha (n) := m_alpha[n] (n)$ when $alpha$ is a limit ordinal
 ]
 
 #definition[
   *Hardy hierarchy* (HH):
   + $H_0(n):=n$
   + $H_(alpha+1)(n):= H_alpha (n+1)$
-  + $H_alpha (n) := H_alpha[n]$ when $alpha$ is a limit ordinal
+  + $H_alpha (n) := H_alpha[n] (n)$ when $alpha$ is a limit ordinal
 ]

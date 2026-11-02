@@ -22,11 +22,11 @@ Of course, we also need to define some ordering of these strings too.
 
   The ordinal notation here is a string consisting of finitely many of the following symbols:
 
-  (We use a different font to highlight the fact that these are not true ordinals)
+  (We use overlines and slightly different symbols to show the fact that these are not true ordinals)
 
   - #zero
   - #plus
-  - The function $fira(omega^#o \() alpha fira(\))$ which can also be written as $wpow(alpha)$
+  - The function $wpow(#o)(alpha)$ which can also be written as $wpow(alpha)$
 
   The ICNF ordinal notation $o(alpha)$ for an ordinal $alpha < e0$ is:
   $
@@ -51,52 +51,52 @@ Of course, we also need to define some ordering of these strings too.
   &"(convert to CNF within "o()")"$
 ]
 
-#definition[
-  Here we will define a recursive ordering for the ICNF ordinal notation. We define the following inductively:
-  + the set $OT_(=k)$ of ordinal notations of height $k$,
-  + the set $OT_(<=k)$ of ordinal notations of height $<=k$,
-  + an ordering $scripts(prec)_k$ on $O_(<=k)$
 
-  The sets $OT_(=k)$ and $OT_(<=k)$ are defined as such:
-  + $zero$ is the only ordinal notation of height 0, so $OT_(=0) = OT_(<=0) = {zero}$, and $scripts(prec)_0 = {}$, i.e., $zero scripts(prec.not)_0 zero$
+Here we will define a recursive ordering for the ICNF ordinal notation. We define the following inductively:
++ the set $OT_(=k)$ of ordinal notations of height $k$,
++ the set $OT_(<=k)$ of ordinal notations of height $<=k$,
++ an ordering $scripts(prec)_k$ on $O_(<=k)$
 
-  + If $OT_(=k), OT_(<=k), scripts(prec)_k$ are defined, then the set $OT_(=k+1)$, the set of all ordinal notations of height $k+1$, is defined as:
-    $
-      wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n))
-    $
-    where $al(1) in OT_(=k)$, and $al(1) scripts(succ.eq)_k al(2) scripts(succ.eq)_k ... scripts(succ.eq)_k al(n)$ ($al(i) in OT_(<=k)$).
+The sets $OT_(=k)$ and $OT_(<=k)$ are defined as such:
++ $zero$ is the only ordinal notation of height 0, so $OT_(=0) = OT_(<=0) = {zero}$, and $scripts(prec)_0 = {}$, i.e., $zero scripts(prec.not)_0 zero$
 
-    We color greek symbols in #greenf[*green*] to represent ordinal notations, rather than ordinals. Note that those colored in #redf[*red*] still represents the symbols themselves. To use a programming analogy, symbols in #greenf[*green*] are like variables containing strings (specifically, ordinal notation strings).
++ If $OT_(=k), OT_(<=k), scripts(prec)_k$ are defined, then the set $OT_(=k+1)$, the set of all ordinal notations of height $k+1$, is defined as:
+  $
+    wpow(al(1)) plus wpow(al(2)) plus ... plus wpow(al(n))
+  $
+  where $al(1) in OT_(=k)$, and $al(1) scripts(succ.eq)_k al(2) scripts(succ.eq)_k ... scripts(succ.eq)_k al(n)$ ($al(i) in OT_(<=k)$).
 
-  The order $scripts(prec)_(k+1)$ on $OT_(<k+1)$ is defined as such:
+  We color greek symbols in #greenf[*green*] to represent ordinal notations, rather than ordinals. Note that those colored in #redf[*red*] still represents the symbols themselves. To use a programming analogy, symbols in #greenf[*green*] are like variables containing strings (specifically, ordinal notation strings).
 
-  - Case 1: $alphag$ and $betag$ are both of height $<=k$ ($alphag "and" betag in OT_(<=k)$).
+The order $scripts(prec)_(k+1)$ on $OT_(<k+1)$ is defined as such:
 
-    In this case, we just use $scripts(prec)_k$ to compare them, i.e. $alphag scripts(prec)_(k+1) betag$ if $alphag scripts(prec)_k betag$.
+- Case 1: $alphag$ and $betag$ are both of height $<=k$ ($alphag "and" betag in OT_(<=k)$).
 
-  - Case 2: $alphag$ is of height $<=k$ but $betag$ is of height $k+1$ ($alphag in OT_(<=k)$ and $betag in OT_(=k+1)$). In this case, $alphag scripts(prec)_(k+1) betag$
+  In this case, we just use $scripts(prec)_k$ to compare them, i.e. $alphag scripts(prec)_(k+1) betag$ if $alphag scripts(prec)_k betag$.
 
-  - Case 3: $alphag$ and $betag$ are both of height $k+1$.
+- Case 2: $alphag$ is of height $<=k$ but $betag$ is of height $k+1$ ($alphag in OT_(<=k)$ and $betag in OT_(=k+1)$). In this case, $alphag scripts(prec)_(k+1) betag$
 
-    In this case, we can express $alphag$ and $betag$ as such they are of the form:
-    $
-      alphag & = wpow(al(1)) plus ... plus wpow(al(n)) \
-       betag & = wpow(be(1)) plus ... plus wpow(be(m)) \
-    $
+- Case 3: $alphag$ and $betag$ are both of height $k+1$.
 
-    We order this lexicographically, comparing $al(1)$ and $be(1)$. If they are equal, move onto $al(2)$ and $be(2)$, and if they are still equal, move on until either you find a $al(i) prec be(i)$ or, if all exponents are equal, that $alphag$ has less terms than $betag$. A formal way to write this is:
+  In this case, we can express $alphag$ and $betag$ as such they are of the form:
+  $
+    alphag & = wpow(al(1)) plus ... plus wpow(al(n)) \
+      betag & = wpow(be(1)) plus ... plus wpow(be(m)) \
+  $
 
-    $alphag scripts(prec)_(k+1) betag$ if either of the following hold:
-    - $al(i) = be(i)$ for all $i<=j$ and $j = n < m$
+  We order this lexicographically, comparing $al(1)$ and $be(1)$. If they are equal, move onto $al(2)$ and $be(2)$, and if they are still equal, move on until either you find a $al(i) prec be(i)$ or, if all exponents are equal, that $alphag$ has less terms than $betag$. A formal way to write this is:
 
-      e.g. $wpow(wpow(zero)) plus wpow(zero) scripts(prec)_2 wpow(wpow(zero)) plus wpow(zero) plus wpow(zero)$, here $n=2, m=3, j=n=2$.
+  $alphag scripts(prec)_(k+1) betag$ if either of the following hold:
+  - $al(i) = be(i)$ for all $i<=j$ and $j = n < m$
 
-    - $al(i) = be(i)$ for all $i<=j$ and $al(j+1) < be(j+1)$, $j<n$
+    e.g. $wpow(wpow(zero)) plus wpow(zero) scripts(prec)_2 wpow(wpow(zero)) plus wpow(zero) plus wpow(zero)$, here $n=2, m=3, j=n=2$.
 
-      e.g. $wpow(wpow(zero)) plus wpow(zero) scripts(prec)_2 wpow(wpow(zero)) plus wpow(wpow(zero))$, here $j=1$
+  - $al(i) = be(i)$ for all $i<=j$ and $al(j+1) < be(j+1)$, $j<n$
 
-  Finally, we can define the set of all ordinal notations $OT=OT_(<=0) union OT_(<=1) union OT_(<=2) union ...$, and an ordering $prec = scripts(prec)_0 union scripts(prec)_1 union scripts(prec)_2 union ...$
-]
+    e.g. $wpow(wpow(zero)) plus wpow(zero) scripts(prec)_2 wpow(wpow(zero)) plus wpow(wpow(zero))$, here $j=1$
+
+Finally, we can define the set of all ordinal notations $OT=OT_(<=0) union OT_(<=1) union OT_(<=2) union ...$, and an ordering $prec = scripts(prec)_0 union scripts(prec)_1 union scripts(prec)_2 union ...$
+
 
 We still have to prove that ordering $prec$ on the set OT is a well-ordering. We will assume that it is a strict linear ordering -- the proof of that is left as an exercise to the reader (totally not because I'm lazy).
 
@@ -648,7 +648,7 @@ I added a third column for the PrSS "hydra" to show how elements in the sequence
   align: left + horizon,
   inset: 0.75em,
   table.header([*Ordinal*], [*Ordinal Notation*], [*PrSS tree*], [*PrSS*]),
-  $0$, $zero$, [```•```], $()$,
+  $0$, $zero$, [``` •```], $()$,
   $1$,
   $wpow(zero)$,
   [```
@@ -1035,6 +1035,7 @@ This property also applies for the root node, for when a sequence has multiple $
           color.teal,
           // align(top+ left)[#tealf[$B$]],
           content: $B$,
+          inset: 0.5em
         )
       ),
 

@@ -1,4 +1,6 @@
 #import "../shorthands.typ": *
+#import "../scholia/colors.typ": palettes
+
 = Ordinal Notations up to #BO
 
 Technically Buchholz's OCF goes up to #TFBO but as we'll see later, #BO is a more "natural" stopping point.
@@ -14,6 +16,8 @@ such that $(OT, prec)$ is order isomorphic to $(C_0(#E),in)$
   #let t = pinkf[*$t$*]
 
   Let $T_B$ be the set of terms and $PT$ be the set of all _prinicpal terms_ (the terms in $PT$ are associated to additively principal ordinals).
+
+  Like ICNF (for ordinal notations $<e0$), we similarly constrain our symbols to $zero$, $plus$, and the family of functions $D_mu (t)$ where $mu$ is an ordinal $<= omega$
 
   - $zero in T$
   - Given a term $t in T$, $mu <=omega$, $bocf(mu, t) in T "and" PT$
@@ -148,38 +152,6 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
 
 
 == Buchholz's Hydra
-
-#let buchholz-hydra = tidy-tree-graph.with(
-  draw-node: (
-    tidy-tree-draws.circle-draw-node,
-    tidy-tree-draws.label-match-draw-node.with(
-      matches: (
-        red: (fill: red),
-        orange: (fill: orange),
-        green: (fill: green),
-        blue: (fill: aqua),
-        "none": (stroke: 0pt),
-      ),
-    ),
-    // (stroke: 0pt),
-  ),
-  draw-edge: (
-    // (.., edge-label) => if edge-label != none { (label: text(green)[#edge-label]) },
-    tidy-tree-draws.metadata-match-draw-edge.with(
-      matches: (
-        red: (stroke: red + 0.75pt),
-        orange: (stroke: orange + 0.75pt),
-        green: (stroke: green + 0.75pt),
-        blue: (stroke: blue + 0.75pt),
-        "none": (stroke: 0pt),
-      ),
-      default: (stroke: black + 0.5pt),
-    ),
-    (marks: "-"),
-  ),
-  spacing: (10pt, 25pt),
-  node-inset: 4pt,
-)
 
 #definition[
   This is somewhat similar to the Kirby-Paris hydra game we have earlier, but each node is labelled with an ordinal $<= omega$, the child nodes of the root must be labelled 0.
@@ -500,90 +472,7 @@ By restricting Buchholz Hydra to only those corresponding to $OT$ (rather than a
 
 $OT$ is defined as all $bocf(v,a)$ such that $ternary(a,v,a)$ (and $v <= omega$),
 
-=== Termination
-
-Again, we show that "expansion" of the hydra always decreases the associated ordinal notation.
-
-
-It is obvious how case 1 would cause termination is just Kirby-Paris hydra all over again. The main complication comes from case 2:
-
-#figure[
-  #set align(horizon)
-  #stack(
-    dir: ltr,
-    buchholz-hydra[
-      - $+$ #node-attr(rotate: -180deg)
-        - $v <= u$ <red>
-          // + #metadata("red")
-          - $mu>u$
-            // + #metadata("red")
-            - $u+1$ <blue>
-            // + #metadata("red")
-            - $xi_1$
-          // + #metadata("red")
-          - $xi_0$
-    ],
-    $&= psi_v (xi_0 + psi_mu (xi_1 + psi_(u+1)(0)))\ &= psi_v (xi_0 + psi_mu (xi_1 + Omega_(u+1)))$,
-  )
-]
-And we have $S(T)$ as:
-#figure[
-  #set align(horizon)
-  #stack(
-    dir: ltr,
-    spacing: 0.5em,
-    $S(T) =$,
-    buchholz-hydra[
-      - $u$ <blue> #node-attr(rotate: -180deg)
-        - $mu$
-          - $T$ <none>
-          - $xi_1$
-        - $xi_0$
-    ],
-    $S(emptyset) =$,
-    buchholz-hydra[
-      - $u$ <blue> #node-attr(rotate: -180deg)
-        - $mu$
-          + #metadata("none")
-          - #zws <none>
-          - $xi_1$
-        - $xi_0$
-    ],
-    $= psi_u (xi_0 + psi_mu (xi_1))$,
-  )
-]
-#figure[
-  #set align(horizon)
-  #stack(
-    dir: ltr,
-    spacing: 0.5em,
-    $S^2(emptyset) =$,
-    buchholz-hydra[
-      - $u$ <blue> #node-attr(rotate: -180deg)
-        - $mu$
-          - $S(emptyset)$ <none>
-          - $xi_1$
-        - $xi_0$
-    ],
-    $=$,
-    buchholz-hydra[
-      - $u$ <blue> #node-attr(rotate: -180deg)
-        - $mu$
-          - $u$ <blue>
-            - $mu$
-              + #metadata("none")
-              - #zws <none>
-              - $xi_1$
-            - $xi_0$
-          - $xi_1$
-        - $xi_0$
-    ],
-    $&= psi_u (xi_0 + psi_mu (xi_1 + S(emptyset)))\ &= psi_u (xi_0 + psi_mu (xi_1 + psi_u (xi_0 + psi_mu (xi_1))))$,
-  )
-]
-
-Since $psi_u (alpha) < Omega_(u+1) = psi_(u+1)(0)$, which is the ordinal notation corresponding to our original $u+1$ leaf node that we cut,
-it stands to reason that cutting off the head decreases the associated ordinal notation of the whole tree as a result.
+=== Termination [WIP]
 
 == The Hyper Primitive Sequence System (HPrSS)
 
@@ -919,7 +808,7 @@ We can prove that $(OT_"HPrSS", lex)$ is order isomorphic to $(BO, in)$ in a sim
     $(0,n+1)$, $bocf(0, W_n)$, $psi_0(Omega_n)$,
   )
 ]
-=== Growth rate
+
 === Association with Buchholz Hydras
 There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hydras (unproven)
 // torturous diagram drawing
@@ -980,29 +869,32 @@ There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hy
 
   Then we draw a tree representing the parent relationships:
 
-  #figure(
-    diagram(
-      node-stroke: .1em,
-      edge-stroke: .1em,
-      spacing: (0.8em, 0.4em),
-      edge-corner-radius: 8pt,
+  #context(
+    figure(
+      diagram(
+        node-stroke: .1em + text.fill,
+        edge-stroke: .1em + text.fill,
+        spacing: (0.8em, 0.4em),
+        edge-corner-radius: 8pt,
+        axes: (ltr, btt),
 
-      node((-1, 1), `+`),
-      node((0, 0), `0`),
-      node((1, -2), `2`),
-      node((2, -4), `4`),
-      node((3, -3), `3`),
-      node((4, -5), `5`),
-      node((5, -1), `1`),
+        node((-1, -1), `+`),
+        node((0, 0), `0`),
+        node((1, 2), `2`),
+        node((2, 4), `4`),
+        node((3, 3), `3`),
+        node((4, 5), `5`),
+        node((5, 1), `1`),
 
-      edge((-1, 1), "r,u"),
-      edge((0, 0), "r,u,u"),
-      edge((0, 0), "r,u,u"),
-      edge((0, 0), "r,r,r,r,r,u"),
-      edge((1, -2), "r,u,u"),
-      edge((1, -2), "r,r,u"),
-      edge((3, -3), "r,u,u"),
-    ),
+        edge((-1, -1), "r,d"),
+        edge((0, 0), "r,d,d"),
+        edge((0, 0), "r,d,d"),
+        edge((0, 0), "r,r,r,r,r,d"),
+        edge((1, 2), "r,d,d"),
+        edge((1, 2), "r,r,d"),
+        edge((3, 3), "r,d,d"),
+      ),
+    )
   )
 
   So for example, $5$'s parent is $3$, whose parent is  $2$, whose parent is $0$.
@@ -1011,68 +903,75 @@ There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hy
   If a node's parent's value is $2$ less than its own value, we label the node $1$.
   And in general, if a node's parent's value is $n$ less than its own value, we label the node $n-1$.
   This results in the following Buchholz Hydra:
-  #figure[
-    #set text(size: 7pt)
-    #set align(horizon)
-    #stack(
-      dir: ltr,
-      // spacing: 3em,
-      diagram(
-        node-stroke: 1pt,
-        edge-stroke: 1pt,
-        spacing: (0.8em, 0.4em),
-        edge-corner-radius: 8pt,
 
-        node((-1, 1), `+`),
-        node((0, 0), `0`),
-        node((1, -2), redf[*`2`*], stroke: red),
-        node((2, -4), redf[*`4`*], stroke: red),
-        node((3, -3), `3`),
-        node((4, -5), redf[*`5`*], stroke: red),
-        node((5, -1), `1`),
+  #context[
+    #figure[
+      #set text(size: 7pt)
+      #set align(horizon)
+      #stack(
+        dir: ltr,
+        // spacing: 3em,
+        diagram(
+          node-stroke: 1pt + text.fill,
+          edge-stroke: 1pt + text.fill,
+          spacing: (0.8em, 0.4em),
+          edge-corner-radius: 8pt,
+          label-wrapper: edge => box(
+            [#edge.label],
+            inset: .2em,
+            radius: .2em,
+            fill: page.fill,
+            stroke: none
+          ),
 
-        edge((-1, 1), "r,u"),
-        edge((0, 0), "r,u,u", redf($+2$), stroke: red, label-side: center),
-        edge((0, 0), "r,r,r,r,r,u", $+1$, label-side: center, label-pos: 0.6),
-        edge((1, -2), "r,u,u", redf($+2$), stroke: red, label-side: center),
-        edge((1, -2), "r,r,u", $+1$, label-side: center),
-        edge((3, -3), "r,u,u", redf($+2$), stroke: red, label-side: center),
-      ),
-      $#h(3em) xarrow(#h(10em))$,
-      diagram(
-        node-stroke: 1pt,
-        edge-stroke: 1pt,
-        spacing: (0.8em, 0.4em),
-        edge-corner-radius: 8pt,
+          node((-1, 1), `+`),
+          node((0, 0), `0`),
+          node((1, -2), redf[*`2`*], stroke: red),
+          node((2, -4), redf[*`4`*], stroke: red),
+          node((3, -3), `3`),
+          node((4, -5), redf[*`5`*], stroke: red),
+          node((5, -1), `1`),
 
-        node((-1, 1), `+`),
-        node((0, 0), `0`),
-        node((1, -2), redf[*`1`*], stroke: red),
-        node((2, -4), redf[*`1`*], stroke: red),
-        node((3, -3), `0`),
-        node((4, -5), redf[*`1`*], stroke: red),
-        node((5, -1), `0`),
+          edge((-1, 1), "r,u"),
+          edge((0, 0), "r,u,u", redf($+2$), stroke: red, label-side: center),
+          edge((0, 0), "r,r,r,r,r,u", $+1$, label-side: center, label-pos: 0.6),
+          edge((1, -2), "r,u,u", redf($+2$), stroke: red, label-side: center),
+          edge((1, -2), "r,r,u", $+1$, label-side: center),
+          edge((3, -3), "r,u,u", redf($+2$), stroke: red, label-side: center),
 
-        edge((-1, 1), "r,u"),
-        edge((0, 0), "r,u,u", redf($+2$), stroke: red, label-side: center),
-        edge((0, 0), "r,r,r,r,r,u", $+1$, label-side: center, label-pos: 0.6),
-        edge((1, -2), "r,u,u", redf($+2$), stroke: red, label-side: center),
-        edge((1, -2), "r,r,u", $+1$, label-side: center),
-        edge((3, -3), "r,u,u", redf($+2$), stroke: red, label-side: center),
-      ),
-    )
+        ),
+        $#h(3em) xarrow(#h(10em))$,
+        diagram(
+          node-stroke: 1pt + text.fill,
+          edge-stroke: 1pt + text.fill,
+          spacing: (0.8em, 0.4em),
+          edge-corner-radius: 8pt,
+          label-wrapper: edge => box(
+            [#edge.label],
+            inset: .2em,
+            radius: .2em,
+            fill: palettes.dark.bg,
+            stroke: none
+          ),
+
+          node((-1, 1), `+`),
+          node((0, 0), `0`),
+          node((1, -2), redf[*`1`*], stroke: red),
+          node((2, -4), redf[*`1`*], stroke: red),
+          node((3, -3), `0`),
+          node((4, -5), redf[*`1`*], stroke: red),
+          node((5, -1), `0`),
+
+          edge((-1, 1), "r,u"),
+          edge((0, 0), "r,u,u", redf($+2$), stroke: red, label-side: center),
+          edge((0, 0), "r,r,r,r,r,u", $+1$, label-side: center, label-pos: 0.6),
+          edge((1, -2), "r,u,u", redf($+2$), stroke: red, label-side: center),
+          edge((1, -2), "r,r,u", $+1$, label-side: center),
+          edge((3, -3), "r,u,u", redf($+2$), stroke: red, label-side: center),
+        ),
+      )
+    ]
   ]
-
-
-  // #figure(buchholz-hydra[
-  //     - \+ #node-attr(rotate:90deg)
-  //         - 0
-  //             - 0
-  //             - 1
-  //                 - 0
-  //                     - 1
-  //                 - 1
-  // ])
 ]
 
 == The Pair Sequence System (PSS)
@@ -1148,157 +1047,174 @@ $
     Case 2 can be thought of as a special case of this rule where $Delta = mat(0; 0)$.
 ]
 That might have been too complex, so here are some examples:
-// #example[
+#example[
 
-//   Expand the following PSS matrices:
+  Expand the following PSS matrices:
 
-//   + $mat(0, 1, 2, 2; 0, 1, 1, 0)[n]$
+  + $mat(0, 1, 2, 2; 0, 1, 1, 0)[n]$
 
-//     #[
-//       The last column is $mat(2;0)$, so no ascension, just normal PrSS-like behavior:
-//       #pin-matrix("gt0","gb0", color: green)
-//       #pin-matrix("gt1","gb1", color: green)
-//       #pin-matrix("bt0","bb0", color: teal)
-//       #pin-matrix("bt1","bb1", color: teal)
-//       #pin-matrix("bt2","bb2", color: teal)
+    #[
+      The last column is $mat(2;0)$, so no ascension, just normal PrSS-like behavior:
 
-//       $
-//         // pins convention to marking out Good Roots and Bad Roots:
-//         // gt = Good root Top
-//         // gb = Good root Bottom
-//         // bt = Bood root Top
-//         // bb = Bad root Bottom
 
-//         // Coordinate convention for mannot's marks:
-//         // [ a0, a1, ... ]
-//         // [ b0, b1, ... ]
-//         mat(
-//           #pin("gt0")0, #pin("bt0")mark(1, tag: #<a1>), 2, mark(2, tag: #<a3>);
-//           mark(0, tag: #<b0>)#pin("gb0"),mark(1, tag: #<b1>),1#pin("bb0"),0
-//         )[n]
-//         =
-//         mat(
-//           #pin("gt1")0, #pin("bt1")1, 2, #pin("bt2")1, 2, ...;
-//           mark(0, tag: #<d0>)#pin("gb1"), mark(1, tag: #<d1>), 1#pin("bb1"), mark(1, tag: #<d3>), 1#pin("bb2"), ...
-//         )
-//       $
-//       #annot-cetz(
-//         (<a1>,<a3>),
-//         cetz,
-//         {
-//           import cetz.draw: *
-//           set-style(
-//             mark: (end: "straight", length: 0.2em, width: 0.2em),
-//             stroke: fuchsia + .75pt,
-//           )
-//           bezier-through("a3.north", (rel: (x: -.2, y: .15)), "a1.north")
+      $
+        // pins convention to marking out Good Roots and Bad Roots:
+        // gt = Good root Top
+        // gb = Good root Bottom
+        // bt = Bood root Top
+        // bb = Bad root Bottom
 
-//         },
-//       )
-//       #annot(<b0>, pos: bottom, dy: 0.25em, text(fill: green)[$G$])
-//       #annot(<d0>, pos: bottom, dy: 0.25em, text(fill: green)[$G$])
-//       #annot(<b1>, pos: bottom, dy: 0.25em, dx: 0.5em, text(fill: teal)[$B$])
-//       #annot(<d1>, pos: bottom, dy: 0.25em, dx: 0.5em, text(fill: teal)[$B$])
-//       #annot(<d3>, pos: bottom, dy: 0.25em, dx: 0.5em, text(fill: teal)[$B$])
-//     ]
-//   + $mat(0, 1, 2, 2; 0, 1, 1, 1)[n]$
+        // Coordinate convention for mannot's marks:
+        // [ a0, a1, ... ]
+        // [ b0, b1, ... ]
+        mat(
+          #pin("gt0")0, #pin("bt0")1, 2, #pin("c0")2;
+          0#pin("gb0"), 1, 1#pin("bb0"), 0
+        )[n]
+        =
+        mat(
+          #pin("gt1")0, #pin("bt1")1, 2, #pin("bt2")1, 2, ...;
+          mark(0, tag: #<d0>)#pin("gb1"), mark(1, tag: #<d1>), 1#pin("bb1"), mark(1, tag: #<d3>), 1#pin("bb2"), ...
+        )
+      $
+      #pin-matrix("gt0","gb0", color: green)
+      #pin-matrix("gt1","gb1", color: green)
+      #pin-matrix("bt0","bb0", color: teal)
+      #pin-matrix("bt1","bb1", color: teal)
+      #pin-matrix("bt2","bb2", color: teal)
+      #pinit-fletcher-edge(
+        fletcher, "bt0", end: "c0", bend: 30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: -9pt,
+        end-dy: -9pt,
+        stroke: fuchsia
+      )
+      #pinit-place("gb0", text(fill: green, size: 8pt)[$G$], dy: 0.67em, dx: -0.5em)
+      #pinit-place("gb1", text(fill: green, size: 8pt)[$G$], dy: 0.67em, dx: -0.5em)
+      #pinit-place("bb0", text(fill: teal, size: 8pt)[$B$], dy: 0.67em, dx: -1em)
+      #pinit-place("bb1", text(fill: teal, size: 8pt)[$B$], dy: 0.67em, dx: -1em)
+      #pinit-place("bb2", text(fill: teal, size: 8pt)[$B$], dy: 0.67em, dx: -1em)
+    ]
+  + $mat(0, 1, 2, 2; 0, 1, 1, 1)[n]$
 
-//     #[
-//       The last column is $mat(2;1)$. We find the ancestors of $2$ on the top row, which are $fuchsiaf(1)$ and $fuchsiaf(0)$ as shown by the arrows.
-//       $
-//         mat(
-//           mark(fuchsiaf(0), tag: #<a0>), mark(fuchsiaf(1), tag: #<a1>), 2, mark(2, tag: #<a3>);
-//           mark(0, tag: #<b0>), mark(1, tag: #<b1>), 1, mark(1, tag: #<b3>)
-//         )[n]
-//       $
+    #[
+      The last column is $mat(2;1)$. We find the ancestors of $2$ on the top row, which are $fuchsiaf(1)$ and $fuchsiaf(0)$ as shown by the arrows.
+      $
+        mat(
+          #pin("a0")fuchsiaf(0), #pin("a1")fuchsiaf(1), 2, #pin("a3")2;
+          0, 1, 1, 1
+        )[n]
+      $
+      #pinit-fletcher-edge(
+        fletcher, "a0", end: "a1", bend: 30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: -9pt,
+        end-dy: -9pt,
+        stroke: fuchsia
+      )
+      #pinit-fletcher-edge(
+        fletcher, "a1", end: "a3", bend: 30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: -9pt,
+        end-dy: -9pt,
+        stroke: fuchsia
+      )
 
-//       #annot-cetz(
-//         (<a0>, <a1>, <a3>, <b0>, <b1>, <b3>),
-//         cetz,
-//         {
-//           import cetz.draw: *
-//           set-style(
-//             mark: (end: "straight", length: 0.2em, width: 0.2em),
-//             stroke: fuchsia + .75pt,
-//           )
-//           bezier-through("a1.north", (rel: (x: -.15, y: .15)), "a0.north")
-//           bezier-through("a3.north", (rel: (x: -.2, y: .15)), "a1.north")
-//         },
-//       )
 
-//       Then on the bottom row to find the parent of $1$, we only search within columns that contains ancestors of $2$, colored in #fuchsiaf[fuchsia].
-//       Columns that we ignore and colored #grayf[gray].
+      Then on the bottom row to find the parent of $1$, we only search within columns that contains ancestors of $2$, colored in #fuchsiaf[fuchsia].
+      Columns that we ignore and colored #grayf[gray].
 
-//       $
-//         mat(
-//           mark(fuchsiaf(0), tag: #<a0>), mark(fuchsiaf(1), tag: #<a1>), grayf(2), mark(2, tag: #<a3>);
-//           mark(fuchsiaf(0), tag: #<b0>), mark(fuchsiaf(1), tag: #<b1>), grayf(1), mark(1, tag: #<b3>)
-//         )[n]
-//       $
+      $
+        mat(
+          #pin("a0")fuchsiaf(0), #pin("a1")fuchsiaf(1), grayf(2), #pin("a3")2;
+          #pin("b0")fuchsiaf(0), #pin("b1")fuchsiaf(1), grayf(1), #pin("b3")1
+        )[n]
+      $
+      #pinit-fletcher-edge(
+        fletcher, "a0", end: "a1", bend: 30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: -9pt,
+        end-dy: -9pt,
+        stroke: fuchsia
+      )
+      #pinit-fletcher-edge(
+        fletcher, "a1", end: "a3", bend: 30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: -9pt,
+        end-dy: -9pt,
+        stroke: fuchsia
+      )
+      #pinit-fletcher-edge(
+        fletcher, "b0", end: "b3", bend: -30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: 1pt,
+        end-dy: 1pt,
+        stroke: fuchsia
+      )
 
-//       #annot-cetz(
-//         (<a0>, <a1>, <a3>, <b0>, <b1>, <b3>),
-//         cetz,
-//         {
-//           import cetz.draw: *
-//           set-style(
-//             mark: (end: "straight", length: 0.2em, width: 0.2em),
-//             stroke: fuchsia + .75pt,
-//           )
-//           bezier-through("a1.north", (rel: (x: -.15, y: .15)), "a0.north")
-//           bezier-through("a3.north", (rel: (x: -.2, y: .15)), "a1.north")
-//           bezier-through("b3.south", (rel: (x: -.25, y: -.1)), "b0.south")
+      In this case, $fuchsiaf(0)$ is the only term in the bottom row in #fuchsiaf[fuchsia] that is $<1$, so the parent of $mat(2;1)$ is $mat(0;0)$.
+    ]
 
-//         },
-//       )
-//       In this case, $fuchsiaf(0)$ is the only term in the bottom row in #fuchsiaf[fuchsia] that is $<1$, so the parent of $mat(2;1)$ is $mat(0;0)$.
-//     ]
+    #[
+      We then have an ascension matrix of $Delta = mat(2;0)$, which results in:
 
-//     #[
-//       We then have an ascension matrix of $Delta = mat(2;0)$, which results in:
+      \
+      \
+      // #pin-matrix("gt2","gb2", color: green)
+      // #pin-matrix("gt1","gb1", color: green)
 
-//       \
-//       \
-//       // #pin-matrix("gt2","gb2", color: green)
-//       // #pin-matrix("gt1","gb1", color: green)
-//       #pin-matrix("bt3","bb3", color: teal)
-//       #pin-matrix("bt4","bb4", color: teal)
-//       #pin-matrix("bt5","bb5", color: teal)
-//       // #pin-matrix("bt1","bb1", color: teal)
-//       // #pin-matrix("bt2","bb2", color: teal)
+      // #pin-matrix("bt1","bb1", color: teal)
+      // #pin-matrix("bt2","bb2", color: teal)
 
-//       $
-//         mat(
-//           #pin("bt3")mark(0, tag: #<a0>), mark(1, tag: #<a1>), 2, mark(2, tag: #<a3>);
-//           mark(0, tag: #<b0>), mark(1, tag: #<b1>),1#pin("bb3"),mark(1, tag: #<b3>)
-//         )[n]
-//         =
-//         mat(
-//           #pin("bt4")0,1,2,#pin("bt5")2,3,4,...;
-//           0,mark(1, tag: #<d1>),1#pin("bb4"),0,mark(1, tag: #<d4>),1#pin("bb5"),...
-//         )
-//       $
-//       #annot-cetz(
-//         (<a0>, <a1>, <a3>, <b0>, <b3>),
-//         cetz,
-//         {
-//           import cetz.draw: *
-//           set-style(
-//             mark: (end: "straight", length: 0.2em, width: 0.2em),
-//             stroke: fuchsia + .75pt,
-//           )
-//           bezier-through("a1.north", (rel: (x: -.15, y: .15)), "a0.north")
-//           bezier-through("a3.north", (rel: (x: -.2, y: .15)), "a1.north")
-//           bezier-through("b3.south", (rel: (x: -.25, y: -.1)), "b0.south")
-
-//         },
-//       )
-//       // #annot(<b0>, pos: bottom, text(fill: green)[$G$])
-//       #annot(<b1>, pos: bottom, dy: 0.25em, text(fill: teal)[$B(0)$])
-//       #annot(<d1>, pos: bottom, dy: 0.25em, text(fill: teal)[$B(0)$])
-//       #annot(<d4>, pos: bottom, dy: 0.25em, text(fill: teal)[$B(1)$])
-//     ]
-// ]
+      $
+        mat(
+          #pin("bt3")#pin("A0")0, #pin("A1")1, 2, #pin("A3")2;
+          #pin("B0")0, #pin("B1")1, 1#pin("bb3"), #pin("B3")1
+        )[n]
+        =
+        mat(
+          #pin("bt4")0,1,2,#pin("bt5")2,3,4,...;
+          0,mark(1, tag: #<d1>),1#pin("bb4"),0,mark(1, tag: #<d4>),1#pin("bb5"),...
+        )
+      $
+      #pin-matrix("bt3","bb3", color: teal)
+      #pin-matrix("bt4","bb4", color: teal)
+      #pin-matrix("bt5","bb5", color: teal)
+      #pinit-fletcher-edge(
+        fletcher, "A0", end: "A1", bend: 30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: -9pt,
+        end-dy: -9pt,
+        stroke: fuchsia
+      )
+      #pinit-fletcher-edge(
+        fletcher, "A1", end: "A3", bend: 30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: -9pt,
+        end-dy: -9pt,
+        stroke: fuchsia
+      )
+      #pinit-fletcher-edge(
+        fletcher, "B0", end: "B3", bend: -30deg, "<|-",
+        start-dx: 5pt,
+        end-dx: 0pt,
+        start-dy: 1pt,
+        end-dy: 1pt,
+        stroke: fuchsia,
+      )
+      #pinit-place("bb3", text(fill: teal, size: 8pt)[$B$], dy: 0.67em, dx: -1.5em)
+      #pinit-place("bb4", text(fill: teal, size: 8pt)[$B$], dy: 0.67em, dx: -1.5em)
+      #pinit-place("bb5", text(fill: teal, size: 8pt)[$B$], dy: 0.67em, dx: -1.5em)
+    ]
+]
 
 Note that when the bottom row is entirely $0$s, we just get regular PrSS.
 
@@ -1553,15 +1469,15 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
       $
 
           &bocf(0, bocf(1, bocf(2, bocf(3, fuchsiaf(bocf(4, W_5)) + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
-          &bocf(0, bocf(1, bocf(2, bocf(3, fuchsiaf(W_5) + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
+          arrow.r.curve&bocf(0, bocf(1, bocf(2, bocf(3, fuchsiaf(W_5) + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
           &bocf(0, bocf(1, bocf(2, tealf(bocf(3, W_5 + W_4)) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
-          &bocf(0, bocf(1, bocf(2, tealf(W_5 + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
+          arrow.r.curve&bocf(0, bocf(1, bocf(2, tealf(W_5 + W_4) + bocf(3, bocf(4, W_5) + W_3) + W_2)))\
           &bocf(0, bocf(1, bocf(2, W_5 + W_4 + bocf(3, fuchsiaf(bocf(4, W_5)) + W_3) + W_2)))\
-          &bocf(0, bocf(1, bocf(2, W_5 + W_4 + bocf(3, fuchsiaf(W_5) + W_3) + W_2)))\
+          arrow.r.curve&bocf(0, bocf(1, bocf(2, W_5 + W_4 + bocf(3, fuchsiaf(W_5) + W_3) + W_2)))\
           &bocf(0, bocf(1, tealf(bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2))))\
-          &bocf(0, bocf(1, tealf(W_5 + W_4 + bocf(3, W_5 + W_3) + bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2))))\
+          arrow.r.curve&bocf(0, bocf(1, tealf(W_5 + W_4 + bocf(3, W_5 + W_3) + bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2))))\
           &bocf(0, fuchsiaf(bocf(1, W_5 + W_4 + bocf(3, W_5 + W_3) + bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2))))\
-          &bocf(0, fuchsiaf(W_5 + W_4 + bocf(3, W_5 + W_3) + bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2)))\
+          arrow.r.curve&bocf(0, fuchsiaf(W_5 + W_4 + bocf(3, W_5 + W_3) + bocf(2, W_5 + W_4 + bocf(3, W_5 + W_3) + W_2)))\
 
       $
   ]
@@ -1711,7 +1627,43 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
     )
   ]
 
-  We see that the limit of PSS is also #BO.
+  We see that the limit of PSS is also #BO. Note that this is not a formal proof of any kind.
+  There are formal proofs of PSS termination and its order isomorphism, but they are quite clunky and long.
+
+  === Hydra view of Expansion
+
+  PSS Hydras also have similar expansion rules as Buchholz Hydras:
+  + If the cut node is labelled $0$, usual PrSS-rules apply
+  + If the cut node label is $u>0$, find the bad root by searching its ancestors until you find an ancestor whose label $v$ is less than $u$.
+    That node becomes the bad root. Every node between the bad root and the cut node is part of the bad part.
+    The bad part is then attached to where the cut node would have been, with all of its nodes shifted up.
+
+  #example[
+    $mat(0,1,2,2;0,1,2,1)$
+
+    #set text(size: 8pt)
+    #hbox(
+      pss(
+        (0,1,2,2),(0,1,2,1),
+        enclosing-node(((0,0),(2,-2)),teal),
+      ),
+      xarrow(h(5em)),
+      pss(
+        (0,1,2,1,2,3),(0,1,2,0,1,2),
+        enclosing-node(((0,0),(2,-2)),teal),
+        enclosing-node(((3,-1),(5,-3)),teal),
+      ),
+      pss(
+        (0,1,2,1,2,3,2,3,4),(0,1,2,0,1,2,0,1,2),
+        enclosing-node(((0,0),(2,-2)),teal),
+        enclosing-node(((3,-1),(5,-3)),teal),
+        enclosing-node(((6,-2),(8,-4)),teal),
+      ),
+      $...$
+    )
+  ]
+  This is just another way of visually understanding PSS expansions, the underlying rules are the same.
+
 
 ]
 
@@ -1742,11 +1694,14 @@ Note that n is a term, equivalent to ω.
 WIP:
 - Explore the hydra a little
 - sgh-mgh relation to the hydra
-- sgh-mgh catching point at BO
 
 === sgh-mgh catching point
 
-We earlier showed in chapter 6, that $H_e0 (n) approx f_e0 (n)$. We will now related sgh and mgh to the rest of these hierarchies.
+We earlier showed in chapter 6, that $H_e0 (n) approx f_e0 (n)$.
+In "A Uniform Approach to Fundamental Sequences and Hierarchies" by W. Buchholz, A. Cichon and Andreas Weiermann, they showed that:
+$
+  g_BO (n) approx f_BO (n)
+$
 
 // #lemma[
 //   $

@@ -430,7 +430,7 @@ To show this, we can split non-increasing sequences into a sequence of constant 
 
     Let $y_i$ denote constant sequences in $X^*_=$. We can construct an isomorphism $f: (X^*_=)^*_lexgt arrow.r.bar X^*_>=$:
 
-    $f( (y_1,y_2,...,y_k') ) = (underbrace(x_1\,...\,x_1, "contents of" y_1), underbrace(x_2\,...\,x_2, "contents of" y_2), ..., underbrace(x_k'\,...\,x_k', "contents of" y_k'))$
+    $f( (y_1,y_2,...,y_k') ) = \(underbrace(x_1\,...\,x_1, "contents of" y_1), underbrace(x_2\,...\,x_2, "contents of" y_2), ..., underbrace(x_k'\,...\,x_k', "contents of" y_k')\)$
 
     Both sets are ordered lexicographically. $X^*_>=$ is ordered by #lex, and $(X^*_=)^*_lexgt$ is ordered lexicographically based on #lex,
     so this is an order-preserving isomorphism.

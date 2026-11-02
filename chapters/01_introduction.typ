@@ -23,15 +23,15 @@ References:
 - Googology wiki(s)
 - The googology discord (too many random scraps of messages)
 - An Introduction to Proof Theory: Normalization, Cut-elimination, and Consistency Proofs by Paolo Mancosu, Richard Zach, and Sergio Galvan
-- Zongshu Wu PrSS document on google drive
 - Buchholz, W. (1986). #link("https://epub.ub.uni-muenchen.de/3841/1/3841.pdf")["A new system of proof-theoretic ordinal functions"]. Annals of Pure and Applied Logic. 32: 195–207. doi:10.1016/0168-0072(86)90052-7.
+- Set Theory: The Third Millennium Edition by Thomas Jech
+- Inductive Definitions and Reflecting Properties of Admissible Ordinals by Wayne Richter and Peter Aczel
 - #link("https://codegolf.stackexchange.com/questions/139355/golf-a-number-bigger-than-tree3/219466#219466")[Patcail's first answer on a codegolf challenge]
 
 == Prerequisites
 
-- Set theory
+- Basic Set theory
   - Notations $union, inter, in, subset, backslash, emptyset, times$ (cartesian product)
   - Notation ${ x | P(x)}$ where $P(x)$ is a statement about $x$
-  - Set vs class
 - The Natural Numbers $NN$ (in this book we include $0 in NN$)
 - Knowledge on functions

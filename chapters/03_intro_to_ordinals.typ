@@ -211,8 +211,8 @@ It turns out that we can set $2^(aleph_0) = aleph_n$ for _any_ finite $n$, and i
 
 In ZFC, we assign each cardinal to an ordinal via *von Neumann cardinal assignment*:
 
-#definition[
-  Von Neumann cardinal assignment defines the *cardinality of a set* as the *smallest ordinal that has a bijection with the set*.
+#definition[Von Neumann cardinal assignment][
+  A cardinal $kappa$ is defined as the *smallest ordinal* that has a bijection with a set of cardinality $kappa$.
 ]
 
 Therefore by this definition, *cardinals are ordinals* and we can assign cardinals to ordinals like this: $aleph_0 = omega, aleph_1 = omega_1, aleph_2 = omega_2, ...$.

@@ -11,7 +11,6 @@
   "Ordinal Googology",
   subtitle: "The mathematics behind the strength of googological systems",
   author: "hemidemisemipresent",
-  // date: datetime.today().display("[month repr:long] [day], [year]"),
   date: "2026"
   // kicker: "Optimization · Notebook 4",
 )
@@ -34,7 +33,8 @@
 #include "chapters/05_formal_ordinals.typ"
 #include "chapters/06_ordinal_notations.typ"
 #include "chapters/07_veblen.typ"
+#include "chapters/12_formal_cardinals.typ"
 #include "chapters/08_buchholz_ocf.typ"
 #include "chapters/09_buchholz_on.typ"
 #include "chapters/10_extended_buchholz.typ"
-// #include "chapters/11_intro_to_bms.typ"
+#include "chapters/11_intro_to_bms.typ"

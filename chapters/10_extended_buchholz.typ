@@ -1,5 +1,5 @@
 #import "../shorthands.typ": *
-= Extended Buchholz's OCF [WIP]
+= Extended Buchholz's OCF
 
 Why do we have to stop at $Omega_omega$? What about $Omega_(omega+1)$? We can extend Buchholz's function as such to allow for even larger ordinals:
 
@@ -10,7 +10,7 @@ Why do we have to stop at $Omega_omega$? What about $Omega_(omega+1)$? We can ex
   + For any ordinal $xi in C_nu (alpha)$, as long as $xi < alpha$, then $ psi_mu (xi) in C_nu (alpha)$ for all #fuchsiaf($mu in C_nu (alpha)$)
   + $psi_nu (alpha) = min{gamma in Ord | gamma in.not C_nu (alpha)}$, i.e., the smallest ordinal not inside $C_nu (alpha)$
 ]
-It has the same properties as the original, just that instead of being restricted to $psi_mu$ with $mu <= omega$, we now have $mu in C_nu (alpha)$ as highlighted in red.
+It has the same properties as the original, just that instead of being restricted to $psi_mu$ with $mu <= omega$, we now have $mu in C_nu (alpha)$ as highlighted in #fuchsiaf[fuchsia].
 This is often abbreviated in the community as *EBOCF* (#strong[E]xtended #strong[B]uchholz's #strong[O]rdinal #strong[C]ollapsing #strong[F]unction)
 
 With this, we can go beyond, letting $"TFBO" = psi_0(Omega_(omega+1))$.
@@ -36,7 +36,7 @@ The normal form of EBOCF is very similar to that of BOCF:
     - $alpha_1 in C_nu_1 (alpha_1),...,alpha_n in C_nu_n (alpha_n)$
 ]
 
-The fundamental sequence rules are also very similar, the only change being Rule 4, highlighted in #fuchsiaf[fuchsia].
+The fundamental sequence rules are also very similar, the only change being Rule 4, also highlighted in #fuchsiaf[fuchsia].
 
 #definition[System of fundamental sequences for $psi$][
     For ordinals $alpha<=TFBO$ (expressed in normal form), the $eta^"th"$ term of the fundamental sequence of $alpha$, $alpha[eta]$ is defined as such:
@@ -381,7 +381,7 @@ We condense the subscripts into a sequence, so for example $p_0(p_1(p_1(p_0(p_1(
   $(0,omega 3)$,$epsilon_(epsilon_e0)$,
   $(0,omega^2)$,$z0$,
 )
-== Address Notation
-[WIP]
-== Sudden Sequence System
-[WIP]
+== Address Notation [WIP]
+
+== Sudden Sequence System [WIP]
+
