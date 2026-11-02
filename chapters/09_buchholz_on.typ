@@ -1219,7 +1219,7 @@ That might have been too complex, so here are some examples:
 Note that when the bottom row is entirely $0$s, we just get regular PrSS.
 
 === PSS Hydra
-We can correspond a PSS into its hydra form, by constructing a hydra such that for each pair, the top row represents the node's height, and the bottom row represents the node's value:
+We can correspond a PSS into its hydra form, by constructing a hydra such that for each pair, the top row represents the node's height, and the bottom row represents the node's value. (We use a monospace font to distinguish it from Buchholz Hydras or other trees)
 #[
 
 

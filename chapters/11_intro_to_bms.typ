@@ -140,74 +140,32 @@ then $(0,0,0)(1,1,1)(2,0,0)$ corresponds to $psi_0(psi_omega (1)) = psi_0(Omega_
   #table(
     columns: (auto, auto, auto),
     inset: 1em,
+    align: horizon,
     table.header([*BMS*], [*"PSS" Hydra*], [*EBOCF*]),
-    $mat(0,1,1;0,1,1;0,1,1)$, tree-from-list[
-      - $0$
-        - $omega$
-        - $omega$
-    ], $psi_0(Omega_omega 2)$,
-    $mat(0,1,2;0,1,0;0,1,0)$, tree-from-list[
-      - $0$
-        - $omega$
-          - $0$
-    ], $psi_0(psi_omega (1))$,
-    $mat(0,1,2;0,1,1;0,1,0)$, tree-from-list[
-      - $0$
-        - $omega$
-          - $1$
-    ], $psi_0(psi_omega (Omega))$,
-    $mat(0,1,2,1;0,1,1,1;0,1,0,0)$, tree-from-list[
-      - $0$
-        - $omega$
-          - $1$
-        - $1$
-    ], $psi_0(psi_omega (Omega) + Omega)$,
-    $mat(0,1,2,1,2;0,1,1,1,2;0,1,0,0,0)$, tree-from-list[
-      - $0$
-        - $omega$
-          - $1$
-        - $1$
-          - $2$
-    ], $psi_0(psi_omega (Omega) + Omega_2)$,
-    $mat(0,1,2,1,2,3;0,1,1,1,2,3;0,1,0,0,0,0)$, tree-from-list[
-      - $0$
-        - $omega$
-          - $1$
-        - $1$
-          - $2$
-            - $3$
-    ], $psi_0(psi_omega (Omega) + Omega_3)$,
-    $mat(0,1,2,1;0,1,1,1;0,1,0,1)$, tree-from-list[
-      - $0$
-        - $omega?$
-          - $1$
-        - $omega?$
-    ], $psi_0(psi_omega (Omega) + Omega_omega)?$,
+    $ mat(0,1,1;0,1,1;0,1,1) $, pss((0,1,1),(0,[ω],[ω])), $psi_0(Omega_omega 2)$,
+    $ mat(0,1,2;0,1,0;0,1,0) $, pss((0,1,2),(0,[ω],0)), $psi_0(psi_omega (1))$,
+    $ mat(0,1,2;0,1,1;0,1,0) $, pss((0,1,2),(0,[ω],1)), $psi_0(psi_omega (Omega))$,
+    $ mat(0,1,2,1;0,1,1,1;0,1,0,0) $, pss((0,1,2,1),(0,[ω],1,1)), $psi_0(psi_omega (Omega) + Omega)$,
+    $ mat(0,1,2,1,2;0,1,1,1,2;0,1,0,0,0) $, pss((0,1,2,1,2),(0,[ω],1,1,2)), $psi_0(psi_omega (Omega) + Omega_2)$,
+    $ mat(0,1,2,1,2,3;0,1,1,1,2,3;0,1,0,0,0,0) $, pss((0,1,2,1,2,3),(0,[ω],1,1,2,3)), $psi_0(psi_omega (Omega) + Omega_3)$,
+    $ mat(0,1,2,1;0,1,1,1;0,1,0,1) $, pss((0,1,2,1),(0,[ω],1,[ω])), $psi_0(psi_omega (Omega) + Omega_omega)?$,
   )
 ]
 
 e.g. for $(0,0,0)(1,1,1)(2,1,0)$, treating $(1,1,1)$ as an $omega$ label at height $1$, the corresponding PSS hydra expansion (where teal squares are the bad parts):
 
 #hbox(
-  tree-from-list(
-    [
-    - $0$
-      - $omega$
-        - $1$
-    ],
-    enclosing-node(((0, -1), (1, -2)), teal),
+  pss(
+    (0,1,2),
+    (0,[ω],1),
+    enclosing-node(((0, 0), (1, -1)), teal),
   ),
   xarrow(h(5em)),
-  tree-from-list(
-    [
-    - $0$
-      - $omega$
-        - $0$
-          - $omega$
-            - $...$
-    ],
-    enclosing-node(((0, -1), (1, -2)), teal),
-    enclosing-node(((2, -3), (3, -4)), teal),
+  pss(
+    (0,1,2,3,4),
+    (0,[ω],0,[ω],[#sym.dots]),
+    enclosing-node(((0, 0), (1, -1)), teal),
+    enclosing-node(((2, -2), (3, -3)), teal),
   ),
 )
 
@@ -215,43 +173,32 @@ Now, what if the child node is $omega$? A label of $omega$, as we conjectued, is
 As a trivial example, consider $psi_0(Omega_omega) ~ (0,0,0)(1,1,1)$:
 
 #hbox(
-  tree-from-list(
-    [
-      - $0$
-        - $omega$
-    ],
-    enclosing-node(((0,-1), (0,-1)),teal),
+  pss(
+    (0,1),
+    (0,[ω]),
+    enclosing-node(((0,0), (0,0)),teal),
   ),
   xarrow(h(5em)),
-  tree-from-list(
-    [
-      - $0$
-        - $redf(1)$
-    ],
-    enclosing-node(((0,-1), (0,-1)),teal),
-    enclosing-node(((1,-2), (1,-2)),teal),
+  pss(
+    (0,1),
+    (0,redf[1]),
+    enclosing-node(((0,0), (0,0)),teal),
+    enclosing-node(((1,-1), (1,-1)),teal),
   ),
-  tree-from-list(
-    [
-      - $0$
-        - $redf(1)$
-          - $redf(2)$
-    ],
-    enclosing-node(((0,-1), (0,-1)),teal),
-    enclosing-node(((1,-2), (1,-2)),teal),
-    enclosing-node(((2,-3), (2,-3)),teal),
+  pss(
+    (0,1,2),
+    (0,redf[1],redf[2]),
+    enclosing-node(((0,0), (0,0)),teal),
+    enclosing-node(((1,-1), (1,-1)),teal),
+    enclosing-node(((2,-2), (2,-2)),teal),
   ),
-  tree-from-list(
-    [
-      - $0$
-        - $redf(1)$
-          - $redf(2)$
-            - $redf(3)$
-    ],
-    enclosing-node(((0,-1), (0,-1)),teal),
-    enclosing-node(((1,-2), (1,-2)),teal),
-    enclosing-node(((2,-3), (2,-3)),teal),
-    enclosing-node(((3,-4), (3,-4)),teal),
+  pss(
+    (0,1,2,3),
+    (0,redf[1],redf[2],redf[3]),
+    enclosing-node(((0,0), (0,0)),teal),
+    enclosing-node(((1,-1), (1,-1)),teal),
+    enclosing-node(((2,-2), (2,-2)),teal),
+    enclosing-node(((3,-3), (3,-3)),teal),
   ),
   $...$
 )
@@ -260,37 +207,24 @@ In this case, the bad part is just the bad root, so the bad part height and labe
 #example[
   $(0,0,0)(1,1,1)(1,1,1)$
   #hbox(
-    tree-from-list(
-      [
-        - $0$
-          - $omega$
-          - $omega$
-      ],
-      enclosing-node(((0,-1), (1,-2)),teal),
+    pss(
+      (0,1,1),
+      (0,[ω],[ω]),
+      enclosing-node(((0,0), (1,-1)),teal),
     ),
     xarrow(h(5em)),
-    tree-from-list(
-      [
-        - $0$
-          - $omega$
-          - $redf(1)$
-            - $omega$
-      ],
-      enclosing-node(((0,-1), (1,-2)),teal),
-      enclosing-node(((2,-2), (3,-3)),teal),
+    pss(
+      (0,1,1,2),
+      (0,[ω],redf[1],[ω]),
+      enclosing-node(((0,0), (1,-1)),teal),
+      enclosing-node(((2,-1), (3,-2)),teal),
     ),
-    tree-from-list(
-      [
-        - $0$
-          - $omega$
-          - $redf(1)$
-            - $omega$
-            - $redf(2)$
-              - $omega$
-      ],
-      enclosing-node(((0,-1), (1,-2)),teal),
-      enclosing-node(((2,-2), (3,-3)),teal),
-      enclosing-node(((4,-3), (5,-4)),teal),
+    pss(
+      (0,1,1,2,2,3),
+      (0,[ω],redf[1],[ω],redf[2],[ω]),
+      enclosing-node(((0,0), (1,-1)),teal),
+      enclosing-node(((2,-1), (3,-2)),teal),
+      enclosing-node(((4,-2), (5,-3)),teal),
     ),
     $...$
   )
@@ -313,43 +247,23 @@ $
 which when translated to our hydra form, behaves like so:
 
 #hbox(
-  tree-from-list(
-    [
-      - $0$
-        - $omega$
-          - $1$
-    ],
-    enclosing-node(((0,-1),(2,-3)), teal),
+  pss(
+    (0,1,2),
+    (0,[ω],1),
+    enclosing-node(((0,0),(2,-2)), teal),
   ),
-
-  tree-from-list(
-    [
-      - $0$
-        - $omega$
-          - $1$
-        - $redf(1)$
-          - $omega$
-            - #orangef($2$)
-    ],
-    enclosing-node(((0,-1),(2,-3)), teal),
-    enclosing-node(((3,-2),(5,-4)), teal),
+  pss(
+    (0,1,2,1,2,3),
+    (0,[ω],1,redf[1],[ω],orangef[2]),
+    enclosing-node(((0,0),(2,-2)), teal),
+    enclosing-node(((3,-1),(5,-3)), teal),
   ),
-
-  tree-from-list(
-    [
-      - $0$
-        - $omega$
-          - $1$
-        - $redf(1)$
-          - $omega$
-            - #orangef($2$)
-          - $redf(2)$
-            - $omega$
-              - #orangef($3$)
-    ],
-    enclosing-node(((0,-1),(2,-3)), teal),
-    enclosing-node(((3,-2),(5,-4)), teal),
-    enclosing-node(((6,-3),(8,-5)), teal),
+  pss(
+    (0,1,2,1,2,3,2,3,4),
+    (0,[ω],1,redf[1],[ω],orangef[2],redf[2],[ω],orangef[3]),
+    enclosing-node(((0,0),(2,-2)), teal),
+    enclosing-node(((3,-1),(5,-3)), teal),
+    enclosing-node(((6,-2),(8,-4)), teal),
   ),
   alignment: center + bottom
 )
@@ -358,57 +272,33 @@ However, the actual hydra (by our modified PSS rules)
 expands as:
 
 #hbox(
-  tree-from-list(
-    [
-      - $0$
-        - $omega$
-          - $1$
-        - $omega$
-    ],
-    enclosing-node(((0,-1),(2,-3)), teal),
+  pss(
+    (0,1,2,1),
+    (0,[ω],1,[ω]),
+    enclosing-node(((0,0),(2,-2)), teal),
   ),
   xarrow(h(5em)),
   hbox(
-    tree-from-list(
-      [
-        - $0$
-          - $omega$
-            - $1$
-      ],
-      enclosing-node(((0,-1),(2,-3)), teal),
+    pss(
+      (0,1,2),
+      (0,[ω],1),
+      enclosing-node(((0,0),(2,-2)), teal),
     ),
-
-    tree-from-list(
-      [
-        - $0$
-          - $omega$
-            - $1$
-          - $redf(1)$
-            - $omega$
-              - #orangef($1$)
-      ],
-      enclosing-node(((0,-1),(2,-3)), teal),
-      enclosing-node(((3,-2),(5,-4)), teal),
+    pss(
+      (0,1,2,1,2,3),
+      (0,[ω],1,redf[1],[ω],orangef[1]),
+      enclosing-node(((0,0),(2,-2)), teal),
+      enclosing-node(((3,-1),(5,-3)), teal),
     ),
-
-    tree-from-list(
-      [
-        - $0$
-          - $omega$
-            - $1$
-          - $redf(1)$
-            - $omega$
-              - #orangef($1$)
-            - $redf(2)$
-              - $omega$
-                - #orangef($1$)
-      ],
-      enclosing-node(((0,-1),(2,-3)), teal),
-      enclosing-node(((3,-2),(5,-4)), teal),
-      enclosing-node(((6,-3),(8,-5)), teal),
+    pss(
+      (0,1,2,1,2,3,2,3,4),
+      (0,[ω],1,redf[1],[ω],orangef[1],redf[2],[ω],orangef[1]),
+      enclosing-node(((0,0),(2,-2)), teal),
+      enclosing-node(((3,-1),(5,-3)), teal),
+      enclosing-node(((6,-2),(8,-4)), teal),
     ),
     alignment: bottom
-  )
+  ),
 )
 
 Note that on top of the expected increases in labels (shown in red), we have unexpectedly have an increase in labels (shown in orange),

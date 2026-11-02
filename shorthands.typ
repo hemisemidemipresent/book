@@ -239,7 +239,7 @@
         (i, -height),
         width: NODE_WIDTH,
         shape: "circle",
-        text(font: "Fira Code")[#value],
+        text(font: "Jetbrains Mono")[#value],
         name: label("circle" + str(i)),
       ),
     )
@@ -260,7 +260,7 @@
     diagram(
       // node-stroke: 1pt + text.fill,
       edge-stroke: 1pt + text.fill,
-      spacing: (0.5em, 0.4em),
+      spacing: (0.25em, 0em),
       node-inset: 0.4em,
       edge-corner-radius: 4pt,
       ..nodes,
