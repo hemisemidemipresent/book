@@ -17,13 +17,17 @@
 
 #set page(
   numbering: "1",
-  // fill: rgb("#f3ead3")
 )
 
+// Table of Contents
+#show outline.entry.where(level: 1): set text(fill: palettes.dark.def, weight: "bold", size: 14pt)
+#show outline.entry.where(level: 2): set text(size: 12pt)
+#show outline.entry.where(level: 3): set text(fill: gray)
 #outline()
+
 // link styling only after contents so it doesnt get affected
 
-#show link: set text(fill: blue)
+#show link: set text(fill: aqua)
 #show link: underline
 
 #include "chapters/01_introduction.typ"

@@ -79,7 +79,6 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
 #proof[WIP: His proofs is not that long, maybe we can break it down here? Maybe move it to an appendix or something]
 
 // Note that Buchholz used $D_nu a$ instead of our red $bocf(nu, a)$, $\#$ instead of our #plus,
-// and he uses $G_nu (b)$ is somewhat analogous to $C_nu (b)$.
 
 #[
   // #let dom(content) = $fuchsiaf(fira(cof \())content fuchsiaf(fira(\)))$
@@ -105,16 +104,16 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
         $bocf(v, b)[z] = bocf(v, b[z])$
       - If $dom(b) = T_u$ for some $u >= v$ then $dom(bocf(v, b)) = NN$ (Analogous with rule 6b),
         $bocf(v, b)[n] = bocf(v, b[G[n]])$, where $G[0] = 0, G[n+1] = bocf(u, b[G[n]])$
-  ]
+  ] <def:buchholz_ordinal_notation>
   // While we skipped over a lot of the formalism that was present, this ordinal notation is basically identical to the actual $psi$, just that it is computable.
   Another thing to note about the fundamental sequences is that for a term $t in OT$, all terms in its fundamental sequence $t[n] in OT$. (Also is Buchholz's paper)
   #lemma[
     If $a,z in OT$, and $z in dom(a)$, then $a[z] in OT$ and $a[z] prec a$
   ]
 
-  Recall that when defining ordinal notations of order type $<e0$, we mainly build up in layers from the bottom-up with Cantor Normal Form,
-  but for PrSS we introduced a "top-down" approach, where each standard form sequence was nested fundamental sequences of the limit of PrSS.
-  Here, we go for a similar "top-down" approach, where every ordinal notation $a prec bocf(omega, zero)$ can be expressed as taking fundamental sequences:
+  Recall that when defining ordinal notations of order type $<e0$, we mainly build up in layers from the bottom-up with Cantor Normal Form.
+  We also build $OT$ "from the bottom up" here, but we can also define $OT$ with a "top-down" approach,
+  where every ordinal notation $a prec bocf(omega, zero)$ can be expressed as taking fundamental sequences:
   $
     a = bocf(omega, zero)[n_1][n_2]...[n_k]
   $
@@ -138,7 +137,7 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
       │~~│~~│~~├─[1]$bocf(0, bocf(1, bocf(0, bocf(0, zero)))) ~ epsilon_(omega^omega)$\
       │~~│~~│~~└─[0]$bocf(0, bocf(1, bocf(0, zero))) ~ epsilon_omega$\
       │~~│~~│~~~~~├─~$dots.v$\
-      │~~│~~│~~~~~├─[2]$bocf(0, bocf(1, zero) plus bocf(1, zero)) ~ epsilon_1$\
+      │~~│~~│~~~~~├─[2]$redf(bocf(0, bocf(1, zero) plus bocf(1, zero)) ~ epsilon_1)$\
       │~~│~~│~~~~~├─[1]$bocf(0, bocf(1, zero)) ~ e0$\
       │~~│~~│~~~~~└─[0]$bocf(0, zero) ~ 1$\
       │~~│~~└─[0]$bocf(0, bocf(1, zero)) ~ e0$\
@@ -148,154 +147,163 @@ From this, #link("https://doi.org/10.1016/0168-0072(86)90052-7")[Buchholz] showe
       └─[0]$bocf(0, bocf(0, zero)) ~ omega$\
     ],
   )
+
+  The equivalence of these two definitions of $OT$
+
 ]
 
 
-== Buchholz's Hydra
 
-#definition[
-  This is somewhat similar to the Kirby-Paris hydra game we have earlier, but each node is labelled with an ordinal $<= omega$, the child nodes of the root must be labelled 0.
 
-  At each step, we choose a leaf node $a$ to chop off. The hydra chooses some $n in NN$.
+== Buchholz Hydra
 
-  + If $a$ has label 0, we proceed as in Kirby-Paris' game. Call the node's parent $b$, and its grandparent $c$ (if it exists).
-    First we delete $a$. If $c$ exists (i.e. $b$ is not the root), we make $n$ copies of $b$ and all its children and attach them to $c$:
+This is somewhat similar to the Kirby-Paris hydra game we have earlier, but each node is labelled with an ordinal $<= omega$,
+and the child nodes of the root must be labelled 0.
 
-    #hbox(
-      tree-from-list(root: false)[
-        - $c$
-          - $b$
-            - $...$
-            - $0$
-      ],
-      $xarrow(#h(3em) n=3 #h(3em))$,
-      tree-from-list(root: false)[
-        - $c$
-          - $b$
-            - $...$
-          - $b$
-            - $...$
-          - $b$
-            - $...$
-      ],
-    )
+And just like how Kirby-Paris hydra gets its termination from its corresponding ordinal notation (ICNF) decreasing,
+Buchholz Hydra gets its termination from its corresponding ordinal notation (Buchholz's Ordinal Notation) decreasing.
+Additionally, Buchholz Hydras are often used as a way to visually depict Buchholz's Ordinal Notation terms.
 
-  + If $a$ has label $u+1$, we go down the tree looking for a node $b$ whose label is $v <= u$:
+At each step, we choose a leaf node $a$ to chop off. The hydra chooses some $n in NN$.
 
-    #hbox(
-      tree-from-list[
-        - $...$
-        - #redf[$v<=u$]
-          - #redf[$...$]
-          - #redf[$...$]
-            - $u+1$
-      ],
-    )
-    Let the subtree rooted in $b$ be called $S$. The nodes highlighted in red (and node $a$ highlighted in blue) make up $S$.
++ If $a$ has label 0, we proceed as in Kirby-Paris' game. Call the node's parent $b$, and its grandparent $c$ (if it exists).
+  First we delete $a$. If $c$ exists (i.e. $b$ is not the root), we make $n$ copies of $b$ and all its children and attach them to $c$:
 
-    Let's make a copy of $S$ called $S'$, and re-label the $b$ inside $S'$ to $u$.
+  #hbox(
+    tree-from-list(root: false)[
+      - $c$
+        - $b$
+          - $...$
+          - $0$
+    ],
+    $xarrow(#h(3em) n=3 #h(3em))$,
+    tree-from-list(root: false)[
+      - $c$
+        - $b$
+          - $...$
+        - $b$
+          - $...$
+        - $b$
+          - $...$
+    ],
+  )
 
-    #hbox(
-      tree-from-list(root: false)[
-        - #redf[$v <= u$]
-          - #redf[$...$]
-          - #redf[$...$]
-            - $u+1$
-      ],
-      xarrow(h(3em)),
-      tree-from-list(root: false)[
-        - #orangef[$u$]
-          - #orangef[$...$]
-          - #orangef[$...$]
-            - $a'$
-      ],
-    )
-    Now let's define the function $S(T)$ that takes in a tree $T$, and replaces $a'$ with $T$
++ If $a$ has label $u+1$, we go down the tree looking for a node $b$ whose label is $v <= u$:
 
-    #hbox(
-      alignment: left,
-      [For example, if $T$ is],
-      tree-from-list(root: false)[
+  #hbox(
+    tree-from-list[
+      - $...$
+      - #redf[$v<=u$]
+        - #redf[$...$]
+        - #redf[$...$]
+          - $u+1$
+    ],
+  )
+  Let the subtree rooted in $b$ be called $S$. The nodes highlighted in red (and node $a$ highlighted in blue) make up $S$.
+
+  Let's make a copy of $S$ called $S'$, and re-label the $b$ inside $S'$ to $u$.
+
+  #hbox(
+    tree-from-list(root: false)[
+      - #redf[$v <= u$]
+        - #redf[$...$]
+        - #redf[$...$]
+          - $u+1$
+    ],
+    xarrow(h(3em)),
+    tree-from-list(root: false)[
+      - #orangef[$u$]
+        - #orangef[$...$]
+        - #orangef[$...$]
+          - $a'$
+    ],
+  )
+  Now let's define the function $S(T)$ that takes in a tree $T$, and replaces $a'$ with $T$
+
+  #hbox(
+    alignment: left,
+    [For example, if $T$ is],
+    tree-from-list(root: false)[
+      - $0$
         - $0$
+        - $0$
+    ],
+    [then $S(T)$ is ],
+    tree-from-list(root: false)[
+      - #orangef[$u$]
+        - #orangef[$...$]
+        - #orangef[$...$]
           - $0$
-          - $0$
-      ],
-      [then $S(T)$ is ],
-      tree-from-list(root: false)[
-        - #orangef[$u$]
-          - #orangef[$...$]
-          - #orangef[$...$]
             - $0$
-              - $0$
-              - $0$
+            - $0$
+    ],
+  )
+
+
+  #hbox(
+    alignment: left,
+    [Similarly, if $T$ is the empty tree then $S(T)$ just becomes],
+    tree-from-list(root: false)[
+      - #orangef[$u$]
+        - #orangef[$...$]
+        - #orangef[$...$]
+    ],
+  )
+
+  When we cut off a head of label $u+1$, we replace it with
+  $S^n ("empty tree")$ where $S^n$ denotes function iteration.
+
+
+  An illustration of the whole process with $n=2$ is as such:
+
+  #hbox(
+    tree-from-list(
+      [
+        - $...$
+          - #redf[$v <= u$]
+            - #redf[$...$]
+            - #redf[$...$]
+              - $u+1$
       ],
-    )
-
-
-    #hbox(
-      alignment: left,
-      [Similarly, if $T$ is the empty tree then $S(T)$ just becomes],
-      tree-from-list(root: false)[
-        - #orangef[$u$]
-          - #orangef[$...$]
-          - #orangef[$...$]
+      enclosing-node(((1, -2), (3, -3)), red),
+    ),
+    xarrow(h(3em)),
+    tree-from-list(
+      [
+        - $...$
+          - #redf[$v <= u$]
+            - #redf[$...$]
+            - #redf[$...$]
+              - $S^2("empty tree")$
       ],
-    )
+      enclosing-node(((1, -2), (3, -3)), red),
+    ),
+  )
 
-    When we cut off a head of label $u+1$, we replace it with
-    $S^n ("empty tree")$ where $S^n$ denotes function iteration.
+  #hbox(
+    tree-from-list(
+      [
+        - $...$
+          - #redf[$v <= u$]
+            - #redf[$...$]
+            - #redf[$...$]
+              - $u$
+                - #orangef[$...$]
+                - #orangef[$...$]
+                  - $u$
+                    - #orangef[$...$]
+                    - #orangef[$...$]
+      ],
+      enclosing-node(((1, -2), (3, -3)), red),
+      enclosing-node(((4, -4), (6, -5)), orange),
+      enclosing-node(((7, -6), (9, -7)), orange)
+      // debug: 3
+    ),
+  )
+
++ If $a$ has label $omega$, replace the label $omega$ with $n+1$.
 
 
-    An illustration of the whole process with $n=2$ is as such:
-
-    #hbox(
-      tree-from-list(
-        [
-          - $...$
-            - #redf[$v <= u$]
-              - #redf[$...$]
-              - #redf[$...$]
-                - $u+1$
-        ],
-        enclosing-node(((1, -2), (3, -3)), red),
-      ),
-      xarrow(h(3em)),
-      tree-from-list(
-        [
-          - $...$
-            - #redf[$v <= u$]
-              - #redf[$...$]
-              - #redf[$...$]
-                - $S^2("empty tree")$
-        ],
-        enclosing-node(((1, -2), (3, -3)), red),
-      ),
-    )
-
-    #hbox(
-      tree-from-list(
-        [
-          - $...$
-            - #redf[$v <= u$]
-              - #redf[$...$]
-              - #redf[$...$]
-                - $u$
-                  - #orangef[$...$]
-                  - #orangef[$...$]
-                    - $u$
-                      - #orangef[$...$]
-                      - #orangef[$...$]
-        ],
-        enclosing-node(((1, -2), (3, -3)), red),
-        enclosing-node(((4, -4), (6, -5)), orange),
-        enclosing-node(((7, -6), (9, -7)), orange)
-        // debug: 3
-      ),
-    )
-
-  + If $a$ has label $omega$, replace the label $omega$ with $n+1$
-
-]
 
 Similarly to the Kirby-Paris Hydra, we can associate each hydra with an ordinal notation term $T$ by the following rules:
 
@@ -322,13 +330,13 @@ Similarly to the Kirby-Paris Hydra, we can associate each hydra with an ordinal 
   $
 + At the root node, the resulting ordinal expressions of each of the root's children $a_0, ..., a_k$ are summed up: $a_0 plus ... plus a_k$
 
-Note that case 2 in the definition above is different from the original definiton that Buchholz gave.
+Note that case 2 in the definition above is different from the original definition that Buchholz gave.
 This difference basically corresponds to the differences in the system of fundamental sequence (Specifically "Rule 6(b)").
 
 
 
 
-Here are some examples of Buchholz's hydra and the associated ordinal notations and ordinals. The hydras have been rotated to save space.
+Here are some examples of Buchholz hydra and the associated ordinal notations and ordinals. The hydras have been rotated to save space.
 
 #align(center)[
   #let angle = 90deg
@@ -466,19 +474,11 @@ Here are some examples of Buchholz's hydra and the associated ordinal notations 
   )
 ]
 
-By restricting Buchholz Hydra to only those corresponding to $OT$ (rather than all of $T$), we can prove the termination of Buchholz Hydras.
-
-=== Standardness
-
-$OT$ is defined as all $bocf(v,a)$ such that $ternary(a,v,a)$ (and $v <= omega$),
-
-=== Termination [WIP]
-
 == The Hyper Primitive Sequence System (HPrSS)
 
 The Hyper Primitive Sequence System (HPrSS) is an extension of the Primitive Sequence System (PrSS),
 and much like how PrSS can be thought of as a linearized version of the Kirby-Paris Hydra,
-HPrSS can be thought of as a linearized version of Buchholz's Hydra.
+HPrSS can be thought of as a linearized version of Buchholz Hydras.
 
 #definition[
   A sequence $s = (s_1, s_2, ..., s_m)$ is a valid HPrSS sequence (i.e. $s in T_"HPrSS"$) if $s$ is either empty $()$ or starts with $0$: $(0,...)$.
@@ -648,7 +648,7 @@ And as such we can re-define $OT_"HPrSS"$:
   $
 ]
 
-=== Order Isomorphism to #BO
+
 We can prove that $(OT_"HPrSS", lex)$ is order isomorphic to $(BO, in)$ in a similar way as we did for PrSS.
 
 [WIP] How to prove this is beyond me
@@ -738,134 +738,24 @@ We can prove that $(OT_"HPrSS", lex)$ is order isomorphic to $(BO, in)$ in a sim
 // ]
 
 
-#[
-  As we saw earlier in PrSS, $(0,1,2,3,...)$ is equivalent to $omega^omega^dots.up = e0$. Since we now have $(0,2)[n]$ which expands to $(0,1,2,3,...)$,
-  we have $(0,2)$ corresponding to $e0$. In fact, we can expand upon this and define larger and larger ordinals:
 
-  We denote $W_v$ as $bocf(v, zero)$ for brevity.
-
-  #table(
-    columns: (auto, auto, auto),
-    table.header([*HPrSS*], [*Ordinal Notation*], [*Ordinal*]),
-    $()$, $zero$, $0$,
-    $(0)$, $bocf(0, zero) = W_0$, $1$,
-    $(0,0)$, $W_0 plus W_0$, $2$,
-    $(0,1)$, $bocf(0, W_0)$, $omega$,
-    $(0,1,2)$, $bocf(0, bocf(0, W_0))$, $omega^omega$,
-    $(0,1,2,3)$,
-    $bocf(0, bocf(0, bocf(0, W_0)))$,
-    $omega^omega^omega$,
-
-    $(0,2)$, $bocf(0, W_1)$, $e0$,
-    $(0,2,1)$, $bocf(0, W_1 plus W_0)$, $e0 dot omega$,
-    $(0,2,1,2)$,
-    $bocf(0, W_1 plus bocf(0, W_0))$,
-    $e0 dot omega^omega$,
-
-    $(0,2,1,2,3)$,
-    $bocf(0, W_1 plus bocf(0, bocf(0, W_0)))$,
-    $e0 dot omega^omega^omega$,
-
-    $(0,2,1,3)$, $bocf(0, W_1 plus bocf(0, W_1))$, $e0^2$,
-    $(0,2,1,3,2,4)$, $bocf(0, W_1 plus bocf(0, W_1 plus bocf(0, W_1)))$, $e0^e0$,
-    $(0,2,2)$, $bocf(0, W_1 plus W_1)$, $epsilon_1$,
-
-    $(0,2,2,2)$, $bocf(0, W_1 plus W_1 plus W_1)$, $epsilon_2$,
-    $(0,2,3)$,
-    $bocf(0, bocf(1, W_0))$,
-    $psi_0(Omega dot omega) = epsilon_omega$,
-
-    $(0,2,3,5)$,
-    $bocf(0, bocf(1, bocf(0, W_1)))$,
-    $psi_0(Omega dot psi_0(Omega)) = epsilon_e0$,
-
-    $(0,2,4)$, $bocf(0, bocf(1, W_1))$, $psi_0(Omega^2) = z0$,
-    $(0,2,4,4)$,
-    $bocf(0, bocf(1, W_1 plus W_1))$,
-    $psi_0(Omega^3) = eta_0 = phi(3, 0)$,
-
-    $(0,2,4,5)$,
-    $bocf(0, bocf(1, bocf(1, W_0)))$,
-    $psi_0(Omega^omega) = phi(omega, 0)$,
-
-    $(0,2,4,5,7)$,
-    $bocf(0, bocf(1, bocf(1, bocf(0, W_1))))$,
-    $psi_0(Omega^(psi_0(Omega))) = psi_0(Omega^e0) = phi(e0, 0)$,
-
-    $(0,2,4,6)$, $bocf(0, bocf(1, bocf(1, W_1)))$, $psi_0(Omega^Omega) = G0$,
-    $(0,2,4,6,8)$,
-    $bocf(0, bocf(1, bocf(1, bocf(1, W_1))))$,
-    $psi_0(Omega^Omega^Omega) = LVO$,
-
-    $(0,3)$, $bocf(0, W_2)$, $psi_0(Omega_2) = BHO = "BHO"$,
-    $(0,3,1)$, $bocf(0, W_2 plus W_0)$, $psi_0(Omega_2 + 1) = BHO dot omega$,
-    $(0,3,2)$, $bocf(0, W_2 plus W_1)$, $psi_0(Omega_2 + Omega)$,
-    $(0,3,3)$, $bocf(0, W_2 plus W_2)$, $psi_0(Omega_2 dot 2)$,
-    $(0,3,4)$, $bocf(0, bocf(2, W_0))$, $psi_0(Omega_2 dot omega)$,
-    $(0,3,5)$, $bocf(0, bocf(2, W))$, $psi_0(Omega_2 dot Omega)$,
-    $(0,3,6)$, $bocf(0, bocf(2, W_2))$, $psi_0(Omega_2^2)$,
-    $(0,4)$, $bocf(0, W_3)$, $psi_0(Omega_3)$,
-    $(0,n+1)$, $bocf(0, W_n)$, $psi_0(Omega_n)$,
-  )
-]
 
 === Association with Buchholz Hydras
-There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hydras (unproven)
 // torturous diagram drawing
 #[
   Suppose we have a sequence: $(0,2,4,3,5,1)$. We label each element's parent:\ \
   $
-    (
-      mark(0, tag: #<s1>),
-      mark(2, tag: #<s2>),
-      mark(4, tag: #<s3>),
-      mark(3, tag: #<s4>),
-      mark(5, tag: #<s5>),
-      mark(1, tag: #<s6>)
-    )
+    (#pin("hs1")0, #h(0.6em) #pin("hs2")2, #h(0.6em) #pin("hs3")4, #h(0.6em) #pin("hs4")3, #h(0.6em) #pin("hs5")5, #h(0.6em) #pin("hs6")1)
   $
-
-  #annot-cetz(
-    (<s1>, <s2>, <s3>, <s4>, <s5>, <s6>),
-    cetz,
-    {
-      import cetz.draw: *
-      set-style(
-        mark: (end: "straight", length: 0.2em, width: 0.2em),
-        stroke: red + 0.75pt,
-      )
-      bezier-through(
-        "s2.south",
-        (rel: (x: -.2, y: -.15)),
-        "s1.south",
-        stroke: red + .75pt,
-      )
-      bezier-through(
-        "s3.south",
-        (rel: (x: -.2, y: -.15)),
-        "s2.south",
-        stroke: red + .75pt,
-      )
-      bezier-through(
-        "s4.north",
-        (rel: (x: -.3, y: .15)),
-        "s2.north",
-        stroke: red + .75pt,
-      )
-      bezier-through(
-        "s5.south",
-        (rel: (x: -.2, y: -.15)),
-        "s4.south",
-        stroke: red + .75pt,
-      )
-      bezier-through(
-        "s6.north",
-        (rel: (x: -.5, y: .25)),
-        "s1.north",
-        stroke: red + .75pt,
-      )
-    },
-  )
+  // arcs start at the parent, so the arrowhead points to it
+  // bottom arcs (bend < 0) attach below the digits, top arcs (bend > 0) above
+  #let below = (start-dx: 3pt, end-dx: 3pt, start-dy: 4pt, end-dy: 4pt, bend: -40deg)
+  #let above = (start-dx: 3pt, end-dx: 3pt, start-dy: -10pt, end-dy: -10pt, bend: 40deg)
+  #pin-arc("hs1", "hs2", ..below, stroke: red)
+  #pin-arc("hs2", "hs3", ..below, stroke: red)
+  #pin-arc("hs2", "hs4", ..above, stroke: red)
+  #pin-arc("hs4", "hs5", ..below, stroke: red)
+  #pin-arc("hs1", "hs6", ..above, bend: 30deg, stroke: red)
 
   Then we draw a tree representing the parent relationships:
 
@@ -973,6 +863,228 @@ There is a somewhat weird way I came up with to associate HPrSS with Buchholz Hy
     ]
   ]
 ]
+// analysis table
+#[
+  As we saw earlier in PrSS, $(0,1,2,3,...)$ is equivalent to $omega^omega^dots.up = e0$. Since we now have $(0,2)[n]$ which expands to $(0,1,2,3,...)$,
+  we have $(0,2)$ corresponding to $e0$. In fact, we can expand upon this and define larger and larger ordinals:
+
+  We denote $W_v$ as $bocf(v, zero)$ for brevity.
+
+  #table(
+    columns: (auto, auto, auto),
+    table.header([*HPrSS*], [*Ordinal Notation*], [*Ordinal*]),
+    $()$, $zero$, $0$,
+    $(0)$, $bocf(0, zero) = W_0$, $1$,
+    $(0,0)$, $W_0 plus W_0$, $2$,
+    $(0,1)$, $bocf(0, W_0)$, $omega$,
+    $(0,1,2)$, $bocf(0, bocf(0, W_0))$, $omega^omega$,
+    $(0,1,2,3)$,
+    $bocf(0, bocf(0, bocf(0, W_0)))$,
+    $omega^omega^omega$,
+
+    $(0,2)$, $bocf(0, W_1)$, $e0$,
+    $(0,2,1)$, $bocf(0, W_1 plus W_0)$, $e0 dot omega$,
+    $(0,2,1,2)$,
+    $bocf(0, W_1 plus bocf(0, W_0))$,
+    $e0 dot omega^omega$,
+
+    $(0,2,1,2,3)$,
+    $bocf(0, W_1 plus bocf(0, bocf(0, W_0)))$,
+    $e0 dot omega^omega^omega$,
+
+    $(0,2,1,3)$, $bocf(0, W_1 plus bocf(0, W_1))$, $e0^2$,
+    $(0,2,1,3,2,4)$, $bocf(0, W_1 plus bocf(0, W_1 plus bocf(0, W_1)))$, $e0^e0$,
+    $(0,2,2)$, $bocf(0, W_1 plus W_1)$, $epsilon_1$,
+
+    $(0,2,2,2)$, $bocf(0, W_1 plus W_1 plus W_1)$, $epsilon_2$,
+    $(0,2,3)$,
+    $bocf(0, bocf(1, W_0))$,
+    $psi_0(Omega dot omega) = epsilon_omega$,
+
+    $(0,2,3,5)$,
+    $bocf(0, bocf(1, bocf(0, W_1)))$,
+    $psi_0(Omega dot psi_0(Omega)) = epsilon_e0$,
+
+    $(0,2,4)$, $bocf(0, bocf(1, W_1))$, $psi_0(Omega^2) = z0$,
+    $(0,2,4,4)$,
+    $bocf(0, bocf(1, W_1 plus W_1))$,
+    $psi_0(Omega^3) = eta_0 = phi(3, 0)$,
+
+    $(0,2,4,5)$,
+    $bocf(0, bocf(1, bocf(1, W_0)))$,
+    $psi_0(Omega^omega) = phi(omega, 0)$,
+
+    $(0,2,4,5,7)$,
+    $bocf(0, bocf(1, bocf(1, bocf(0, W_1))))$,
+    $psi_0(Omega^(psi_0(Omega))) = psi_0(Omega^e0) = phi(e0, 0)$,
+
+    $(0,2,4,6)$, $bocf(0, bocf(1, bocf(1, W_1)))$, $psi_0(Omega^Omega) = G0$,
+    $(0,2,4,6,8)$,
+    $bocf(0, bocf(1, bocf(1, bocf(1, W_1))))$,
+    $psi_0(Omega^Omega^Omega) = LVO$,
+
+    $(0,3)$, $bocf(0, W_2)$, $psi_0(Omega_2) = BHO = "BHO"$,
+    $(0,3,1)$, $bocf(0, W_2 plus W_0)$, $psi_0(Omega_2 + 1) = BHO dot omega$,
+    $(0,3,2)$, $bocf(0, W_2 plus W_1)$, $psi_0(Omega_2 + Omega)$,
+    $(0,3,3)$, $bocf(0, W_2 plus W_2)$, $psi_0(Omega_2 dot 2)$,
+    $(0,3,4)$, $bocf(0, bocf(2, W_0))$, $psi_0(Omega_2 dot omega)$,
+    $(0,3,5)$, $bocf(0, bocf(2, W))$, $psi_0(Omega_2 dot Omega)$,
+    $(0,3,6)$, $bocf(0, bocf(2, W_2))$, $psi_0(Omega_2^2)$,
+    $(0,4)$, $bocf(0, W_3)$, $psi_0(Omega_3)$,
+    $(0,n+1)$, $bocf(0, W_n)$, $psi_0(Omega_n)$,
+  )
+]
+
+=== Order Isomorphism to #BO
+
+#[
+  #let Trans = $"Trans"$
+  Now that we have a grasp of how HPrSS relates to Buchholz OCF terms, let's try to prove it.
+  Let's first define the map $Trans$ from Buchholz Terms to HPrSS arrays:
+  #definition[
+    $Trans: T_B -> T_H$ is defined as:
+
+    - $Trans(0) = ()$
+    - $Trans(t_0 + psi_v(t_1))$
+      - If $t_1 = psi_0(0) dot m$,
+        $
+          Trans(t_0 + psi_v (psi_0(0) dot m)) = Trans(t_0) xor \(v, underbrace(v+1\,...\,v+1,m)\)
+        $
+      - Otherwise,
+        $
+          Trans(t_0 + psi_v (t_1)) = Trans(t_0) xor (v) xor [Trans(t_1)]^(v+1)
+        $
+  ]
+  #definition[
+    For an $m in NN$. $Sigma_m$ is defined as:
+    - $Sigma_0 = {psi_0(psi_u(0)) | u in NN^+}$
+    - $Sigma_(m+1) = Sigma_m union {t[n] | t in Sigma_m, n in NN}$
+    Then $union.big_(m in NN) Sigma_m = O T_B$
+  ]
+  #theorem[
+    $Trans$ is a bijective map onto $O T_H$
+  ]
+  #proof[
+    For each $t in O T_B$, $t in Sigma_m$ for some $m in NN$. Let $mu$ me the minimum such $m$, i.e. $t in Sigma_mu$ but $t in.not Sigma_(mu-1)$
+
+    If $mu = 0$, then $t = psi_0(psi_u (0))$ for some $u in NN^+$, and therefore $Trans(t) = (0,u) in O T_H$
+
+    For $mu>0$ we show by induction.
+    Suppose for every $t in Sigma_(mu-1), Trans(t) in O T_H$.
+    Then for every $t in Sigma_mu$, there exists a $t' in Sigma_(mu-1), n in NN$ such that $t = t'[n]$.
+
+    Since $t in.not Sigma_(mu-1)$, $t!=t'$, and $t = t'[n] < t'$.
+
+    Let $t' = t_0 + psi_u (t_1)$ for some $t_0, t_1 in O T_B, u in NN$.
+
+    Let's compare #link(<def:buchholz_ordinal_notation>)[each expansion rule in Buchholz Ordinal Notation].
+    We want to show that for $t = t'[n]$, $Trans(t) = Trans(t')[n]$
+
+    1. Irrelevant case
+    2. $1[0] = 0$, so we have $t' = 1, t = 0$
+
+      $Trans(t) = Trans(0) = ()$
+
+      $Trans(t')[0] = Trans(1)[0] = (0)[0] = ()$
+    3. Ignore since not in $O T_H$
+    4. $t' = psi_v (b), b!=0$
+
+      We have $t' = t_0 + psi_v (t_1) = psi_v (b)$, so $t_0 = 0, t_1 = b$
+      1. $cof(b) = {0}$ implies $b = psi_0(0) dot m$.
+
+        In this case $t = psi_v (b[0]) dot (n+1) = psi_v (psi_0(0) dot (m-1)) dot (n+1)$
+
+        $
+          Trans(t) &= Trans(psi_v (psi_0(0) dot (m-1)) dot n+1)\
+          &= underbrace(((v) xor \[\(underbrace(0\,...\,0,m-1)\)\]^(v+1)) xor ((v) xor \[\(underbrace(0\,...\,0,m-1)\)\]^(v+1)) xor ...,n+1)\
+          &= \(underbrace(v\, underbrace(v+1\,...\,v+1,m-1)\,v\,underbrace(v+1\,...\,v+1,m-1)..., n+1))\
+
+          Trans(t')[n] &= Trans(0 + psi_v (psi_0(0) dot m))[n] \
+          &= \(v, underbrace(v+1\,...\,v+1,m))[n]\
+          &= \(underbrace(v\, underbrace(v+1\,...\,v+1,m-1)\,v\,underbrace(v+1\,...\,v+1,m-1)..., n+1))
+        $
+      2. #fuchsiaf[Will be covered later]
+      3. $psi_v (b)[z] = psi_v (b[z])$, so let $t' = psi_v (b), t=psi_v (b[n])$
+
+        $
+          Trans(t')[n] &= Trans(psi_v (b))\
+          &= ((v) xor [Trans(b)]^(v+1))[n]\
+
+          Trans(t) &= Trans(psi_v (b[n]))\
+          &= (v) xor [Trans(b[n])]^(v+1)
+        $
+
+        Since $cof(b) >= omega$, $b>omega$, and as such $Trans(b)$ will have a non-zero difference sequence, the bad part will be within $Trans(b)$, and all expansion will be confined within $Trans(b)$ therefore:
+
+        $
+          Trans(t')[n] &= ((v) xor [Trans(b)]^(v+1))[n]\
+          &= (v) xor [Trans(b)[n]]^(v+1)\
+          Trans(t) &= (v) xor [Trans(b[n])^(v+1)\
+        $
+        So this is conditional on $Trans(b)[n] = Trans(b[n])$ which recursively follows from the rest of the cases.
+    #fuchsiaf[Ok now onto 4.ii]
+
+    $t' = t_0 + psi_u (t_1)$ and $cof(t_1) = Omega_(v+1) > Omega_u$. This means that that $t_1$ contains an $Omega_(v+1)$ as its deepest innermost rightmost term.
+
+    #whisper[
+      Like idk how to explain it,
+      say $t' = t_0 + psi_0(t_1)$ and $cof(t_1) = Omega_3$, then some possible values for $t_1$ are:
+
+      - $Omega_3$
+      - $psi_4(Omega_3)$
+      - $psi_5(Omega_4 + Omega_3)$
+      - $psi_4(Omega_5 + psi_4(Omega_3))$
+
+      Either way there must be like an $Omega_3$ as the "last term" somewhere, and this is the initial "chop off" upon expansion.
+    ]
+
+    Then let $t'(n)$ be $t'[n]$ but with the innermost $psi_v (0)$ (i.e. $Omega_v$) changed to $0$
+
+    #whisper[
+      e.g. $psi_0(psi_4(Omega_3)) = psi_0(psi_4(psi_2(psi_4(psi_2(...)))))$ will have an innermost $Omega_2$ instead of $Omega_3$
+    ]
+
+    Then we have $t'(n) < t <= t'(n+1)$
+
+    #whisper[
+      e.g. $psi_0(Omega_3) ~ (0,4)$ expands to $psi_0(psi_2(psi_2(...))) ~ (0,3,6,9,...)$:
+
+      $
+        t'[2] &= psi_0(psi_2(psi_2(0)) ~ (0,3,6)\
+        t'(2) &= psi_0(psi_2(0) ~ (0,3)\
+        t'[3] &= psi_0(psi_2(psi_2(psi_2(0)) ~ (0,3,6,9)\
+        t'(3) &= psi_0(psi_2(psi_2(0)) ~ (0,3,6)\
+      $
+      We have
+      $
+        t'(2) < t'[2] <= t'(3) < t'[3]
+      $
+    ]
+
+    Then since $t'(n)$ is just one $psi_v (0)$ away from $t'[n]$,
+    $
+      Trans(t) = Trans(t'[n]) = Trans(t'(n)) xor (a + v + 1)
+    $
+    where $a$ is the parent of the last entry of $t$.
+    We also have
+    $
+      Trans(t'(n+1)) = Trans(t) xor "some sequence"
+    $
+    Since we can just keep deleting the rightmost entry using $f(s) = s[0]$, $Trans(t)$ can be expanded from $Trans(t'(n+1))$ which can be expanded from $Trans(t'[n+1])$, which is in $O T_H$ since $Trans(t')$ is in $O T_H$ from the induction hypothesis.
+  ]
+  #theorem[
+    $(O T_B,scripts(<)_(O T_B))$ is isomorphic to $(O T_H,scripts(<)_(O T_H))$
+  ]
+  #proof[
+    - $scripts(<)_(O T_B)$ coincides with a lexicographical ordering of the ordinal notation.
+    - $Trans$ preserves lexicographical ordering
+    - (from earlier) $Trans$ is a bijective map between $O T_B$ and $O T_H$
+    Therefore:
+    - $(O T_B,scripts(<)_(O T_B))$ is isomorphic to $(O T_H,scripts(<)_(O T_H))$
+    - $(O T_H,scripts(<)_(O T_H))$ is an ordinal notation
+  ]
+]
+
 
 == The Pair Sequence System (PSS)
 
@@ -1056,7 +1168,6 @@ That might have been too complex, so here are some examples:
     #[
       The last column is $mat(2;0)$, so no ascension, just normal PrSS-like behavior:
 
-
       $
         // pins convention to marking out Good Roots and Bad Roots:
         // gt = Good root Top
@@ -1064,7 +1175,7 @@ That might have been too complex, so here are some examples:
         // bt = Bood root Top
         // bb = Bad root Bottom
 
-        // Coordinate convention for mannot's marks:
+        // Coordinate conventions, always before the element:
         // [ a0, a1, ... ]
         // [ b0, b1, ... ]
         mat(
@@ -1082,8 +1193,8 @@ That might have been too complex, so here are some examples:
       #pin-matrix("bt0","bb0", color: teal)
       #pin-matrix("bt1","bb1", color: teal)
       #pin-matrix("bt2","bb2", color: teal)
-      #pinit-fletcher-edge(
-        fletcher, "bt0", end: "c0", bend: 30deg, "<|-",
+      #pin-arc(
+        "bt0", "c0", bend: 30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: -9pt,
@@ -1106,16 +1217,16 @@ That might have been too complex, so here are some examples:
           0, 1, 1, 1
         )[n]
       $
-      #pinit-fletcher-edge(
-        fletcher, "a0", end: "a1", bend: 30deg, "<|-",
+      #pin-arc(
+        "a0", "a1", bend: 30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: -9pt,
         end-dy: -9pt,
         stroke: fuchsia
       )
-      #pinit-fletcher-edge(
-        fletcher, "a1", end: "a3", bend: 30deg, "<|-",
+      #pin-arc(
+        "a1", "a3", bend: 30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: -9pt,
@@ -1129,28 +1240,28 @@ That might have been too complex, so here are some examples:
 
       $
         mat(
-          #pin("a0")fuchsiaf(0), #pin("a1")fuchsiaf(1), grayf(2), #pin("a3")2;
+          #pin("x0")fuchsiaf(0), #pin("x1")fuchsiaf(1), grayf(2), #pin("x3")2;
           #pin("b0")fuchsiaf(0), #pin("b1")fuchsiaf(1), grayf(1), #pin("b3")1
         )[n]
       $
-      #pinit-fletcher-edge(
-        fletcher, "a0", end: "a1", bend: 30deg, "<|-",
+      #pin-arc(
+        "x0", "x1", bend: 30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: -9pt,
         end-dy: -9pt,
         stroke: fuchsia
       )
-      #pinit-fletcher-edge(
-        fletcher, "a1", end: "a3", bend: 30deg, "<|-",
+      #pin-arc(
+        "x1", "x3", bend: 30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: -9pt,
         end-dy: -9pt,
         stroke: fuchsia
       )
-      #pinit-fletcher-edge(
-        fletcher, "b0", end: "b3", bend: -30deg, "<|-",
+      #pin-arc(
+        "b0", "b3", bend: -30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: 1pt,
@@ -1186,24 +1297,24 @@ That might have been too complex, so here are some examples:
       #pin-matrix("bt3","bb3", color: teal)
       #pin-matrix("bt4","bb4", color: teal)
       #pin-matrix("bt5","bb5", color: teal)
-      #pinit-fletcher-edge(
-        fletcher, "A0", end: "A1", bend: 30deg, "<|-",
+      #pin-arc(
+        "A0", "A1", bend: 30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: -9pt,
         end-dy: -9pt,
         stroke: fuchsia
       )
-      #pinit-fletcher-edge(
-        fletcher, "A1", end: "A3", bend: 30deg, "<|-",
+      #pin-arc(
+        "A1", "A3", bend: 30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: -9pt,
         end-dy: -9pt,
         stroke: fuchsia
       )
-      #pinit-fletcher-edge(
-        fletcher, "B0", end: "B3", bend: -30deg, "<|-",
+      #pin-arc(
+        "B0", "B3", bend: -30deg,
         start-dx: 5pt,
         end-dx: 0pt,
         start-dy: 1pt,
@@ -1671,7 +1782,7 @@ We can correspond a PSS into its hydra form, by constructing a hydra such that f
 
 
 == Patcail's Hydra/Mini-Nuclear Array Notation [WIP]
-
+/*
 ```
 # FSes FOR PATCAIL NOTATION
 ## Normalization function
@@ -1708,3 +1819,4 @@ $
 //     g_(psi_0(Omega_(n+1)) approx f_(psi_0(Omega_n))
 //   $
 // ]
+*/

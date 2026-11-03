@@ -7,8 +7,7 @@
 #import "@preview/cetz:0.5.3"
 #import "@preview/tdtr:0.5.5": *
 #import "@preview/fletcher:0.5.8": diagram, edge, node
-#import "@preview/fletcher:0.5.8" // for the raw `fletcher` value used in pinit
-#import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-point-from, pinit-place, pinit-fletcher-edge
+#import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-point-from, pinit-place, pinit, absolute-place
 #import "@preview/xarrow:0.4.0": *
 #import "@preview/mannot:0.3.2": annot, annot-cetz, mark
 
@@ -102,6 +101,47 @@
   fill: color.transparentize(90%),
   stroke: color + 0.075em,
 )
+
+// Curved arrow between two pins, with an arrowhead pointing at `start`.
+// Replaces `pinit-fletcher-edge`, whose nested pins/measurements need too
+// many layout passes and stop the document from converging.
+// Positive `bend` bulges to the left of start -> end (upwards for left-to-right).
+#let pin-arc(
+  start,
+  end,
+  bend: 30deg,
+  start-dx: 0pt,
+  start-dy: 0pt,
+  end-dx: 0pt,
+  end-dy: 0pt,
+  stroke: black,
+  thickness: 0.6pt,
+  head: 4pt,
+) = pinit(start, end, callback: (s, e) => {
+  let (x1, y1) = (s.x + start-dx, s.y + start-dy)
+  let (x2, y2) = (e.x + end-dx, e.y + end-dy)
+  // quadratic bezier control point, giving tangent angle `bend` at both ends
+  let k = calc.tan(bend) / 2
+  let cx = (x1 + x2) / 2 + (y2 - y1) * k
+  let cy = (y1 + y2) / 2 - (x2 - x1) * k
+  // arrowhead direction: tangent at start, pointing into the start pin
+  let a = calc.atan2((x1 - cx).pt(), (y1 - cy).pt())
+  let (ux, uy) = (calc.cos(a), calc.sin(a))
+  let w = head * 0.45
+  absolute-place({
+    place(curve(
+      stroke: stroke + thickness,
+      curve.move((x1 - ux * head * 0.8, y1 - uy * head * 0.8)),
+      curve.quad((cx, cy), (x2, y2)),
+    ))
+    place(polygon(
+      fill: stroke,
+      (x1, y1),
+      (x1 - ux * head - uy * w, y1 - uy * head + ux * w),
+      (x1 - ux * head + uy * w, y1 - uy * head - ux * w),
+    ))
+  })
+})
 
 // colors
 // #let maroon = color.rgb("#800000")
@@ -239,7 +279,7 @@
         (i, -height),
         width: NODE_WIDTH,
         shape: "circle",
-        text(font: "Jetbrains Mono")[#value],
+        text(font: "DejaVu Sans Mono")[#value],
         name: label("circle" + str(i)),
       ),
     )
