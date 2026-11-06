@@ -317,3 +317,384 @@ which "upgrades" the $(2,1,0)$ column from a label of $1$ to a label of $omega$.
 
 I shall plug my own website to explore upgraders (up to EBO): https://hemisemidemipresent.github.io/bms/ .
 Note that the upgrading algorithm are conjectures.
+
+== Multicolored Hydras
+
+We see that each column has different $n$-parent relationships with each other.
+Another way to understand how "expansion" works is to encode BMS matrices with multicolored hydras.
+In this example, we have the base color being 0-parent, red being 1-parent, green being 2-parent.
+
+#context[
+  // ---------- edge helper ----------
+  // Draws start -> corner -> end, where the corner takes the larger
+  // first coordinate and the smaller second coordinate of the two endpoints.
+  #let conn(start, end, stroke: auto, shift: 0pt) = {
+    let corner = (
+      calc.max(start.at(0), end.at(0)),
+      calc.min(start.at(1), end.at(1)),
+    )
+    edge(start, corner, end, stroke: stroke, shift: shift)
+  }
+
+  // shared strokes / shifts
+  #let orange-thin   = orange.transparentize(50%)
+  #let green-thin = green.transparentize(50%)
+  #let shift0 = 3pt
+  #let shift1 = 0pt
+  #let shift2 = -3pt
+
+
+  #{
+    let r  = (-1,-1)
+    let n0 = (0,0)
+    let n1 = (1,1)
+    let n2 = (2,2)
+    let n3 = (3,3)
+
+    diagram(
+      node-stroke: 0.6pt + text.fill,
+      spacing: (0.5em, 1.5em),
+      axes: (ltr, btt),
+      edge-stroke: 1pt + text.fill,
+      node(r,  $R$, shape: rect),
+      node(n0, $(0,0,0)$, shape: rect),
+      node(n1, $(1,1,1)$, shape: rect),
+      node(n2, $(2,1,0)$, shape: rect),
+      node(n3, $(3,1,0)$, shape: rect),
+
+      // 0-parent
+      conn(n0, r, shift: shift0),
+      conn(n1, n0, shift: shift0),
+      conn(n2, n1, shift: shift0),
+      conn(n3, n2, shift: shift0),
+
+      // 1-parent
+      conn(n0, r,  stroke: orange-thin, shift: shift1),
+      conn(n1, n0, stroke: orange, shift: shift1),
+      conn(n2, n0, stroke: orange, shift: shift1),
+      conn(n3, n0, stroke: orange, shift: shift1),
+
+      // 2-parent
+      conn(n0, r,  stroke: green-thin, shift: shift2),
+      conn(n1, n0, stroke: green, shift: shift2),
+      conn(n2, r,  stroke: green-thin, shift: shift2),
+      conn(n3, r,  stroke: green-thin, shift: shift2),
+    )
+  }
+
+  the rightmost node is the child. we find the bad root.
+  It’s highest tier connection to a non-root node is red, so if we go down the red path, we get the bad root.
+
+  #{
+    let r  = (-1,-1)
+    let n0 = (0,0)
+    let n1 = (1,1)
+    let n2 = (2,2)
+    let n3 = (3,3)
+
+    diagram(
+      node-stroke: 0.6pt + text.fill,
+      spacing: (1em, 1.5em),
+      axes: (ltr, btt),
+      edge-stroke: 1pt + text.fill,
+      node(r,  $R$, shape: rect),
+      node(n0, [b], shape: rect),
+      node(n1, $quad$, shape: rect),
+      node(n2, $quad$, shape: rect),
+      node(n3, [c], shape: rect),
+
+      // 0-parent
+      conn(n0, r, shift: shift0),
+      conn(n1, n0, shift: shift0),
+      conn(n2, n1, shift: shift0),
+      conn(n3, n2, shift: shift0),
+
+      // 1-parent
+      conn(n0, r,  stroke: orange-thin, shift: shift1),
+      conn(n1, n0, stroke: orange, shift: shift1),
+      conn(n2, n0, stroke: orange, shift: shift1),
+      conn(n3, n0, stroke: orange, shift: shift1),
+
+      // 2-parent
+      conn(n0, r,  stroke: green-thin, shift: shift2),
+      conn(n1, n0, stroke: green, shift: shift2),
+      conn(n2, r,  stroke: green-thin, shift: shift2),
+      conn(n3, r,  stroke: green-thin, shift: shift2),
+    )
+  }
+
+  cut the child and all of its connections:
+
+  #{
+    let r  = (-1,-1)
+    let n0 = (0,0)
+    let n1 = (1,1)
+    let n2 = (2,2)
+    let n3 = (3,3)
+
+    diagram(
+      node-stroke: 0.6pt + text.fill,
+      spacing: (1em, 1.5em),
+      axes: (ltr, btt),
+      edge-stroke: 1pt + text.fill,
+      node(r,  $R$, shape: rect),
+      node(n0, [b], shape: rect),
+      node(n1, $quad$, shape: rect),
+      node(n2, $quad$, shape: rect),
+      node(n3, [c], shape: rect, stroke: (dash: "dashed")),
+
+      // 0-parent
+      conn(n0, r, shift: shift0),
+      conn(n1, n0, shift: shift0),
+      conn(n2, n1, shift: shift0),
+      conn(n3, n2, shift: shift0, stroke: (dash: "dashed")),
+
+      // 1-parent
+      conn(n0, r,  stroke: orange-thin, shift: shift1),
+      conn(n1, n0, stroke: orange, shift: shift1),
+      conn(n2, n0, stroke: orange, shift: shift1),
+      conn(n3, n0, stroke: (paint: orange, dash: "dashed"), shift: shift1),
+
+      // 2-parent
+      conn(n0, r,  stroke: green-thin, shift: shift2),
+      conn(n1, n0, stroke: green, shift: shift2),
+      conn(n2, r,  stroke: green-thin, shift: shift2),
+      conn(n3, r,  stroke: (paint: green-thin, dash: "dashed"), shift: shift2),
+    )
+  }
+
+  Then we make many copies of the bad root
+
+  #{
+    let r  = (-1,-1)
+    let n0 = (0,0)
+    let n1 = (1,1)
+    let n2 = (2,2)
+
+    diagram(
+      node-stroke: 0.6pt + text.fill,
+      spacing: (1em, 1.5em),
+      axes: (ltr, btt),
+      edge-stroke: 1pt + text.fill,
+      node(r,  $R$, shape: rect),
+      node(n0, $b$, shape: rect),
+      node(n1, $quad$, shape: rect),
+      node(n2, $quad$, shape: rect),
+
+      // 0-parent
+      conn(n0, r, shift: shift0),
+      conn(n1, n0, shift: shift0),
+      conn(n2, n1, shift: shift0),
+
+      // 1-parent
+      conn(n0, r,  stroke: orange-thin, shift: shift1),
+      conn(n1, n0, stroke: orange, shift: shift1),
+      conn(n2, n0, stroke: orange, shift: shift1),
+
+      // 2-parent
+      conn(n0, r,  stroke: green-thin, shift: shift2),
+      conn(n1, n0, stroke: green, shift: shift2),
+      conn(n2, r,  stroke: green-thin, shift: shift2),
+    )
+  }
+  #{
+    let r  = (-1,-1)
+    let n0 = (0,0)
+    let n1 = (1,1)
+    let n2 = (2,2)
+
+    diagram(
+      node-stroke: 0.6pt + text.fill,
+      spacing: (1em, 1.5em),
+      axes: (ltr, btt),
+      edge-stroke: 1pt + text.fill,
+      node(r,  $quad$, shape: rect, stroke: none),
+      node(n0, $b$, shape: rect),
+      node(n1, $quad$, shape: rect),
+      node(n2, $quad$, shape: rect),
+
+      // 0-parent
+      conn(n0, r, shift: shift0),
+      conn(n1, n0, shift: shift0),
+      conn(n2, n1, shift: shift0),
+
+      // 1-parent
+      conn(n0, r,  stroke: orange-thin, shift: shift1),
+      conn(n1, n0, stroke: orange, shift: shift1),
+      conn(n2, n0, stroke: orange, shift: shift1),
+
+      // 2-parent
+      conn(n0, r,  stroke: green-thin, shift: shift2),
+      conn(n1, n0, stroke: green, shift: shift2),
+      conn(n2, r,  stroke: green-thin, shift: shift2),
+    )
+  }
+  #{
+    let r  = (-1,-1)
+    let n0 = (0,0)
+    let n1 = (1,1)
+    let n2 = (2,2)
+
+    diagram(
+      node-stroke: 0.6pt + text.fill,
+      spacing: (1em, 1.5em),
+      axes: (ltr, btt),
+      edge-stroke: 1pt + text.fill,
+      node(r,  $quad$, shape: rect, stroke: none),
+      node(n0, $b$, shape: rect),
+      node(n1, $quad$, shape: rect),
+      node(n2, $quad$, shape: rect),
+
+      // 0-parent
+      conn(n0, r, shift: shift0),
+      conn(n1, n0, shift: shift0),
+      conn(n2, n1, shift: shift0),
+
+      // 1-parent
+      conn(n0, r,  stroke: orange-thin, shift: shift1),
+      conn(n1, n0, stroke: orange, shift: shift1),
+      conn(n2, n0, stroke: orange, shift: shift1),
+
+      // 2-parent
+      conn(n0, r,  stroke: green-thin, shift: shift2),
+      conn(n1, n0, stroke: green, shift: shift2),
+      conn(n2, r,  stroke: green-thin, shift: shift2),
+    )
+  }
+
+  connect hanging root connections to the root note
+
+  #{
+    let r  = (-1,-1)
+    let n0 = (0,0)
+    let n1 = (1,1)
+    let n2 = (2,2)
+    let n3 = (3,0)
+    let n4 = (4,1)
+    let n5 = (5,2)
+    let n6 = (6,0)
+    let n7 = (7,1)
+    let n8 = (8,2)
+
+    diagram(
+      node-stroke: 0.6pt + text.fill,
+      spacing: (1em, 1.5em),
+      axes: (ltr, btt),
+      edge-stroke: 1pt + text.fill,
+      node(r,  $R$, shape: rect),
+      node(n0, $b$, shape: rect),
+      node(n1, $quad$, shape: rect),
+      node(n2, $quad$, shape: rect),
+      node(n3, $b$, shape: rect),
+      node(n4, $quad$, shape: rect),
+      node(n5, $quad$, shape: rect),
+      node(n6, $b$, shape: rect),
+      node(n7, $quad$, shape: rect),
+      node(n8, $quad$, shape: rect),
+
+      // 0-parent
+      conn(n0, r, shift: shift0),
+      conn(n1, n0, shift: shift0),
+      conn(n2, n1, shift: shift0),
+
+      conn(n4, n3, shift: shift0),
+      conn(n5, n4, shift: shift0),
+
+      conn(n7, n6, shift: shift0),
+      conn(n8, n7, shift: shift0),
+
+      // 1-parent
+      conn(n0, r,  stroke: orange-thin, shift: shift1),
+      conn(n1, n0, stroke: orange, shift: shift1),
+      conn(n2, n0, stroke: orange, shift: shift1),
+
+      conn(n3, r,  stroke: orange-thin, shift: shift1),
+      conn(n4, n3, stroke: orange, shift: shift1),
+      conn(n5, n3, stroke: orange, shift: shift1),
+
+      conn(n6, r,  stroke: orange-thin, shift: shift1),
+      conn(n7, n6, stroke: orange, shift: shift1),
+      conn(n8, n6, stroke: orange, shift: shift1),
+
+      // 2-parent
+      conn(n0, r,  stroke: green-thin, shift: shift2),
+      conn(n1, n0, stroke: green, shift: shift2),
+      conn(n2, r,  stroke: green-thin, shift: shift2),
+
+      conn(n3, r,  stroke: green-thin, shift: shift2),
+      conn(n4, n3, stroke: green, shift: shift2),
+      conn(n5, r,  stroke: green-thin, shift: shift2),
+
+      conn(n6, r,  stroke: green-thin, shift: shift2),
+      conn(n7, n6, stroke: green, shift: shift2),
+      conn(n8, r,  stroke: green-thin, shift: shift2),
+    )
+  }
+
+  #{
+    let r  = (-1,-1)
+    let n0 = (0,0)
+    let n1 = (1,1)
+    let n2 = (2,2)
+    let n3 = (3,3)
+    let n4 = (4,4)
+    let n5 = (5,5)
+    let n6 = (6,6)
+    let n7 = (7,7)
+    let n8 = (8,8)
+
+    diagram(
+      node-stroke: 0.6pt + text.fill,
+      spacing: (1em, 1.5em),
+      axes: (ltr, btt),
+      edge-stroke: 1pt + text.fill,
+      node(r,  $R$, shape: rect),
+      node(n0, $b$, shape: rect),
+      node(n1, $quad$, shape: rect),
+      node(n2, $quad$, shape: rect),
+      node(n3, $b$, shape: rect),
+      node(n4, $quad$, shape: rect),
+      node(n5, $quad$, shape: rect),
+      node(n6, $b$, shape: rect),
+      node(n7, $quad$, shape: rect),
+      node(n8, $quad$, shape: rect),
+
+      // 0-parent
+      conn(n0, r, shift: shift0),
+      conn(n1, n0, shift: shift0),
+      conn(n2, n1, shift: shift0),
+      conn(n3, n2, shift: shift0),
+      conn(n4, n3, shift: shift0),
+      conn(n5, n4, shift: shift0),
+      conn(n6, n5, shift: shift0),
+      conn(n7, n6, shift: shift0),
+      conn(n8, n7, shift: shift0),
+
+      // 1-parent
+      conn(n0, r,  stroke: orange-thin, shift: shift1),
+      conn(n1, n0, stroke: orange, shift: shift1),
+      conn(n2, n0, stroke: orange, shift: shift1),
+
+      conn(n3, r,  stroke: orange-thin, shift: shift1),
+      conn(n4, n3, stroke: orange, shift: shift1),
+      conn(n5, n3, stroke: orange, shift: shift1),
+
+      conn(n6, r,  stroke: orange-thin, shift: shift1),
+      conn(n7, n6, stroke: orange, shift: shift1),
+      conn(n8, n6, stroke: orange, shift: shift1),
+
+      // 2-parent
+      conn(n0, r,  stroke: green-thin, shift: shift2),
+      conn(n1, n0, stroke: green, shift: shift2),
+      conn(n2, r,  stroke: green-thin, shift: shift2),
+
+      conn(n3, r,  stroke: green-thin, shift: shift2),
+      conn(n4, n3, stroke: green, shift: shift2),
+      conn(n5, r,  stroke: green-thin, shift: shift2),
+
+      conn(n6, r,  stroke: green-thin, shift: shift2),
+      conn(n7, n6, stroke: green, shift: shift2),
+      conn(n8, r,  stroke: green-thin, shift: shift2),
+    )
+  }
+]
